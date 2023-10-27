@@ -1,0 +1,13 @@
+<%= form_for @service, url: service_path(@service), method: :patch do |f| %>
+  <div class="form-group">
+    <%= f.label :name, "Nombre del Servicio" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :price, "Precio del Servicio" %>
+    <%= f.number_field :price, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Guardar Cambios", class: "btn btn-primary" %>
+  </div>
+<% end %>
