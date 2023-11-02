@@ -2,7 +2,10 @@
   <div class="container-fluid">
     <%# <a class="navbar-brand" href="#">OhMyDog(logo)</a> %>
 
-    <%= link_to "OhMyDogLogo", "#", class:"navbar-brand" %> 
+    <%= link_to(root_path, class: "navbar-brand") do %>
+      <%= image_tag("oh-my-dog-logo.png", alt: "¡Oh My Dog!") %>
+      OhMyDog
+    <% end %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -19,16 +22,14 @@
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Recursos/Servicios/Funciones/Menu?
+            Servicios
           </a>
           <ul class="dropdown-menu">
             <li><%= link_to "Adopciones", "#", class:"dropdown-item" %></li>
             <li><%= link_to "Perdidos y Encontrados", "#", class:"dropdown-item" %></li>
-            <li><%= link_to "Paseadores y Cuidadores", "#", class:"dropdown-item" %></li>
             <li><%= link_to "Turnos", "#", class:"dropdown-item" %></li>
             <li><%= link_to "Calendario", "#", class:"dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to "Donaciones", "#", class:"dropdown-item" %></li>
+            <li><%= link_to "Paseadores y Cuidadores", "#", class:"dropdown-item" %></li>
           </ul>
         </li>
 
@@ -41,7 +42,7 @@
         </li>
 
         <li class="nav-item">
-          <%= link_to "Contacto", "#", class:"nav-link" %>
+          <%= link_to "Donaciones", "#", class:"nav-link" %>
         </li>
 
         <li class="nav-item dropdown">
@@ -49,13 +50,12 @@
             Ayuda
           </a>
           <ul class="dropdown-menu">
-            <li><p>Info de contacto/Horarios en general/Etc</p></li>
+            <li><p>Info de contacto (mail, telefono, ubicacion)</p></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Quienes Somos</a></li>
-            <li><a class="dropdown-item" href="#">Contactanos/Formulario Email?</a></li>
+            <li><%= link_to "Quienes Somos", "#", class:"dropdown-item" %></li>
           </ul>
         </li>
-        
+
         <li class="nav-item">
           <%= link_to "Notificaciones", "#", class:"nav-link" %>
         </li>
@@ -65,8 +65,8 @@
             Mi Cuenta
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-            <li><a class="dropdown-item" href="#">Mis mascotas</a></li>
+            <li><%= link_to "Mi perfil", "#", class:"dropdown-item" %></li>
+            <li><%= link_to "Mis mascotas", "#", class:"dropdown-item" %></li>
             <li><hr class="dropdown-divider"></li>
             <li><%= link_to "Cerrar Sesión", "#", class:"dropdown-item" %></li>
           </ul>
