@@ -8,5 +8,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :services, only: [:edit, :update]
+  resources :services do
+    member do
+      patch 'toggle_active'
+    end
+  end
+
 end

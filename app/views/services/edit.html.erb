@@ -1,0 +1,12 @@
+<%= form_for @service, url: service_path(@service), method: :patch, class: "my-4" do |f| %>
+  <div class="form-group mb-3"> <!-- Agrega margen inferior -->
+    <%= f.label :name, "Nombre del Servicio" %>
+    <%= f.text_field :name, class: "form-control" %>
+    <%= f.label :price, "Precio del Servicio" %>
+    <%= f.text_field :price, class: "form-control" %>
+  </div>
+  <!-- Otros campos de edición con márgenes -->
+  <div class="form-group mb-3"> <!-- Agrega margen inferior -->
+    <%= f.submit "Guardar cambios", class: "btn btn-primary" %>
+  </div>
+<% end %>

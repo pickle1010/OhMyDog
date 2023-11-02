@@ -1,13 +1,73 @@
-<%= form_for @service, url: service_path(@service), method: :patch do |f| %>
-  <div class="form-group">
-    <%= f.label :name, "Nombre del Servicio" %>
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :price, "Precio del Servicio" %>
-    <%= f.number_field :price, class: "form-control" %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Guardar Cambios", class: "btn btn-primary" %>
-  </div>
-<% end %>
+
+<div class="container mt-5">
+ <h1 class="text-center">Servicios Disponibles</h1>
+
+ <table class="table table-bordered table-hover">
+   <thead class="thead-light">
+     <tr>
+       <th>Nombre del Servicio</th>
+       <th>Precio</th>
+       <th>Acción</th>
+       <th>Estado</th>
+     </tr>
+   </thead>
+   <tbody>
+     <% @service.each do |service| %>
+       <tr>
+         <td><%= service.name %></td>
+         <td>$<%= service.price %></td>
+         <td>
+           <%= link_to 'Editar', edit_service_path(service), class: 'btn btn-warning btn-sm' %>
+         </td>
+         <td>
+           <% if service.active? %>
+             <%= button_to 'Desactivar', toggle_active_service_path(service), method: :patch, class: 'btn btn-danger btn-sm toggle-btn', data: { service_id: service.id } %>
+           <% else %>
+             <%= button_to 'Activar', toggle_active_service_path(service), method: :patch, class: 'btn btn-success btn-sm toggle-btn', data: { service_id: service.id } %>
+           <% end %>
+         </td>
+       </tr>
+     <% end %>
+   </tbody>
+ </table>
+ <%= link_to 'Agregar Servicio', new_service_path, class: 'btn btn-primary' %>
+</div>
+
+
+
+<script>
+ // Obtén una lista de todos los botones con la clase 'toggle-btn'
+ var buttons = document.querySelectorAll(".toggle-btn");
+
+ buttons.forEach(function(button) {
+   button.addEventListener("click", function() {
+     var serviceId = this.getAttribute("data-service-id");
+
+     fetch("/services/" + serviceId + "/toggle_active", { method: "PATCH" })
+       .then(function(response) {
+         // Intenta analizar la respuesta JSON en un bloque 'try'
+         try {
+           return response.json();
+         } catch (error) {
+           console.error("Error al analizar JSON:", error);
+           return null; // Devuelve null en caso de error de análisis
+         }
+       })
+       .then(function(data) {
+         if (data !== null) {
+           if (data.active) {
+             button.innerHTML = "Desactivar";
+             button.classList.remove("btn-success");
+             button.classList.add("btn-danger");
+           } else {
+             button.innerHTML = "Activar";
+             button.classList.remove("btn-danger");
+             button.classList.add("btn-success");
+           }
+         } else {
+           console.error("Error en la respuesta JSON.");
+         }
+       });
+   });
+ });
+</script>
