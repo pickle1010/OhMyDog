@@ -101,6 +101,7 @@ GEM
     drb (2.1.1)
       ruby2_keywords
     erubi (1.12.0)
+    flatpickr (4.6.13.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -243,6 +244,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  flatpickr
   importmap-rails
   jbuilder
   pg (~> 1.1)
