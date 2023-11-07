@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :allow_without_password, only: [:update]
 
   # GET /admin/users or /admin/users.json
   def index
@@ -65,6 +66,13 @@ class Admin::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :password, :dni, :first_name, :last_name, :address, :role)
+      params.require(:user).permit(:email, :password, :password_confirmation, :dni, :first_name, :last_name, :address, :role)
+    end
+
+    def allow_without_password
+      if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+          params[:user].delete(:password)
+          params[:user].delete(:password_confirmation)
+      end
     end
 end
