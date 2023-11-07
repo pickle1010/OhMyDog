@@ -3,7 +3,9 @@
 one:
   name: MyString
   price: 1.5
+  active: false
 
 two:
   name: MyString
   price: 1.5
+  active: false
