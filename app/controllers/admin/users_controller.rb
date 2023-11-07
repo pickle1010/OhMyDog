@@ -1,4 +1,6 @@
 class Admin::UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_if_admin
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :allow_without_password, only: [:update]
 
@@ -74,5 +76,9 @@ class Admin::UsersController < ApplicationController
           params[:user].delete(:password)
           params[:user].delete(:password_confirmation)
       end
+    end
+
+    def check_if_admin
+      redirect_to root_path unless current_user.admin?
     end
 end
