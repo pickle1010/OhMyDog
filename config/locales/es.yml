@@ -1,12 +1,20 @@
 es:
   activerecord:
+    models:
+      service: 'servicio'
+    attributes:
+      service:
+        name: 'nombre'
+        price: 'precio'
+        active: 'activo'
     errors:
       models:
         service:
           attributes:
             name:
-              blank: "nombre no puede estar en blanco"
-              taken: "ya está en uso"
+              blank: 'no puede estar vacío'
+              taken: 'no puede repetirse dentro de la tabla de servicios'
             price:
-              blank: "precio no puede estar en blanco"
-              not_an_integer: "debe ser un número entero"
+              blank: 'no puede estar vacío'
+              not_a_number: 'sólo debe contener números'
+              
