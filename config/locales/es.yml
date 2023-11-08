@@ -7,6 +7,13 @@ es:
         name: 'nombre'
         price: 'precio'
         active: 'activo'
+    models:
+      service: 'servicio'
+    attributes:
+      service:
+        name: 'nombre'
+        price: 'precio'
+        active: 'activo'
     errors:
       models:
         service:
