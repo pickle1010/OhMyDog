@@ -1,0 +1,12 @@
+es:
+  activerecord:
+    errors:
+      models:
+        service:
+          attributes:
+            name:
+              blank: "nombre no puede estar en blanco"
+              taken: "ya está en uso"
+            price:
+              blank: "precio no puede estar en blanco"
+              not_an_integer: "debe ser un número entero"
