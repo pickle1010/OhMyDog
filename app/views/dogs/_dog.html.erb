@@ -1,0 +1,42 @@
+<div id="<%= dom_id dog %>">
+  <p>
+    <strong>Photo:</strong>
+    <%= link_to dog.photo.filename, dog.photo if dog.photo.attached? %>
+  </p>
+
+  <p>
+    <strong>First name:</strong>
+    <%= dog.first_name %>
+  </p>
+
+  <p>
+    <strong>Last name:</strong>
+    <%= dog.last_name %>
+  </p>
+
+  <p>
+    <strong>Breed:</strong>
+    <%= dog.breed %>
+  </p>
+
+  <p>
+    <strong>Color:</strong>
+    <%= dog.color %>
+  </p>
+
+  <p>
+    <strong>Sex:</strong>
+    <%= dog.sex %>
+  </p>
+
+  <p>
+    <strong>Birthday:</strong>
+    <%= dog.birthday %>
+  </p>
+
+  <p>
+    <strong>User:</strong>
+    <%= dog.user_id %>
+  </p>
+
+</div>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :dogs
   devise_for :users
   namespace :admin do
     resources :users
