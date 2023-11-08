@@ -3,18 +3,16 @@
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
   <%= f.hidden_field :reset_password_token %>
-
+  
   <div class="field mb-3">
-    <%= f.label :password, "New password", class: "form-label" %><br />
+    <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control", placeholder: "Contraseña nueva" %>
     <% if @minimum_password_length %>
-      <em class="form-text">(<%= @minimum_password_length %> caracteres mínimos)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control" %>
+    <p class="form-text">La contraseña debe contener <%= @minimum_password_length %> caracteres como mínimo</p>
+  <% end %>
   </div>
 
   <div class="field mb-3">
-    <%= f.label :password_confirmation, "Confirm new password", class: "form-label" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirma la nueva contraseña" %>
   </div>
 
   <div class="actions mb-3">
