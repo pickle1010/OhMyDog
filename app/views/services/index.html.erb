@@ -1,13 +1,27 @@
-<%= form_for @service, url: service_path(@service), method: :patch do |f| %>
-  <div class="form-group">
-    <%= f.label :name, "Nombre del Servicio" %>
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :price, "Precio del Servicio" %>
-    <%= f.number_field :price, class: "form-control" %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Guardar Cambios", class: "btn btn-primary" %>
-  </div>
-<% end %>
+<p style="color: green"><%= notice %></p>
+
+<h1>Servicios</h1>
+
+    <table class="table table-dark table-striped table-bordered border-primary">
+      <thead>
+         <tr>
+           <th scope="col">Nombre</th>
+           <th scope="col">Precio</th>
+           <th scope="col">Estado</th>
+           <th scope="col">Acción</th>
+         </tr>
+      </thead>
+      <tbody>
+        <% @services.each do |service| %>
+          <tr>
+            <th scope="row"><%=service.name%></th>
+            <td><%=service.price%></td>
+            <td><%= service.active ? 'Activo' : 'Inactivo' %></td>
+            <td><%= link_to "Ver", service, class: "btn btn-primary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+   </table>
+
+
+<%= link_to "Agregar nuevo servicio", new_service_path, class: "btn btn-primary" %>

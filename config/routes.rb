@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :services
   resources :turn_forms
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -9,5 +10,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :services, only: [:edit, :update]
+
+
 end
