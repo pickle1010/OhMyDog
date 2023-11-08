@@ -1,0 +1,2 @@
+class TurnForm < ApplicationRecord
+end

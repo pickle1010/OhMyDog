@@ -68,3 +68,6 @@ group :test do
 end
 
 gem 'flatpickr'
+#https://rubygems.org/gems/bootstrap/versions/5.2.3
+gem 'bootstrap', '~> 5.2', '>= 5.2.3'
+gem 'sassc-rails'

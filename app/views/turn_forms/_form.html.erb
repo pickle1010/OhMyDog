@@ -1,0 +1,66 @@
+<div class="container"> <!-- Agregar un contenedor para centrar el contenido -->
+  <div class="row justify-content-center" style="border: 2px solid rgba(122, 246, 254, 0.5);"> <!-- Centrar horizontalmente -->
+    <div class="col-md-8"> <!-- Espaciar el contenido -->
+            <!--formulary-->
+            <%= form_with(model: @turn_form, local: true) do |form| %>
+                <!--Select motive. compatibility with Service database?--> 
+                <div class="form-group my-3">
+                    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                    <select class="form-select" id="autoSizingSelect">
+                    <option selected>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    </select>
+                </div>
+                
+                <!--Time select-->
+               <div class="row mb-3">
+                    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
+                        <div class="form-group">
+                            <%= form.label :DateCons, "Fecha de la consulta" %>
+                        </div>
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        <div class="form-group">
+                            <%= form.text_field :DateCons, class: 'form-control flatpickr', id: 'date-picker' %>
+                        </div>
+                    </div>
+                </div>
+
+                <!--ScheduleDate-->
+                <div class="row mb-3">
+                    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
+                        <div class="form-group">
+                            <%= form.label :ScheduleCons, "Horario de la consulta" %>
+                        </div>
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        <div class="form-group">
+                            <%= form.select :ScheduleCons, [['Mañana', 'morning'], ['Tarde', 'afternoon']], { include_blank: false }, { class: 'form-select', id: 'schedule-select' } %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description field -->
+                <div class="row mb-3">  
+                    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
+                        <div class="form-group">
+                            <%= form.label :descriptionCons, "Descripción" %>
+                        </div>
+                    </div>  
+                    <div class="col-md-8 mb-3">
+                        <div class="form-group">
+                            <%= form.text_area :descriptionCons, class: 'form-control', rows: 2 %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- sent button -->
+                <div class="col-auto my-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>   
+            <% end %>
+        </div>
+    </div>
+</div>
