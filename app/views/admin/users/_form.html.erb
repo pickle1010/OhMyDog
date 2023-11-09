@@ -11,50 +11,62 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+  <div class="row mb-3">
+    <%= form.label :first_name, "Nombre", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :first_name, autofocus: true, autocomplete: "given-name", class: "form-control" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :dni, style: "display: block" %>
-    <%= form.number_field :dni %>
+  <div class="row mb-3">
+    <%= form.label :last_name, "Apellidos", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :last_name, autofocus: true, autocomplete: "family-name", class: "form-control" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :first_name, style: "display: block" %>
-    <%= form.text_field :first_name %>
+  <div class="row mb-3">
+    <%= form.label :dni, "DNI", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.number_field :dni, autofocus: true, class: "form-control" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :last_name, style: "display: block" %>
-    <%= form.text_field :last_name %>
+  <div class="row mb-3">
+    <%= form.label :email, "Correo electrónico", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :address, style: "display: block" %>
-    <%= form.text_field :address %>
+  <div class="row mb-3">
+    <%= form.label :address, "Dirección", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :address, autofocus: true, autocomplete: "address-line1", class: "form-control" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :role, style: "display: block" %>
-    <%= form.text_field :role %>
+  <!-- <div class="form-floating">
+    <%= form.select(:role, [["Cliente", "client"], ["Administrador", "admin"]], {}, { :class => 'form-select mb-3' }) %>
+    <%= form.label :role, "Tipo de usuario" %>
+  </div> -->
+
+  <div class="field mb-3">
+    <%= form.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Contraseña nueva" %>
+    <div id="passwordHelpBlock" class="form-text">
+      <p>La contraseña debe contener 6 caracteres como mínimo</p>
+    </div>
   </div>
 
   <div class="field mb-3">
-    <%= form.label :password, "Contraseña nueva", class: "form-label" %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> caracteres mínimo)</em>
-    <% end %><br />
-    <%= form.password_field :password, autocomplete: "new-password", class: "form-control" %>
+    <%= form.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirmá la nueva contraseña" %>
   </div>
 
-  <div class="field mb-3">
-    <%= form.label :password_confirmation, "Confirmá la nueva contraseña", class: "form-label" %><br />
-    <%= form.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="actions">
+    <% if form.object.new_record? %>
+      <%= form.submit "Crear Usuario", class: "btn btn-primary" %>
+    <% else %>
+      <%= form.submit "Editar", data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, class: "btn btn-primary" %>
+    <% end %>
   </div>
 <% end %>

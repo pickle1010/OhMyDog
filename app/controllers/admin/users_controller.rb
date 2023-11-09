@@ -28,7 +28,7 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to admin_user_url(@user), notice: "El usuario fue creado exitosamente." }
+        format.html { redirect_to admin_user_url(@user), success: "El usuario fue creado exitosamente." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,7 +41,7 @@ class Admin::UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to admin_user_url(@user), notice: "El usuario fue actualizado exitosamente." }
+        format.html { redirect_to admin_user_url(@user), success: "El usuario fue actualizado exitosamente." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +55,7 @@ class Admin::UsersController < ApplicationController
     @user.destroy!
 
     respond_to do |format|
-      format.html { redirect_to admin_users_url, notice: "El usuario fue eliminado exitosamente." }
+      format.html { redirect_to admin_users_url, success: "El usuario fue eliminado exitosamente." }
       format.json { head :no_content }
     end
   end
