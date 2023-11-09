@@ -14,7 +14,4 @@ es:
             name:
               blank: 'no puede estar vacío'
               taken: 'no puede repetirse dentro de la tabla de servicios'
-            price:
-              blank: 'no puede estar vacío'
-              not_a_number: 'debe ser un número decimal'
-              
+ 
