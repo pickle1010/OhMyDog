@@ -1,0 +1,51 @@
+es: 
+  errors:
+    attributes:
+      dni:
+        not_a_number:
+    blank:
+    messages:
+      not_a_number:
+  activerecord:
+    models:
+      user: 'usuario'
+    attributes:
+      user:
+        email: "Correo electrónico"
+        dni: 'DNI'
+        first_name: 'Nombre'
+        last_name: 'Apellido'
+        address: 'Dirección'
+        role: 'Rol'
+        password: 'Contraseña'
+        password_confirmation: 'Confirmación de contraseña'
+    errors:
+      messages:
+        not_a_number:
+        blank:
+      models:
+        user:
+          not_a_number:
+          blank:
+          attributes:
+            email:
+              blank: 'no puede estar en blanco'
+              invalid: 'no es válido'
+              taken: 'ya corresponde a un cliente'
+            dni:
+              blank: 'no puede estar en blanco'
+              not_a_number: 'debe ser un número'
+              greater_than: 'debe ser mayor que cero'
+              taken: 'ya corresponde a un cliente'
+            first_name: 
+              blank: 'no puede estar en blanco' 
+            last_name:
+              blank: 'no puede estar en blanco'   
+            address: 
+              blank: 'no puede estar en blanco'
+            password: 
+              blank: 'no puede estar en blanco'
+              too_short: 'tiene menos de 6 caracteres'
+            password_confirmation:
+              confirmation: 'erronea. Las contraseñas no coinciden' 
+

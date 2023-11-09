@@ -1,0 +1,8 @@
+<%= render @user %>
+
+<div>
+  <%= link_to "Editar cliente", edit_admin_user_path(@user) %> |
+  <%= link_to "Volver a clientes", admin_users_path %>
+
+  <%= button_to "Eliminar cliente", [:admin, @user],  data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, method: :delete, class: "btn btn-danger" %>
+</div>

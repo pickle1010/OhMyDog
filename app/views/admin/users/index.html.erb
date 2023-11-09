@@ -1,0 +1,38 @@
+<h1>Clientes</h1>
+
+<%= link_to "Agregar cliente", new_admin_user_path %>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>DNI</th>
+        <th>Email</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Dirección</th>
+        <!-- <th>Rol</th> -->
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <div id="users">
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.dni %></td>
+            <td><%= user.email %></td>
+            <td><%= user.first_name %></td>
+            <td><%= user.last_name %></td>
+            <td><%= user.address %></td>
+            <!-- <td><%= user.role %></td> -->
+            <td><%= link_to "Ver", [:admin, user] %></td>
+            <td><%= link_to "Editar", edit_admin_user_path(user) %></td>
+            <td><%= link_to "Eliminar", [:admin, user], data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %></td>
+          </tr>
+        <% end %>
+      </div>
+    </tbody>
+  </div>
+  
+</table>
