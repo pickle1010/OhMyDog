@@ -22,6 +22,11 @@ class TurnFormsController < ApplicationController
   # POST /turn_forms or /turn_forms.json
   def create
     @turn_form = TurnForm.new(turn_form_params)
+    selected_service_ids = params[:turn_form][:service_ids]
+    selected_services = Service.where(id: selected_service_ids)
+
+    # Actualizar ServiceCons con los nombres de los servicios seleccionados
+    @turn_form.servicesCons = selected_services.pluck(:name).join(', ')
 
     respond_to do |format|
       if @turn_form.save
@@ -65,6 +70,6 @@ class TurnFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def turn_form_params
-      params.require(:turn_form).permit(:DateCons, :ScheduleCons, :descriptionCons)
+      params.require(:turn_form).permit(:DateCons, :ScheduleCons, :descriptionCons, :servicesCons)
     end
 end
