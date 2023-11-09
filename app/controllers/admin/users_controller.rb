@@ -77,8 +77,4 @@ class Admin::UsersController < ApplicationController
           params[:user].delete(:password_confirmation)
       end
     end
-
-    def check_if_admin
-      redirect_to root_path unless current_user.admin?
-    end
 end

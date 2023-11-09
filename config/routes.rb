@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :dogs
+  get '/my_dogs', to: 'dogs#my_dogs', as: 'my_dogs'
+
   devise_for :users
   namespace :admin do
     resources :users

@@ -1,13 +1,26 @@
 class DogsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_if_admin, except: %i[ my_dogs show ]
   before_action :set_dog, only: %i[ show edit update destroy ]
 
   # GET /dogs or /dogs.json
   def index
-    @dogs = Dog.all
+    if current_user.admin?
+      @dogs = Dog.all
+    else
+      redirect_to my_dogs_path
+    end
   end
 
   # GET /dogs/1 or /dogs/1.json
   def show
+    redirect_to root_path unless current_user.admin? || @dog.user == current_user
+  end
+
+  # GET /my_dogs 
+  def my_dogs
+    # Show only the user's dogs
+    @dogs = current_user.dogs
   end
 
   # GET /dogs/new
