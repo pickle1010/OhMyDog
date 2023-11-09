@@ -1,6 +1,6 @@
 class TurnForm < ApplicationRecord
     has_many :services
-    validates :DateCons , presence: true
+    validates :DateCons , presence: true 
     validates :ScheduleCons , presence: true
     validates :servicesCons , presence: true   
     validate :morning_option_available
@@ -16,4 +16,5 @@ class TurnForm < ApplicationRecord
           end
         end
     end
+
 end

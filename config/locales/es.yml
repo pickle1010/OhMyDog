@@ -1,33 +1,27 @@
 es: 
+  turn_form:
+    ScheduleCons:
+      morning: 'mañana'
+      afternoon: 'tarde'
   activerecord:
     models:
-      dog: 'Perro'
+      turn_form: 'turno'
     attributes:
-      dog:
-        photo: 'foto'
-        user: 'cliente'
-        first_name: 'nombre'
-        last_name: 'apellido'
-        breed: 'raza'
-        color: 'color'
-        sex: 'sexo'
-        birthday: 'cumpleaños'
+      turn_form:
+        DateCons: 'Debe seleccionar'
+        servicesCons: 'Debe seleccionar'
+        ScheduleCons: 'horario de la consulta'
+        descriptionCons: 'descripción'
     errors:
       models:
-        dog:
+        turn_form:
           attributes:
-            first_name:
-              blank: 'no puede estar vacío'
-            last_name:
-              blank: 'no puede estar vacío'
-            breed: 
-              blank: 'no puede estar vacío' 
-            color:
-              blank: 'no puede estar vacío'   
-            sex: 
-              blank: 'no puede estar vacío'
-            birthday:
-              blank: 'no puede estar vacío'
-            user:
-              required: 'debe existir en el sistema'
+            DateCons:
+              blank: 'una fecha para su consulta'
+            servicesCons:
+              blank: 'al menos un servicio'
+            ScheduleCons:
+              blank: 'no puede estar vacía'
+            descriptionCons: 
+              blank: 'no puede estar vacía' 
 
