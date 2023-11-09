@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Users</h1>
+<h1>Clientes</h1>
 
 <div id="users">
   <% @users.each do |user| %>
     <%= render user %>
     <p>
-      <%= link_to "Show this user", [:admin, user] %>
+      <%= link_to "Ver este cliente", [:admin, user] %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New user", new_admin_user_path %>
+<%= link_to "Agregar cliente", new_admin_user_path %>
