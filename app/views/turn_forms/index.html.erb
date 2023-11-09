@@ -2,13 +2,18 @@
 
 <h1>Turn forms</h1>
 
-<div id="turn_forms">
-  <% @turn_forms.each do |turn_form| %>
-    <%= render turn_form %>
-    <p>
-      <%= link_to "Show this turn form", turn_form %>
-    </p>
-  <% end %>
-</div>
+<%= link_to "Solicitar Turno", new_turn_form_path, method: :get, class: "btn btn-primary my-3 mx-5" %>
 
-<%= link_to "New turn form", new_turn_form_path %>
+<div id="turn_forms my-3">
+  <% @turn_forms.each do |turn_form| %>
+    <div class="container"> <!-- Agregar un contenedor para centrar el contenido -->
+      <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
+        <%= render turn_form %>
+        <p>
+          <%= link_to "Mostrar este formulario", turn_form, method: :get, method: :get, class: "btn btn-primary" %>
+        </p>
+      </div>
+    </div>  
+      <% end %>
+</div>  
+
