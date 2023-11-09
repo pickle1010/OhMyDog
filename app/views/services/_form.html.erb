@@ -1,7 +1,7 @@
 <%= form_with(model: service) do |form| %>
   <% if service.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(service.errors.count, "error") %> prohibited this service from being saved:</h2>
+      <h2><%= pluralize(service.errors.count, "error","errores") %> <%= (service.errors.count == 1) ? "impide" : "impiden" %> que se guarde este servicio:</h2>
 
       <ul>
         <% service.errors.each do |error| %>
@@ -32,6 +32,6 @@
     </div>
   
   <div>
-      <%= form.submit "Guardar", class: "btn btn-success my-3" %>
+    <%= form.submit "Guardar", data: { confirm: "¿Estás de acuerdo con los cambios realizados?", turbo_confirm: "¿Estás de acuerdo con los cambios realizados?" }, class: "btn btn-success mt-3" %>
   </div>
 <% end %>

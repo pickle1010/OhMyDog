@@ -6,7 +6,12 @@ es:
   activerecord:
     models:
       turn_form: 'turno'
+      service: 'servicio'
     attributes:
+      service:
+        name: 'nombre'
+        price: 'precio'
+        active: 'activo'
       turn_form:
         DateCons: 'Debe seleccionar'
         servicesCons: 'Debe seleccionar'
@@ -14,6 +19,11 @@ es:
         descriptionCons: 'descripción'
     errors:
       models:
+        service:
+          attributes:
+            name:
+              blank: 'no puede estar vacío'
+              taken: 'no puede repetirse dentro de la tabla de servicios'
         turn_form:
           attributes:
             DateCons:
@@ -24,4 +34,5 @@ es:
               blank: 'no puede estar vacía'
             descriptionCons: 
               blank: 'no puede estar vacía' 
-
+        
+ 
