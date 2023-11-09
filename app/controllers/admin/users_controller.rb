@@ -24,11 +24,25 @@ class Admin::UsersController < ApplicationController
 
   # POST /admin/users or /admin/users.json
   def create
+    existing_user = User.find_by(dni: user_params[:dni])
+
+    if existing_user
+      redirect_to admin_user_url(existing_user), danger: "Cliente con DNI #{existing_user.dni} ya existe. Redirigido al cliente existente..."
+      return
+    end
+
+    existing_user = User.find_by(email: user_params[:email])
+
+    if existing_user
+      redirect_to admin_user_url(existing_user), danger: "Cliente con email #{existing_user.email} ya existe. Redirigido al cliente existente..."
+      return
+    end
+
     @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to admin_user_url(@user), success: "El usuario fue creado exitosamente." }
+        format.html { redirect_to admin_user_url(@user), success: "El cliente fue creado exitosamente." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,7 +55,7 @@ class Admin::UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to admin_user_url(@user), success: "El usuario fue actualizado exitosamente." }
+        format.html { redirect_to admin_user_url(@user), success: "El cliente fue actualizado exitosamente." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +69,7 @@ class Admin::UsersController < ApplicationController
     @user.destroy!
 
     respond_to do |format|
-      format.html { redirect_to admin_users_url, success: "El usuario fue eliminado exitosamente." }
+      format.html { redirect_to admin_users_url, success: "El cliente fue eliminado exitosamente." }
       format.json { head :no_content }
     end
   end

@@ -51,16 +51,18 @@
     <%= form.label :role, "Tipo de usuario" %>
   </div> -->
 
-  <div class="field mb-3">
-    <%= form.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Contraseña nueva" %>
-    <div id="passwordHelpBlock" class="form-text">
-      <p>La contraseña debe contener 6 caracteres como mínimo</p>
+  <% if form.object.new_record? %>
+    <div class="field mb-3">
+      <%= form.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Contraseña nueva" %>
+      <div id="passwordHelpBlock" class="form-text">
+        <p>La contraseña debe contener 6 caracteres como mínimo</p>
+      </div>
     </div>
-  </div>
 
-  <div class="field mb-3">
-    <%= form.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirmá la nueva contraseña" %>
-  </div>
+    <div class="field mb-3">
+      <%= form.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirmá la nueva contraseña" %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <% if form.object.new_record? %>

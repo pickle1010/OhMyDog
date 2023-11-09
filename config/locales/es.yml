@@ -31,9 +31,12 @@ es:
             email:
               blank: 'no puede estar en blanco'
               invalid: 'no es válido'
+              taken: 'ya corresponde a un cliente'
             dni:
               blank: 'no puede estar en blanco'
               not_a_number: 'debe ser un número'
+              greater_than: 'debe ser mayor que cero'
+              taken: 'ya corresponde a un cliente'
             first_name: 
               blank: 'no puede estar en blanco' 
             last_name:
