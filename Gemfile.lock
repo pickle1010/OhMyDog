@@ -79,7 +79,7 @@ GEM
     autoprefixer-rails (10.4.15.0)
       execjs (~> 2)
     base64 (0.2.0)
-    bcrypt (3.2.09)
+    bcrypt (3.1.19)
     bigdecimal (3.1.4)
     bindex (0.8.1)
     bootsnap (1.17.0)
@@ -281,8 +281,8 @@ DEPENDENCIES
   bootstrap (~> 5.2, >= 5.2.3)
   capybara
   debug
-  flatpickr
   devise (~> 4.9, >= 4.9.3)
+  flatpickr
   importmap-rails
   jbuilder
   letter_opener (~> 1.8, >= 1.8.1)
