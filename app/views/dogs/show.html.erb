@@ -3,8 +3,8 @@
 <%= render @dog %>
 
 <div>
-  <%= link_to "Edit this dog", edit_dog_path(@dog) %> |
-  <%= link_to "Back to dogs", dogs_path %>
+  <%= link_to "Editar datos", edit_dog_path(@dog), class: "btn btn-dark" %> |
+  <%= link_to "Volver a perros", dogs_path, class: "btn btn-dark" %>
 
-  <%= button_to "Destroy this dog", @dog, method: :delete %>
+  <%= button_to "Eliminar", @dog, data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" } ,method: :delete, class: "btn btn-danger mt-3" %>
 </div>

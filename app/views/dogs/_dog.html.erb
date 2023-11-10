@@ -1,21 +1,21 @@
 <div id="<%= dom_id dog %>">
   <p>
-    <strong>Photo:</strong>
+    <strong>Foto:</strong>
     <%= link_to dog.photo.filename, dog.photo if dog.photo.attached? %>
   </p>
 
   <p>
-    <strong>First name:</strong>
+    <strong>Nombre:</strong>
     <%= dog.first_name %>
   </p>
 
   <p>
-    <strong>Last name:</strong>
+    <strong>Apellido:</strong>
     <%= dog.last_name %>
   </p>
 
   <p>
-    <strong>Breed:</strong>
+    <strong>Raza:</strong>
     <%= dog.breed %>
   </p>
 
@@ -25,17 +25,17 @@
   </p>
 
   <p>
-    <strong>Sex:</strong>
+    <strong>Sexo:</strong>
     <%= dog.sex %>
   </p>
 
   <p>
-    <strong>Birthday:</strong>
+    <strong>Cumpleaños:</strong>
     <%= dog.birthday %>
   </p>
 
   <p>
-    <strong>User DNI:</strong>
+    <strong>DNI del dueño:</strong>
     <%= dog.user.dni %>
   </p>
 

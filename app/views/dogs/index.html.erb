@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Dogs</h1>
+<h1>Perros</h1>
 
 <div id="dogs">
   <% @dogs.each do |dog| %>
     <%= render dog %>
     <p>
-      <%= link_to "Show this dog", dog %>
+      <%= link_to "ver", dog, class: "btn btn-dark" %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New dog", new_dog_path %>
+<%= link_to "Agregar perro", new_dog_path, class: "btn btn-primary" %>

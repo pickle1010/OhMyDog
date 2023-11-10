@@ -6,7 +6,7 @@
   <% @dogs.each do |dog| %>
     <%= render dog %>
     <p>
-      <%= link_to "Show this dog", dog %>
+      <%= link_to "Ver", dog, class: "btn btn-primary" %>
     </p>
   <% end %>
 </div>

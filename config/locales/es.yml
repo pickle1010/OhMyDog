@@ -18,6 +18,7 @@ es:
       user: 'usuario'
     attributes:
       dog:
+        user_id: "DNI del dueño"
         photo: 'foto'
         user: 'cliente'
         first_name: 'nombre'
