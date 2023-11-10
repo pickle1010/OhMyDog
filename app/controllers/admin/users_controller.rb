@@ -6,7 +6,7 @@ class Admin::UsersController < ApplicationController
 
   # GET /admin/users or /admin/users.json
   def index
-    @users = User.all
+    @users = User.where(role: :client)
   end
 
   # GET /admin/users/1 or /admin/users/1.json
