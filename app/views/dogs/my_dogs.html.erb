@@ -1,12 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Mis perros</h1>
+<h1>Mis mascotas</h1>
 
 <div id="dogs">
   <% @dogs.each do |dog| %>
     <%= render dog %>
     <p>
-      <%= link_to "Ver", dog, class: "btn btn-primary" %>
+      <%= link_to "Ver", dog, class: "btn btn-dark" %>
     </p>
   <% end %>
 </div>
