@@ -55,12 +55,12 @@
                <div class="row mb-3">
                     <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
                         <div class="form-group">
-                            <%= form.label :DateCons, "Fecha de la consulta" %>
+                            <%= form.label :dateCons, "Fecha de la consulta" %>
                         </div>
                     </div>
                     <div class="col-md-8 mb-3">
                         <div class="form-group">
-                            <%= form.text_field :DateCons, class: 'form-control flatpickr', id: 'date-picker' %>
+                            <%= form.date_field :dateCons, class: 'form-control flatpickr', id: 'date-picker' %>
                         </div>
                     </div>
                 </div>
@@ -69,12 +69,12 @@
                 <div class="row mb-3">
                     <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
                         <div class="form-group">
-                            <%= form.label :ScheduleCons, "Horario de la consulta" %>
+                            <%= form.label :scheduleCons, "Horario de la consulta" %>
                         </div>
                     </div>
                     <div class="col-md-8 mb-3">
                         <div class="form-group">
-                            <%= form.select :ScheduleCons, [['Mañana', 'mañana'], ['Tarde', 'tarde']], { include_blank: false }, { class: 'form-select', id: 'schedule-select' } %>
+                            <%= form.select(:scheduleCons, [['Mañana', 'morning'], ['Tarde', 'afternoon']], { include_blank: false }, { class: 'form-select', id: 'schedule-select' }) %>
                         </div>
                     </div>
                 </div>

@@ -31,9 +31,9 @@ es:
         price: 'precio'
         active: 'activo'
       turn_form:
-        DateCons: 'Debe seleccionar'
+        dateCons: 'Debe seleccionar'
         servicesCons: 'Debe seleccionar'
-        ScheduleCons: 'horario de la consulta'
+        scheduleCons: 'horario de la consulta'
         descriptionCons: 'descripción'
       user:
         email: "Correo electrónico"
