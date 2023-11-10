@@ -93,5 +93,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_10_024058) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "dogs", "users"
   add_foreign_key "turn_forms", "users"
 end

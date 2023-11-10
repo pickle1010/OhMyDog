@@ -1,6 +1,6 @@
 class TurnFormsController < ApplicationController
-  before_action authenticate_user!
-  before_action check_if_admin, except %i[ new ]
+  before_action :authenticate_user!
+  before_action :check_if_not_admin, only:[:new, :create]
   before_action :set_turn_form, only: %i[ show edit update destroy ]
 
   # GET /turn_forms or /turn_forms.json
@@ -25,7 +25,7 @@ class TurnFormsController < ApplicationController
   # POST /turn_forms or /turn_forms.json
   def create
     @turn_form = TurnForm.new(turn_form_params)
-    @appointment.set_user(current_user)
+    @turn_form.set_user(current_user)
     selected_service_ids = params[:turn_form][:service_ids]
     selected_services = Service.where(id: selected_service_ids)
 
@@ -75,5 +75,9 @@ class TurnFormsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def turn_form_params
       params.require(:turn_form).permit(:DateCons, :ScheduleCons, :descriptionCons, :servicesCons)
+    end
+
+    def check_if_not_admin
+      redirect_to turn_forms_path if current_user.admin?
     end
 end

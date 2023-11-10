@@ -2,7 +2,9 @@
 
 <h1>Turn forms</h1>
 
+<% if current_user.client? %>
 <%= link_to "Solicitar Turno", new_turn_form_path, method: :get, class: "btn btn-primary my-3 mx-5" %>
+<% end %>
 
 <div id="turn_forms my-3">
   <% @turn_forms.each do |turn_form| %>

@@ -1,7 +1,7 @@
 <%= form_with(model: dog) do |form| %>
   <% if dog.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(dog.errors.count, "error") %> prohibited this dog from being saved:</h2>
+      <h2><%= pluralize(dog.errors.count, "error", "errores") %> <%= (dog.errors.count == 1) ? "impide" : "impiden" %> que se guarden los datos del perro</h2>
 
       <ul>
         <% dog.errors.each do |error| %>
