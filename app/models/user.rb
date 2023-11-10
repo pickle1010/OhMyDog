@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :dogs, dependent: :destroy
+  has_many :turn_forms
   enum role: [:client, :admin]
   after_initialize :set_default_role, :if => :new_record?
 

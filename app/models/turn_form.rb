@@ -1,9 +1,14 @@
 class TurnForm < ApplicationRecord
+    belongs_to :user
     has_many :services
     validates :DateCons , presence: true 
     validates :ScheduleCons , presence: true
     validates :servicesCons , presence: true   
     validate :morning_option_available
+
+    def set_user(user)
+      self.user_id = user.id
+    end
 
     def morning_option_available
         if :DateCons == Date.today && :ScheduleCons == 'morning'
