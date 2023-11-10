@@ -12,10 +12,20 @@ es:
       not_a_number:
   activerecord:
     models:
+      dog: 'Perro'
       turn_form: 'turno'
       service: 'servicio'
       user: 'usuario'
     attributes:
+      dog:
+        photo: 'foto'
+        user: 'cliente'
+        first_name: 'nombre'
+        last_name: 'apellido'
+        breed: 'raza'
+        color: 'color'
+        sex: 'sexo'
+        birthday: 'cumpleaños'
       service:
         name: 'nombre'
         price: 'precio'
@@ -39,6 +49,22 @@ es:
         not_a_number:
         blank:
       models:
+        dog:
+          attributes:
+            first_name:
+              blank: 'no puede estar vacío'
+            last_name:
+              blank: 'no puede estar vacío'
+            breed: 
+              blank: 'no puede estar vacío' 
+            color:
+              blank: 'no puede estar vacío'   
+            sex: 
+              blank: 'no puede estar vacío'
+            birthday:
+              blank: 'no puede estar vacío'
+            user:
+              required: 'debe existir en el sistema'
         service:
           attributes:
             name:

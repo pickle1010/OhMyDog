@@ -22,6 +22,11 @@ class Admin::UsersController < ApplicationController
   def edit
   end
 
+  def show_dogs
+    @user = User.find(params[:id])
+    @dogs = @user.dogs
+  end  
+
   # POST /admin/users or /admin/users.json
   def create
     existing_user = User.find_by(dni: user_params[:dni])
@@ -42,7 +47,7 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to admin_user_url(@user), success: "El cliente fue creado exitosamente." }
+        format.html { redirect_to new_dog_path, success: "El cliente fue creado exitosamente."}
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -90,9 +95,5 @@ class Admin::UsersController < ApplicationController
           params[:user].delete(:password)
           params[:user].delete(:password_confirmation)
       end
-    end
-
-    def check_if_admin
-      redirect_to root_path unless current_user.admin?
     end
 end
