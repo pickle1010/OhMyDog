@@ -1,8 +1,8 @@
 <%= render @user %>
 
 <div>
-  <%= link_to "Editar cliente", edit_admin_user_path(@user) %> |
-  <%= link_to "Volver a clientes", admin_users_path %>
+  <%= link_to "Editar cliente", edit_admin_user_path(@user), class: "btn btn-dark" %> |
+  <%= link_to "Volver a clientes", admin_users_path, class: "btn btn-dark" %>
 
-  <%= button_to "Eliminar cliente", [:admin, @user],  data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, method: :delete, class: "btn btn-danger" %>
+  <%= button_to "Eliminar cliente", [:admin, @user],  data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, method: :delete, class: "btn btn-danger mt-2" %>
 </div>

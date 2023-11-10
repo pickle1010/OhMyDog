@@ -30,6 +30,9 @@
             <li><%= link_to "Turnos", turn_forms_path, class:"dropdown-item" %></li>
             <li><%= link_to "Calendario", "#", class:"dropdown-item" %></li>
             <li><%= link_to "Paseadores y Cuidadores", "#", class:"dropdown-item" %></li>
+            <% if user_signed_in? && current_user.admin? %>
+              <li><%= link_to "Mis servicios", services_path ,class:"dropdown-item" %></li>
+            <% end %>
           </ul>
         </li>
 

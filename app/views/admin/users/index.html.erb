@@ -1,6 +1,6 @@
 <h1>Clientes</h1>
 
-<%= link_to "Agregar cliente", new_admin_user_path %>
+<%= link_to "Agregar cliente", new_admin_user_path, class: "btn btn-primary mb-3 mt-3" %>
 
 <div class="table-responsive">
     <table class="table table-striped table-hover">
@@ -26,10 +26,10 @@
             <td><%= user.last_name %></td>
             <td><%= user.address %></td>
             <!-- <td><%= user.role %></td> -->
-            <td><%= link_to 'View Dogs', show_dogs_admin_user_path(user)%></td>
-            <td><%= link_to "Ver", [:admin, user] %></td>
-            <td><%= link_to "Editar", edit_admin_user_path(user) %></td>
-            <td><%= link_to "Eliminar", [:admin, user], data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %></td>
+            <td><%= link_to 'Mascotas', show_dogs_admin_user_path(user), class: "btn btn-primary"%></td>
+            <td><%= link_to "Datos", [:admin, user], class: "btn btn-primary" %></td>
+            <td><%= link_to "Editar", edit_admin_user_path(user), class: "btn btn-primary" %></td>
+            <td><%= link_to "Eliminar", [:admin, user], data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" }, class: "btn btn-primary" %></td>
           </tr>
         <% end %>
       </div>
