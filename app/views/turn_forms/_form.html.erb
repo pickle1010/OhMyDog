@@ -1,3 +1,8 @@
+<div class="alert alert-warning alert-dismissible fade show" role="alert" id="warning-message">
+  Cada turno es para un único perro. Si tienes más de un perro, por favor, saca un turno para cada uno.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div class="container"> <!-- Agregar un contenedor para centrar el contenido -->
   <div class="row justify-content-center" style="border: 2px solid rgba(122, 246, 254, 0.5);"> <!-- Centrar horizontalmente -->
     <div class="col-md-8"> <!-- Espaciar el contenido -->
@@ -91,10 +96,22 @@
                 <!-- sent button -->
                 <div class="row justify-content-end my-4 mx-4">
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                        <button type="submit" class="btn btn-primary" onclick="showWarning()">Confirmar</button>
                     </div> 
                 </div>      
             <% end %>
         </div>
     </div>
 </div>
+
+<script>
+  function showWarning() {
+    // Mostrar el mensaje de advertencia
+    document.getElementById("warning-message").style.display = "block";
+  }
+</script>
+
+
+
+
+
