@@ -12,6 +12,9 @@
  *
  *= require_tree .
  *= require_self
+ *= require flatpickr
+ *= require flatpickr/plugins/confirmDate/confirmDate
+ 
  */
 
  .navbar-brand {

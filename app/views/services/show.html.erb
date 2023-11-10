@@ -1,0 +1,13 @@
+<div class="container text-center my-5" style="border: 2px solid rgba(122, 246, 254, 0.5);">
+  <p style="color: green"><%= notice %></p>
+
+  <%= render @service %>
+
+  <div class="row justify-content-center mt-4">
+    <div class="col-12 col-md-6 text-center">
+      <%= link_to "Editar Servicio", edit_service_path(@service), class: "btn btn-primary mb-2" %>
+      <%= link_to "Volver a Servicios", services_path, class: "btn btn-primary mb-2" %>
+      <%= button_to "Eliminar Servicio", @service, method: :delete, class: "btn btn-danger mb-2 align-middle" %>
+    </div>
+  </div>
+</div>

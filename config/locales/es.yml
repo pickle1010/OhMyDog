@@ -1,4 +1,8 @@
-es: 
+es:
+  turn_form:
+    ScheduleCons:
+      morning: 'mañana'
+      afternoon: 'tarde' 
   errors:
     attributes:
       dni:
@@ -8,8 +12,19 @@ es:
       not_a_number:
   activerecord:
     models:
+      turn_form: 'turno'
+      service: 'servicio'
       user: 'usuario'
     attributes:
+      service:
+        name: 'nombre'
+        price: 'precio'
+        active: 'activo'
+      turn_form:
+        DateCons: 'Debe seleccionar'
+        servicesCons: 'Debe seleccionar'
+        ScheduleCons: 'horario de la consulta'
+        descriptionCons: 'descripción'
       user:
         email: "Correo electrónico"
         dni: 'DNI'
@@ -24,6 +39,21 @@ es:
         not_a_number:
         blank:
       models:
+        service:
+          attributes:
+            name:
+              blank: 'no puede estar vacío'
+              taken: 'no puede repetirse dentro de la tabla de servicios'
+        turn_form:
+          attributes:
+            DateCons:
+              blank: 'una fecha para su consulta'
+            servicesCons:
+              blank: 'al menos un servicio'
+            ScheduleCons:
+              blank: 'no puede estar vacía'
+            descriptionCons: 
+              blank: 'no puede estar vacía' 
         user:
           not_a_number:
           blank:
@@ -48,4 +78,3 @@ es:
               too_short: 'tiene menos de 6 caracteres'
             password_confirmation:
               confirmation: 'erronea. Las contraseñas no coinciden' 
-
