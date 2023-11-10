@@ -22,13 +22,18 @@ class Admin::UsersController < ApplicationController
   def edit
   end
 
+  def show_dogs
+    @user = User.find(params[:id])
+    @dogs = @user.dogs
+  end  
+
   # POST /admin/users or /admin/users.json
   def create
     @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to admin_user_url(@user), notice: "User was successfully created." }
+        format.html { redirect_to new_dog_path, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }

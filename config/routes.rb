@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   devise_for :users
   namespace :admin do
-    resources :users
+    resources :users do
+      get 'show_dogs', on: :member
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
