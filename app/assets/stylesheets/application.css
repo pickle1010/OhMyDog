@@ -17,10 +17,28 @@
  
  */
 
+ /* app/assets/stylesheets/application.css or a custom CSS file */
+
  .navbar-brand {
     width: 150px;
   }
   
   .navbar-brand > img {
     width: 30%;
+  }
+
+  .bg-brand-orange {
+    background-color: rgb(252, 148, 77);
+  }
+
+  .bg-brand-blue {
+    background-color: rgb(12, 152, 182);
+  }
+
+  .bg-brand-light-blue {
+    background-color: rgb(175, 219, 229);
+  }
+
+  .bg-brand-light-orange {
+    background-color: rgb(255, 200, 120);
   }
