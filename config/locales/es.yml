@@ -12,21 +12,48 @@ es:
       not_a_number:
   activerecord:
     models:
-      dog: 'Perro'
+      user/dogs: 'perros del usuario'
+      dog: 'perro'
       turn_form: 'turno'
       service: 'servicio'
       user: 'usuario'
     attributes:
+      user/dogs:
+        user_id: "id del dueño"
+        photo: 'foto del perro'
+        user: 'dueño'
+        first_name: 'nombre del perro'
+        last_name: 'apellido del perro'
+        breed: 'raza del perro'
+        color: 'color del perro'
+        sex: 'sexo del perro'
+        birthday: 'cumpleaños del perro'
       dog:
-        user_id: "DNI del dueño"
+        user_id: "id del dueño"
         photo: 'foto'
-        user: 'cliente'
+        user: 'dueño'
         first_name: 'nombre'
         last_name: 'apellido'
         breed: 'raza'
+        breeds:
+          labrador: 'labrador'
+          golden_retriever: 'golden retriever'
+          beagle: 'beagle'
+          bulldog: 'bulldog'
+          rottweiler: 'rottweiler'
+          dachshund: 'salchicha'
+          chihuahua: 'chihuahua'
+          doberman: 'doberman'
+          german_shepherd: 'pastor aleman'
+          boxer: 'boxer'
+          dogo_argentino: 'dogo argentino'
+          border_collie: 'border collie'
         color: 'color'
         sex: 'sexo'
-        birthday: 'cumpleaños'
+        sexes:
+          male: 'macho'
+          female: 'hembra'
+        birthday: 'Cumpleaños'
       service:
         name: 'nombre'
         price: 'precio'
@@ -37,14 +64,15 @@ es:
         scheduleCons: 'horario de la consulta'
         descriptionCons: 'descripción'
       user:
-        email: "Correo electrónico"
+        email: "correo electrónico"
         dni: 'DNI'
-        first_name: 'Nombre'
-        last_name: 'Apellido'
-        address: 'Dirección'
-        role: 'Rol'
-        password: 'Contraseña'
-        password_confirmation: 'Confirmación de contraseña'
+        first_name: 'nombre'
+        last_name: 'apellido'
+        address: 'dirección'
+        role: 'rol'
+        password: 'contraseña'
+        password_confirmation: 'confirmación de contraseña'
+        current_password: 'contraseña actual'
     errors:
       messages:
         not_a_number:
@@ -86,22 +114,25 @@ es:
           blank:
           attributes:
             first_name: 
-              blank: 'no puede estar en blanco' 
+              blank: 'no puede estar vacío' 
             last_name:
-              blank: 'no puede estar en blanco' 
+              blank: 'no puede estar vacío' 
             dni:
-              blank: 'no puede estar en blanco'
+              blank: 'no puede estar vacío'
               not_a_number: 'debe ser un número'
               greater_than: 'debe ser mayor que cero'
               taken: 'ya corresponde a un cliente' 
             email:
-              blank: 'no puede estar en blanco'
+              blank: 'no puede estar vacío'
               invalid: 'no es válido'
               taken: 'ya corresponde a un cliente' 
             address: 
-              blank: 'no puede estar en blanco'
+              blank: 'no puede estar vacía'
             password: 
-              blank: 'no puede estar en blanco'
+              blank: 'no puede estar vacía'
               too_short: 'tiene menos de 6 caracteres'
             password_confirmation:
-              confirmation: 'erronea. Las contraseñas no coinciden' 
+              confirmation: 'errónea. Las contraseñas no coinciden' 
+            current_password:
+              blank: 'no puede estar vacía'
+              invalid: 'es erronea'

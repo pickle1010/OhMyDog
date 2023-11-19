@@ -2,18 +2,18 @@ class Dog < ApplicationRecord
   belongs_to :user
   has_one_attached :photo
 
-  validates :first_name, presence: true, format: {with: /\A[^0-9]+\z/, message: "solo permite ingresar letras"}    
-  validates :last_name, presence: true, format: {with: /\A[^0-9]+\z/, message: "solo permite ingresar letras"}    
-  validates :breed, presence: true, format: {with: /\A[^0-9]+\z/, message: "solo permite ingresar letras"}   
-  validates :color, presence: true, format: {with: /\A[^0-9]+\z/, message: "solo permite ingresar letras"}   
-  validates :sex, presence: true, format: {with: /\A[^0-9]+\z/, message: "solo permite ingresar letras"}   
-  validates :birthday, presence: true  
+  enum sex: [:male, :female]
+  enum breed: [:labrador, :golden_retriever, :beagle, :bulldog, :rottweiler, :dachshund, :chihuahua, :doberman, :german_shepherd, :boxer, :dogo_argentino, :border_collie]
+  
+  validates :first_name, :last_name, :breed, :color, :sex, :birthday, presence: true
+  validates :first_name, :last_name, :color, format: {with: /\A[^0-9]+\z/, message: "solo permite ingresar letras"}
   validate :photo_attached?
 
+  #Pendiente validar nombre del perro segun perros existentes del dueño y cambiar :sex por tipo enum: macho o hembra.
   private
 
   def photo_attached?
-    errors.add(:photo, "debe estar adjunta") unless photo.attached?
+    errors.add(:photo, "debe ser adjuntada") unless photo.attached?
   end
 
 end

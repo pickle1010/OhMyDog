@@ -1,0 +1,86 @@
+<%= form_with(model: [:admin, @user, dog]) do |form| %>
+  <% if dog.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(dog.errors.count, "error", "errores") %> <%= (dog.errors.count == 1) ? "impide" : "impiden" %> que se guarden los datos del perro</h4>
+
+      <ul>
+        <% dog.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row mb-3">
+    <%= form.label :photo, t("activerecord.attributes.dog.photo").humanize, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.file_field :photo, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <%= form.label :first_name, "Nombre", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :first_name, autofocus: true, autocomplete: "given-name", class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <%= form.label :last_name, "Apellidos", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :last_name, autofocus: true, autocomplete: "family-name", class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <%= form.label :breed, t("activerecord.attributes.dog.breed").humanize, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <% if form.object.new_record? %>
+        <%= form.select(:breed, 
+                  [['', nil]] + Dog.breeds.keys.map { |breed| [t("activerecord.attributes.dog.breeds.#{breed}").humanize, breed] },
+                  { selected: nil },
+                  { class: 'form-select' }) %>
+      <% else %>
+        <%= form.select(:breed, 
+                  Dog.breeds.keys.map { |breed| [t("activerecord.attributes.dog.breeds.#{breed}").humanize, breed] },
+                  { selected: @dog.new_record? },
+                  { class: 'form-select' }) %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <%= form.label :color, "Color", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.text_field :color, autofocus: true, autocomplete: "off", class: "form-control" %>
+    </div>
+  </div>
+    
+  <div class="row mb-3">
+    <%= form.label :sex, t("activerecord.attributes.dog.sex").humanize, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <% if form.object.new_record? %>
+        <%= form.select(:sex, 
+                  [['', nil]] + Dog.sexes.keys.map { |sex| [t("activerecord.attributes.dog.sexes.#{sex}").humanize, sex] },
+                  { selected: nil },
+                  { class: 'form-select' }) %>
+      <% else %>
+        <%= form.select(:sex, 
+                  Dog.sexes.keys.map { |sex| [t("activerecord.attributes.dog.sexes.#{sex}").humanize, sex] },
+                  { selected: @dog.sex },
+                  { class: 'form-select' }) %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <%= form.label :birthday, "Fecha de nacimiento", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.date_field :birthday, autofocus: true, autocomplete: "off", class: "form-control" %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.submit "Guardar", class: "btn btn-primary mt-3" %>
+  </div>
+<% end %>

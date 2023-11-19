@@ -1,18 +1,16 @@
 class User < ApplicationRecord
   has_many :dogs, dependent: :destroy
-  has_many :turn_forms
-  enum role: [:client, :admin]
-  after_initialize :set_default_role, :if => :new_record?
+  has_many :turn_forms, dependent: :destroy
+  
+  accepts_nested_attributes_for :dogs
 
-  def set_default_role
-    self.role ||= :client
-  end
+  enum role: [:client, :admin] , _default: :client 
 
   # Include default devise modules. Others available are:
-  # :confirmable, :registerable, :rememberable, :lockable, :trackable and :omniauthable
-  devise :database_authenticatable, :recoverable, 
-         :validatable, :timeoutable
+  # :confirmable, :registerable, :rememberable, :timeoutable, :lockable, :trackable and :omniauthable
+  devise :database_authenticatable, :recoverable, :validatable
 
   validates :dni, :first_name, :last_name, :address, presence: true
+  validates :first_name, :last_name, format: {with: /\A[^0-9]+\z/, message: "solo puede tener letras"}
   validates :dni, uniqueness: true, numericality: { greater_than: 0 }
 end

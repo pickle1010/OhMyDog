@@ -1,15 +1,13 @@
-class DogsController < ApplicationController
+class Admin::DogsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_if_admin, except: %i[ my_dogs show ]
+  before_action :check_if_admin, except: %i[ index show ]
+  before_action :set_user
   before_action :set_dog, only: %i[ show edit update destroy ]
 
   # GET /dogs or /dogs.json
   def index
-    if current_user.admin?
-      @dogs = Dog.all
-    else
-      redirect_to my_dogs_path
-    end
+    redirect_to root_path unless current_user.admin? || @user == current_user
+    @dogs = @user.dogs
   end
 
   # GET /dogs/1 or /dogs/1.json
@@ -17,16 +15,10 @@ class DogsController < ApplicationController
     redirect_to root_path unless current_user.admin? || @dog.user == current_user
   end
 
-  # GET /my_dogs 
-  def my_dogs
-    # Show only the user's dogs
-    @dogs = current_user.dogs
-  end
-
   # GET /dogs/new
   def new
-    @dog = Dog.new
-  end
+    @dog = Dog.new(user_id: @user.id)
+  end  
 
   # GET /dogs/1/edit
   def edit
@@ -34,11 +26,11 @@ class DogsController < ApplicationController
 
   # POST /dogs or /dogs.json
   def create
-    @dog = Dog.new(dog_params)
+    @dog = Dog.new(dog_params.merge(user_id: @user.id))
 
     respond_to do |format|
       if @dog.save
-        format.html { redirect_to dog_url(@dog), notice: "Dog was successfully created." }
+        format.html { redirect_to admin_user_dog_url(user_id: @dog.user_id, id: @dog.id), success: 'El perro fue creado exitosamente' }
         format.json { render :show, status: :created, location: @dog }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -51,7 +43,7 @@ class DogsController < ApplicationController
   def update
     respond_to do |format|
       if @dog.update(dog_params)
-        format.html { redirect_to dog_url(@dog), notice: "Dog was successfully updated." }
+        format.html { redirect_to admin_user_dog_path(user_id: @user.id, id: @dog.id), success: "El perro fue actualizado exitosamente" }
         format.json { render :show, status: :ok, location: @dog }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,7 +57,7 @@ class DogsController < ApplicationController
     @dog.destroy!
 
     respond_to do |format|
-      format.html { redirect_to dogs_url, notice: "Dog was successfully destroyed." }
+      format.html { redirect_to admin_user_dogs_path(@user.id), success: "El perro fue eliminado exitosamente" }
       format.json { head :no_content }
     end
   end
@@ -73,7 +65,11 @@ class DogsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_dog
-      @dog = Dog.find(params[:id])
+      @dog = @user.dogs.find(params[:id])
+    end
+
+    def set_user
+      @user = User.find(params[:user_id])
     end
 
     # Only allow a list of trusted parameters through.

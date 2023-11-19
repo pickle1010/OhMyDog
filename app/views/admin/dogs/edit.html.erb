@@ -1,0 +1,11 @@
+<h1>Editar mascota</h1>
+
+<%= render "form", dog: @dog %>
+
+<br>
+
+<div>
+  <%= link_to "Ver", [:admin, @dog.user, @dog], class: "btn btn-dark" %> |
+  <%= link_to "Volver", :back, class: "btn btn-secondary" %>
+  <%= link_to "Volver a perros", admin_user_dogs_path(@dog.user.id), class: "btn btn-dark" %>
+</div>

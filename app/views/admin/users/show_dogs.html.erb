@@ -1,7 +1,0 @@
-<h2>Mascotas de <%= @user.first_name %></h2>
-<div>
-  <% @dogs.each do |dog| %>
-    <%= render partial: 'dogs/dog', locals: { dog: dog } %>
-  <% end %>
-</div>
-<%= link_to 'Volver a clientes', admin_users_path, class: "btn btn-dark" %>

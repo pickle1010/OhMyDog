@@ -5,14 +5,12 @@ Rails.application.routes.draw do
     put 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
 
-  resources :dogs
-  get '/my_dogs', to: 'dogs#my_dogs', as: 'my_dogs'
-
   namespace :admin do
     resources :users do
-      get 'show_dogs', on: :member
+      resources :dogs
     end
   end
+  
   resources :services
   resources :turn_forms
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -1,31 +1,28 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_if_admin
+  before_action :check_if_admin, except: %i[ show ]
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :allow_without_password, only: [:update]
 
   # GET /admin/users or /admin/users.json
   def index
-    @users = User.where(role: :client)
+    @users = User.where(role: :client).order(:dni)
   end
 
   # GET /admin/users/1 or /admin/users/1.json
   def show
+    redirect_to root_path unless current_user.admin? || @user == current_user
   end
 
   # GET /admin/users/new
   def new
     @user = User.new
+    @user.dogs.build
   end
 
   # GET /admin/users/1/edit
   def edit
   end
-
-  def show_dogs
-    @user = User.find(params[:id])
-    @dogs = @user.dogs
-  end  
 
   # POST /admin/users or /admin/users.json
   def create
@@ -46,8 +43,8 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
 
     respond_to do |format|
-      if @user.save
-        format.html { redirect_to new_dog_path, success: "El cliente fue creado exitosamente."}
+      if @user.save        
+        format.html { redirect_to new_admin_user_dog_path(@user.id), success: "El cliente y su mascota fueron creados exitosamente. Puede seguir agregando mascotas..."}
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -87,7 +84,7 @@ class Admin::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :dni, :first_name, :last_name, :address, :role)
+      params.require(:user).permit(:email, :password, :password_confirmation, :dni, :first_name, :last_name, :address, :role, dogs_attributes: [:id, :photo, :first_name, :last_name, :breed, :color, :sex, :birthday])
     end
 
     def allow_without_password
