@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users, :skip => [:registrations] 
+  devise_for :users, :skip => [:registrations], :path_prefix => 'my'
   as :user do
-    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+    get 'my/users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+    put 'my/users' => 'devise/registrations#update', :as => 'user_registration'
   end
 
-  namespace :admin do
-    resources :users do
-      resources :dogs
-    end
+  resources :users, shallow: true do
+    resources :dogs
   end
   
   resources :services

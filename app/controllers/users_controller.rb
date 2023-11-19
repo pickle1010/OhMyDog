@@ -1,42 +1,42 @@
-class Admin::UsersController < ApplicationController
+class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_admin, except: %i[ show ]
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :allow_without_password, only: [:update]
 
-  # GET /admin/users or /admin/users.json
+  # GET /users or /users.json
   def index
     @users = User.where(role: :client).order(:dni)
   end
 
-  # GET /admin/users/1 or /admin/users/1.json
+  # GET /users/1 or /users/1.json
   def show
     redirect_to root_path unless current_user.admin? || @user == current_user
   end
 
-  # GET /admin/users/new
+  # GET /users/new
   def new
     @user = User.new
     @user.dogs.build
   end
 
-  # GET /admin/users/1/edit
+  # GET /users/1/edit
   def edit
   end
 
-  # POST /admin/users or /admin/users.json
+  # POST /users or /users.json
   def create
     existing_user = User.find_by(dni: user_params[:dni])
 
     if existing_user
-      redirect_to admin_user_url(existing_user), danger: "Cliente con DNI #{existing_user.dni} ya existe. Redirigido al cliente existente..."
+      redirect_to user_url(existing_user), danger: "Cliente con DNI #{existing_user.dni} ya existe. Redirigido al cliente existente..."
       return
     end
 
     existing_user = User.find_by(email: user_params[:email])
 
     if existing_user
-      redirect_to admin_user_url(existing_user), danger: "Cliente con email #{existing_user.email} ya existe. Redirigido al cliente existente..."
+      redirect_to user_url(existing_user), danger: "Cliente con email #{existing_user.email} ya existe. Redirigido al cliente existente..."
       return
     end
 
@@ -44,7 +44,7 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save        
-        format.html { redirect_to new_admin_user_dog_path(@user.id), success: "El cliente y su mascota fueron creados exitosamente. Puede seguir agregando mascotas..."}
+        format.html { redirect_to new_user_dog_path(@user.id), success: "El cliente y su mascota fueron creados exitosamente. Puede seguir agregando mascotas..."}
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -53,11 +53,11 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /admin/users/1 or /admin/users/1.json
+  # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to admin_user_url(@user), success: "El cliente fue actualizado exitosamente." }
+        format.html { redirect_to user_url(@user), success: "El cliente fue actualizado exitosamente." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -66,12 +66,12 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  # DELETE /admin/users/1 or /admin/users/1.json
+  # DELETE /users/1 or /users/1.json
   def destroy
     @user.destroy!
 
     respond_to do |format|
-      format.html { redirect_to admin_users_url, success: "El cliente fue eliminado exitosamente." }
+      format.html { redirect_to users_url, success: "El cliente fue eliminado exitosamente." }
       format.json { head :no_content }
     end
   end

@@ -34,7 +34,7 @@
                 <% if current_user.admin? %>
                   <li><hr class="dropdown-divider"></li>
                   <li><%= link_to "Servicios", services_path , class:"dropdown-item" %></li>
-                  <li><%= link_to "Clientes", admin_users_path, class:"dropdown-item" %></li>
+                  <li><%= link_to "Clientes", users_path, class:"dropdown-item" %></li>
                 <% end %>
               <% end %>
             </ul>
@@ -61,8 +61,8 @@
                 Mi cuenta
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><%= link_to "Mi perfil", [:admin, current_user], class:"dropdown-item" %></li>
-                <li><%= link_to "Mis mascotas", admin_user_dogs_path(current_user), class:"dropdown-item" %></li>
+                <li><%= link_to "Mi perfil", current_user, class:"dropdown-item" %></li>
+                <li><%= link_to "Mis mascotas", user_dogs_path(current_user), class:"dropdown-item" %></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><%= button_to "Cerrar Sesión", destroy_user_session_path, method: :delete, class:"dropdown-item" %></li>
               </ul>
