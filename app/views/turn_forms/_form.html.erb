@@ -60,7 +60,7 @@
                     </div>
                     <div class="col-md-8 mb-3">
                         <div class="form-group">
-                            <%= form.text_field :DateCons, class: 'form-control flatpickr', id: 'date-picker' %>
+                            <%= form.text_field :DateCons, class: 'form-control flatpickr', id: 'date-picker', data: { disable: @disabled_dates.to_json } %>
                         </div>
                     </div>
                 </div>
@@ -110,8 +110,6 @@
     document.getElementById("warning-message").style.display = "block";
   }
 </script>
-
-
 
 
 

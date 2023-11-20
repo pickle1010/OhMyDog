@@ -14,5 +14,5 @@
  *= require_self
  *= require flatpickr
  *= require flatpickr/plugins/confirmDate/confirmDate
- 
+ *= require simple_calendar
  */

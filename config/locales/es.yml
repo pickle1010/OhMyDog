@@ -1,4 +1,26 @@
 es: 
+  date:
+    abbr_day_names: 
+      - Domingo
+      - Lunes
+      - Martes
+      - Miercoles
+      - Jueves
+      - Viernes
+      - Sabado
+    month_names:
+      - Enero
+      - Febrero
+      - Marzo
+      - Abril
+      - Mayo
+      - Junio
+      - Julio
+      - Agosto
+      - Septiembre
+      - Octubre
+      - Noviembre
+      - Diciembre   
   turn_form:
     ScheduleCons:
       morning: 'mañana'
@@ -34,5 +56,10 @@ es:
               blank: 'no puede estar vacía'
             descriptionCons: 
               blank: 'no puede estar vacía' 
-        
- 
+  activerecord:
+     models:
+       Meeting: 'Calendario'
+     attributes:
+       Meeting:
+         name: 'Opcion'
+         date: 'Fecha'

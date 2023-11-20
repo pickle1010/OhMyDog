@@ -4,6 +4,7 @@ class TurnForm < ApplicationRecord
     validates :ScheduleCons , presence: true
     validates :servicesCons , presence: true   
     validate :morning_option_available
+    #validates :blocked_date, uniqueness: { scope: :meeting_id }
 
     def morning_option_available
         if :DateCons == Date.today && :ScheduleCons == 'morning'
