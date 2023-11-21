@@ -14,7 +14,8 @@ class TurnFormsController < ApplicationController
   # GET /turn_forms/new
   def new
     @turn_form = TurnForm.new
-    @disabled_dates = Meeting.pluck(:start_time)
+    meetings = Meeting.where(name: :No_laborable_todo_el_dia)
+    @disabled_dates = meetings.pluck(:start_time)
     # Puedes realizar cualquier formato necesario para las fechas antes de pasarlas a la vista
     @disabled_dates = @disabled_dates.map { |date| date.strftime("%Y-%m-%d") }
   end

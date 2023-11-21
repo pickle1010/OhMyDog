@@ -16,3 +16,4 @@ document.addEventListener('DOMContentLoaded', function () {
       // Otros ajustes de Flatpickr, si es necesario
     });
   });
+  
