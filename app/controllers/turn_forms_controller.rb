@@ -1,7 +1,7 @@
 class TurnFormsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_not_admin, only:[:new, :create]
-  before_action :set_turn_form, only: %i[ show edit update destroy ]
+  before_action :set_turn_form, only: %i[ show edit update destroy confirm reject]
 
   # GET /turn_forms or /turn_forms.json
   def index
@@ -26,6 +26,7 @@ class TurnFormsController < ApplicationController
   def create
     @turn_form = TurnForm.new(turn_form_params)
     @turn_form.set_user(current_user)
+    @turn_form.dog = Dog.find(params[:turn_form][:dog_id]) if params[:turn_form][:dog_id].present?
     selected_service_ids = params[:turn_form][:service_ids]
     selected_services = Service.where(id: selected_service_ids)
 
@@ -47,6 +48,7 @@ class TurnFormsController < ApplicationController
   def update
     respond_to do |format|
       if @turn_form.update(turn_form_params)
+        @turn_form.dog = Dog.find(params[:turn_form][:dog_id]) if params[:turn_form][:dog_id].present?
         format.html { redirect_to turn_form_url(@turn_form), success: "La solicitud de turno fue editada exitosamente" }
         format.json { render :show, status: :ok, location: @turn_form }
       else
@@ -66,6 +68,17 @@ class TurnFormsController < ApplicationController
     end
   end
 
+  def confirm
+    @turn_form.update(confirmed: true)
+    redirect_to turn_forms_url, notice: "Turno confirmado exitosamente."
+  end
+  
+  def reject
+    @turn_form.destroy
+    redirect_to turn_forms_url, notice: "Turno rechazado exitosamente."
+  end
+  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_turn_form
@@ -74,7 +87,7 @@ class TurnFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def turn_form_params
-      params.require(:turn_form).permit(:dateCons, :scheduleCons, :descriptionCons, :servicesCons)
+      params.require(:turn_form).permit(:dateCons, :scheduleCons, :descriptionCons, :servicesCons, :confirmed, :dog_id)
     end
 
     def check_if_not_admin

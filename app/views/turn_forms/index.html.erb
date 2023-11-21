@@ -1,6 +1,6 @@
 <div class="d-flex align-items-center">
   <div class="me-auto">
-    <h1>Turnos solicitados</h1>
+    <h1>Turnos</h1>
   </div>
   <% if current_user.client? %>
     <%= link_to new_turn_form_path, class: "btn btn-primary btn-lg" do %>
@@ -12,16 +12,62 @@
   <% end %>
 </div>
 
-<div id="turn_forms my-3">
-  <% @turn_forms.each do |turn_form| %>
-    <div class="container"> <!-- Agregar un contenedor para centrar el contenido -->
-      <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
-        <%= render turn_form %>
-        <p>
-          <%= link_to "Ver turno", turn_form, method: :get, method: :get, class: "btn btn-primary" %>
-        </p>
+<div class="row">
+  <!-- Columna de Turnos Solicitados -->
+  <div class="col-md-6">
+    <h2>Turnos solicitados</h2>
+    <div id="turn_forms" class="my-3">
+      <% @turn_forms.each do |turn_form| %>
+        <% if current_user.client? %>
+          <!-- Solo el cliente verá los turnos confirmados -->
+          <div class="container">
+            <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
+              <%= render turn_form %>
+              <p>
+                <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary mr-2" %>
+              </p>
+            </div>
+          </div>
+        <% elsif current_user.admin? && !turn_form.confirmed? %>
+          <!-- Solo el veterinario verá los turnos no confirmados -->
+          <div class="container">
+            <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
+              <%= render turn_form %>
+              <p>
+                <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary mr-2" %>
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                  <%= button_to "Confirmar turno", confirm_turn_form_path(turn_form), method: :patch, class: "btn btn-success" %>
+                  <%= button_to "Rechazar turno", reject_turn_form_path(turn_form), method: :patch, class: "btn btn-danger ms-3" %>
+                </div>
+              </p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+  </div>
+</div>
+
+  <!-- Columna de Turnos Confirmados -->
+  <% if current_user.admin? %>
+    <div class="col-md-6">
+      <h1>Turnos confirmados</h1>
+
+      <div id="confirmed_turn_forms" class="my-3">
+        <% @turn_forms.each do |turn_form| %>
+          <% if turn_form.confirmed? %>
+            <div class="container"> <!-- Agregar un contenedor para centrar el contenido -->
+              <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
+                <%= render turn_form %>
+                <p>
+                  <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary" %>
+                  <!-- Puedes agregar más acciones específicas para turnos confirmados aquí -->
+                </p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
-    </div>
+    </div>  
   <% end %>
 </div>  
 

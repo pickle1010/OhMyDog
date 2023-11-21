@@ -60,6 +60,20 @@
         </div>
     </div>
 
+    <!-- Seleccionar un perro del cliente  -->
+    <div class="row mb-3">
+        <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
+            <div class="form-group">
+                <%= form.label :dog_id, "Seleccione a su mascota" %>
+            </div>
+        </div>
+        <div class="col-md-8 mb-3">
+            <div class="form-group">
+                <%= form.collection_select(:dog_id, current_user.dogs, :id, :first_name, { prompt: "", required: true }, { class: 'form-select' }) %>                      
+            </div>
+        </div>
+    </div>
+
     <!-- Description field -->
     <div class="row mb-3">  
         <%= form.label :descriptionCons, "Descripción", class: "col-sm-2 col-form-label" %>

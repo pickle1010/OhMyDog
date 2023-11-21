@@ -1,5 +1,17 @@
 <div id="<%= dom_id turn_form %>">
 
+  <% if current_user.admin? %>
+    <p>
+      <strong>Cliente:</strong>
+      <%= turn_form.user.first_name %> <%= turn_form.user.last_name %>
+    </p>
+  <% end %>
+  
+  <p>
+    <strong>Perro:</strong>
+    <%= turn_form.dog.first_name if turn_form.dog.present? %>
+  </p>
+
   <p>
     <strong>Fecha de consulta:</strong>
     <%= turn_form.dateCons %>
