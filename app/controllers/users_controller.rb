@@ -43,7 +43,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     respond_to do |format|
-      if @user.save        
+      if @user.save
         format.html { redirect_to new_user_dog_path(@user.id), success: "El cliente y su mascota fueron creados exitosamente. Puede seguir agregando mascotas..."}
         format.json { render :show, status: :created, location: @user }
       else

@@ -1,6 +1,6 @@
 es:
   turn_form:
-    ScheduleCons:
+    scheduleCons:
       morning: 'mañana'
       afternoon: 'tarde' 
   errors:
@@ -34,6 +34,7 @@ es:
         user: 'dueño'
         first_name: 'nombre'
         last_name: 'apellido'
+        birthday: 'fecha de nacimiento'
         breed: 'raza'
         breeds:
           labrador: 'labrador'
@@ -53,15 +54,14 @@ es:
         sexes:
           male: 'macho'
           female: 'hembra'
-        birthday: 'Cumpleaños'
       service:
         name: 'nombre'
         price: 'precio'
         active: 'activo'
       turn_form:
-        dateCons: 'Debe seleccionar'
-        servicesCons: 'Debe seleccionar'
-        scheduleCons: 'horario de la consulta'
+        dateCons: 'fecha'
+        servicesCons: 'servicios'
+        scheduleCons: 'banda horaria'
         descriptionCons: 'descripción'
       user:
         email: "correo electrónico"
@@ -91,7 +91,7 @@ es:
             sex: 
               blank: 'no puede estar vacío'
             birthday:
-              blank: 'no puede estar vacío'
+              blank: 'no puede estar vacía'
             user:
               required: 'debe existir en el sistema'
         service:
@@ -101,11 +101,11 @@ es:
               taken: 'no puede repetirse dentro de la tabla de servicios'
         turn_form:
           attributes:
-            DateCons:
+            dateCons:
               blank: 'una fecha para su consulta'
             servicesCons:
               blank: 'al menos un servicio'
-            ScheduleCons:
+            scheduleCons:
               blank: 'no puede estar vacía'
             descriptionCons: 
               blank: 'no puede estar vacía' 
