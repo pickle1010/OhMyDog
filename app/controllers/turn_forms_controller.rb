@@ -26,6 +26,7 @@ class TurnFormsController < ApplicationController
   def create
     @turn_form = TurnForm.new(turn_form_params)
     @turn_form.set_user(current_user)
+    @turn_form.dog = Dog.find(params[:turn_form][:dog_id]) if params[:turn_form][:dog_id].present?
     selected_service_ids = params[:turn_form][:service_ids]
     selected_services = Service.where(id: selected_service_ids)
 
@@ -47,6 +48,8 @@ class TurnFormsController < ApplicationController
   def update
     respond_to do |format|
       if @turn_form.update(turn_form_params)
+        @turn_form.dog = Dog.find(params[:turn_form][:dog_id]) if params[:turn_form][:dog_id].present?
+        
         format.html { redirect_to turn_form_url(@turn_form), notice: "Turn form was successfully updated." }
         format.json { render :show, status: :ok, location: @turn_form }
       else
@@ -85,7 +88,7 @@ class TurnFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def turn_form_params
-      params.require(:turn_form).permit(:dateCons, :scheduleCons, :descriptionCons, :servicesCons, :confirmed)
+      params.require(:turn_form).permit(:dateCons, :scheduleCons, :descriptionCons, :servicesCons, :confirmed, :dog_id)
     end
 
     def check_if_not_admin

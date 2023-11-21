@@ -1,11 +1,13 @@
 class TurnForm < ApplicationRecord
     belongs_to :user
+    belongs_to :dog
     has_many :services
     enum scheduleCons: [:morning, :afternoon]
     validates :dateCons , presence: true
     validates :scheduleCons , presence: true
     validates :servicesCons , presence: true
     validate :dateCons_cannot_be_in_the_past
+    validate :unique_turn_for_dog, if: -> { user.client? }
     # validate :morning_option_available
 
     def set_user(user)
@@ -15,6 +17,15 @@ class TurnForm < ApplicationRecord
     def dateCons_cannot_be_in_the_past
       if dateCons.present? && dateCons < Date.today
         errors.add(:dateCons, "la fecha presente o una futura")
+      end
+    end
+
+    def unique_turn_for_dog
+      existing_turns = TurnForm.where(user: user, dog: dog)
+      existing_turns = existing_turns.where.not(id: id) if persisted?  # Excluye el turno actual si está siendo editado
+  
+      if existing_turns.exists?
+        errors.add(:base, "Ya has solicitado un turno para este perro.")
       end
     end
 

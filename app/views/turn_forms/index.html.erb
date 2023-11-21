@@ -9,27 +9,36 @@
       <%= link_to "Solicitar Turno", new_turn_form_path, method: :get, class: "btn btn-primary my-3 mx-5" %>
     <% end %>
 
-    <div id="turn_forms" class="my-3">
-      <% @turn_forms.each do |turn_form| %>
-        <% unless turn_form.confirmed? %>
-          <div class="container"> <!-- Agregar un contenedor para centrar el contenido -->
-            <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
-              <%= render turn_form %>
-              <p>
-                <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary mr-2" %>
-                <% if current_user.admin? && !turn_form.confirmed? %>
-                  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <%= button_to "Confirmar turno", confirm_turn_form_path(turn_form), method: :patch, class: "btn btn-success" %>
-                    <%= button_to "Rechazar turno", reject_turn_form_path(turn_form), method: :patch, class: "btn btn-danger ms-3" %>
-                  </div>
-                <% end %>
-              </p>
-            </div>
+ <div id="turn_forms" class="my-3">
+    <% @turn_forms.each do |turn_form| %>
+      <% if current_user.client? %>
+        <!-- Solo el cliente verá los turnos confirmados -->
+        <div class="container">
+          <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
+            <%= render turn_form %>
+            <p>
+              <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary mr-2" %>
+            </p>
           </div>
-        <% end %>
+        </div>
+      <% elsif current_user.admin? && !turn_form.confirmed? %>
+        <!-- Solo el veterinario verá los turnos no confirmados -->
+        <div class="container">
+          <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
+            <%= render turn_form %>
+            <p>
+              <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary mr-2" %>
+              <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <%= button_to "Confirmar turno", confirm_turn_form_path(turn_form), method: :patch, class: "btn btn-success" %>
+                <%= button_to "Rechazar turno", reject_turn_form_path(turn_form), method: :patch, class: "btn btn-danger ms-3" %>
+              </div>
+            </p>
+          </div>
+        </div>
       <% end %>
-    </div>
+    <% end %>
   </div>
+</div>
 
   <!-- Columna de Turnos Confirmados -->
   <% if current_user.admin? %>
