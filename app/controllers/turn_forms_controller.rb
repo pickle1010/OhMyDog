@@ -34,7 +34,7 @@ class TurnFormsController < ApplicationController
 
     respond_to do |format|
       if @turn_form.save
-        format.html { redirect_to turn_form_url(@turn_form), notice: "Turn form was successfully created." }
+        format.html { redirect_to turn_form_url(@turn_form), success: "El turno fue solicitado exitosamente" }
         format.json { render :show, status: :created, location: @turn_form }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -47,7 +47,7 @@ class TurnFormsController < ApplicationController
   def update
     respond_to do |format|
       if @turn_form.update(turn_form_params)
-        format.html { redirect_to turn_form_url(@turn_form), notice: "Turn form was successfully updated." }
+        format.html { redirect_to turn_form_url(@turn_form), success: "La solicitud de turno fue editada exitosamente" }
         format.json { render :show, status: :ok, location: @turn_form }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -61,7 +61,7 @@ class TurnFormsController < ApplicationController
     @turn_form.destroy!
 
     respond_to do |format|
-      format.html { redirect_to turn_forms_url, notice: "Turn form was successfully destroyed." }
+      format.html { redirect_to turn_forms_url, success: "El turno fue destruido exitosamente" }
       format.json { head :no_content }
     end
   end

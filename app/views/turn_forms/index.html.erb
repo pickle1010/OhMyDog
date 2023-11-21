@@ -1,10 +1,16 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Turnos solicitados</h1>
-
-<% if current_user.client? %>
-<%= link_to "Solicitar Turno", new_turn_form_path, method: :get, class: "btn btn-primary my-3 mx-5" %>
-<% end %>
+<div class="d-flex align-items-center">
+  <div class="me-auto">
+    <h1>Turnos solicitados</h1>
+  </div>
+  <% if current_user.client? %>
+    <%= link_to new_turn_form_path, class: "btn btn-primary btn-lg" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+      </svg>
+      Solicitar turno
+    <% end %>
+  <% end %>
+</div>
 
 <div id="turn_forms my-3">
   <% @turn_forms.each do |turn_form| %>
@@ -15,7 +21,7 @@
           <%= link_to "Ver turno", turn_form, method: :get, method: :get, class: "btn btn-primary" %>
         </p>
       </div>
-    </div>  
-      <% end %>
+    </div>
+  <% end %>
 </div>  
 

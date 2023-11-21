@@ -1,115 +1,78 @@
 <div class="alert alert-warning alert-dismissible fade show" role="alert" id="warning-message">
   Cada turno es para un único perro. Si tienes más de un perro, por favor, saca un turno para cada uno.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-<div class="container"> <!-- Agregar un contenedor para centrar el contenido -->
-  <div class="row justify-content-center" style="border: 2px solid rgba(122, 246, 254, 0.5);"> <!-- Centrar horizontalmente -->
-    <div class="col-md-8"> <!-- Espaciar el contenido -->
-            <!--formulary-->
-            <%= form_with(model: @turn_form, local: true) do |form| %>
-                <!--Error messages-->
-                <% if @turn_form.errors.any? %>
-                    <div style="color: red">
-                    <h2><%= pluralize(@turn_form.errors.count, "error","errores") %> <%= (@turn_form.errors.count == 1) ? "impide" : "impiden" %> que se complete el formulario:</h2>
-                    <ul>
-                        <% @turn_form.errors.each do |error| %>
-                        <li><%= error.full_message %></li>
-                        <% end %>
-                    </ul>
-                    </div>
+<%= form_with(model: @turn_form, local: true) do |form| %>
+    <!--Error messages-->
+    <% if @turn_form.errors.any? %>
+        <div class="alert alert-danger">
+            <h4 class="alert-heading"><%= pluralize(@turn_form.errors.count, "error","errores") %> <%= (@turn_form.errors.count == 1) ? "impide" : "impiden" %> que se complete el formulario</h4>
+            <ul>
+                <% @turn_form.errors.each do |error| %>
+                    <li><%= error.full_message.humanize %></li>
                 <% end %>
-                
-                <!--Select motive. compatibility with Service database?--> 
-                <div class="row mb-3">
-                    <div class="col-md-12 mt-3">
-                        <h3>Selecciona los servicios:</h3>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nombre del Servicio</th>
-                                    <th>Precio</th>
-                                    <th>Seleccionar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% Service.all.each do |service| %>
-                                    <% if service.active %>
-                                        <tr>
-                                            <td><%= service.name %></td>
-                                            <td><%= service.price %></td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <%= form.check_box :service_ids, { multiple: true }, service.id, nil %>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                     <% end %>
-                                <% end %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            </ul>
+        </div>
+    <% end %>
 
-                <!--Time select-->
-               <div class="row mb-3">
-                    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
-                        <div class="form-group">
-                            <%= form.label :dateCons, "Fecha de la consulta" %>
-                        </div>
-                    </div>
-                    <div class="col-md-8 mb-3">
-                        <div class="form-group">
-                            <%= form.date_field :dateCons, class: 'form-control flatpickr', id: 'date-picker' %>
-                        </div>
-                    </div>
-                </div>
+    <!--Select motive. compatibility with Service database?--> 
+    <div class="row">
+        <h3>Selecciona los servicios:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre del Servicio</th>
+                    <th>Precio</th>
+                    <th>Seleccionar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% Service.all.each do |service| %>
+                    <% if service.active %>
+                        <tr>
+                            <td><%= service.name %></td>
+                            <td><%= service.price %></td>
+                            <td>
+                                <div class="form-check">
+                                    <%= form.check_box :service_ids, { multiple: true }, service.id, nil %>
+                                </div>
+                            </td>
+                        </tr>
+                        <% end %>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
 
-                <!--ScheduleDate-->
-                <div class="row mb-3">
-                    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
-                        <div class="form-group">
-                            <%= form.label :scheduleCons, "Horario de la consulta" %>
-                        </div>
-                    </div>
-                    <div class="col-md-8 mb-3">
-                        <div class="form-group">
-                            <%= form.select(:scheduleCons, [['Mañana', 'morning'], ['Tarde', 'afternoon']], { include_blank: false }, { class: 'form-select', id: 'schedule-select' }) %>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Description field -->
-                <div class="row mb-3">  
-                    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
-                        <div class="form-group">
-                            <%= form.label :descriptionCons, "Descripción" %>
-                        </div>
-                    </div>  
-                    <div class="col-md-8 mb-3">
-                        <div class="form-group">
-                            <%= form.text_area :descriptionCons, class: 'form-control', rows: 4 %>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- sent button -->
-                <div class="row justify-content-end my-4 mx-4">
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-primary" onclick="showWarning()">Confirmar</button>
-                    </div> 
-                </div>      
-            <% end %>
+    <!--Time select-->
+    <div class="row mb-3">
+        <%= form.label :dateCons, "Fecha de la consulta", class: "col-sm-2 col-form-label" %>
+        <div class="col-md-10">
+            <%= form.date_field :dateCons, class: 'form-control flatpickr', id: 'date-picker' %>
         </div>
     </div>
-</div>
 
-<script>
-  function showWarning() {
-    // Mostrar el mensaje de advertencia
-    document.getElementById("warning-message").style.display = "block";
-  }
-</script>
+    <!--ScheduleDate-->
+    <div class="row mb-3">
+        <%= form.label :scheduleCons, "Horario de la consulta", class: "col-sm-2 col-form-label" %>
+        <div class="col-md-10">
+            <%= form.select(:scheduleCons, [['Mañana', 'morning'], ['Tarde', 'afternoon']], { include_blank: false }, { class: 'form-select', id: 'schedule-select' }) %>
+        </div>
+    </div>
+
+    <!-- Description field -->
+    <div class="row mb-3">  
+        <%= form.label :descriptionCons, "Descripción", class: "col-sm-2 col-form-label" %>
+        <div class="col-md-10">
+            <%= form.text_area :descriptionCons, class: 'form-control', rows: 4 %>
+        </div>
+    </div>
+
+    <!-- sent button -->
+    <div>
+        <%= form.submit "Solicitar", data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, class: "btn btn-primary mt-3" %>
+    </div>
+<% end %>
 
 
 

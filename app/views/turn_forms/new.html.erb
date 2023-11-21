@@ -1,7 +1,9 @@
-<%= render "form", turn_form: @turn_form %>
+<div class="container">
+  <%= render "form", turn_form: @turn_form %>
+  
+  <br>
 
-<br>
-
-<div>
-  <%= link_to "Volver a turnos", turn_forms_path, method: :get, class: "btn btn-primary ms-5" %>
+  <div>
+    <%= link_to "Volver a turnos", turn_forms_path, method: :get, class: "btn btn-secondary" %>
+  </div>
 </div>
