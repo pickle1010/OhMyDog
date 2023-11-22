@@ -1,0 +1,82 @@
+<header>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+    <div class="container-fluid">
+
+      <%= link_to(root_path, class: "navbar-brand") do %>
+        <%= image_tag("oh-my-dog-iconlogo.png", alt: "¡Oh my dog!") %>
+        ¡Oh My Dog!
+      <% end %>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+          <li class="nav-item">
+            <%# <a class="nav-link" href="#">Link</a> %>
+            <%= link_to "Home", root_path, class:"nav-link" %>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Menú
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><%= link_to "Adopciones", root_path, class:"dropdown-item" %></li>
+              <li><%= link_to "Perdidos y Encontrados", root_path, class:"dropdown-item" %></li>
+              <li><%= link_to "Paseadores y Cuidadores", root_path, class:"dropdown-item" %></li>
+              <li><%= link_to "Calendario", "#", class:"dropdown-item" %></li>
+              <% if user_signed_in? %>
+                <li><%= link_to "Turnos", turn_forms_path, class:"dropdown-item" %></li>
+                <% if current_user.admin? %>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><%= link_to "Servicios", services_path , class:"dropdown-item" %></li>
+                  <li><%= link_to "Clientes", users_path, class:"dropdown-item" %></li>
+                <% end %>
+              <% end %>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to "Donaciones", root_path, class:"nav-link" %>
+          </li>
+
+          <% if user_signed_in? %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                </svg>
+                <span class="badge rounded-pill badge-notification bg-danger">1</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown-center">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Mi cuenta
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><%= link_to "Mi perfil", current_user, class:"dropdown-item" %></li>
+                <li><%= link_to "Mis mascotas", user_dogs_path(current_user), class:"dropdown-item" %></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><%= button_to "Cerrar Sesión", destroy_user_session_path, method: :delete, class:"dropdown-item" %></li>
+              </ul>
+            </li>
+          <% end %>
+
+          <% unless user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "Iniciar sesión", new_user_session_path, class:"btn btn-primary" %>
+            </li>
+          <% end %>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+</header>
