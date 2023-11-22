@@ -29,11 +29,20 @@ es:
     models:
       turn_form: 'turno'
       service: 'servicio'
+      meeting: 'evento'
     attributes:
       service:
         name: 'nombre'
         price: 'precio'
         active: 'activo'
+      meeting:
+        name: 'opcion'
+        names:
+          No_laborable_todo_el_dia: 'no laborable todo el día' 
+          No_laborable_en_la_mañana: 'no laborable en la mañana'
+          No_laborable_en_la_tarde: 'no laborable en la tarde'
+          Vacunacion: 'vacunación'
+        date: 'fecha'
       turn_form:
         DateCons: 'Debe seleccionar'
         servicesCons: 'Debe seleccionar'
@@ -56,10 +65,4 @@ es:
               blank: 'no puede estar vacía'
             descriptionCons: 
               blank: 'no puede estar vacía' 
-  activerecord:
-     models:
-       Meeting: 'Calendario'
-     attributes:
-       Meeting:
-         name: 'Opcion'
-         date: 'Fecha'
+       

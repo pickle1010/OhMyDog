@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :clinic_dogs
   resources :meetings
   resources :services
   resources :turn_forms
