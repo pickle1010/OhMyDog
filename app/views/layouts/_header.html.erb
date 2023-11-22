@@ -57,10 +57,10 @@
               <ul class="dropdown-menu dropdown-menu-end">
                 <% if current_user.notifications.count > 0 %>
                   <% Notification.where(recipient: current_user).newest_first.each do |notification| %>
-                    <li><span class="dropdown-item-text"><%= notification.to_notification.message %></span></li>
+                    <li><span class="dropdown-item-text"><%= notification.to_notification.title %></span></li>
                     <li><hr class="dropdown-divider"></li>
                   <% end %>
-                  <li class="tex-center"><%= link_to "Ver más", "#", class: "dropdown-item" %></li>
+                  <li><%= link_to "Ver más", notifications_path, class: "dropdown-item" %></li>
                 <% else %>
                   <li><span class="dropdown-item-text">No tienes notificaciones por ahora. Recarga la página para saber si has recibido alguna nueva</span></li>
                 <% end %>
