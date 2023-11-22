@@ -1,37 +1,40 @@
 <%= form_with(model: service) do |form| %>
   <% if service.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(service.errors.count, "error","errores") %> <%= (service.errors.count == 1) ? "impide" : "impiden" %> que se guarde este servicio:</h2>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(service.errors.count, "error","errores") %> <%= (service.errors.count == 1) ? "impide" : "impiden" %> que se guarde este servicio:</h4>
 
       <ul>
         <% service.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <li><%= error.full_message.humanize %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-    <div class="form-group row my-3">
-      <%= form.label :name, "Nombre", class: "col-sm-2 col-form-label" %>
-      <div class="col-sm-10">
-        <%= form.text_field :name, class: "form-control form-control-lg" %>
-      </div>
+  <div class="row mb-3">
+    <%= form.label :name, "Nombre", class: "offset-sm-1 col-sm-1 col-form-label" %>
+    <div class="col-sm-8 me-auto">
+      <%= form.text_field :name, autofocus: true, autocomplete: "off", class: "form-control" %>
     </div>
+  </div>
 
-    <div class="form-group row my-3">
-      <%= form.label :price, "Precio", class: "col-sm-2 col-form-label" %>
-      <div class="col-sm-10">
-        <%= form.text_field :price, class: "form-control form-control-lg" %>
-      </div>
+  <div class="row mb-3">
+    <%= form.label :price, "Precio", class: "offset-sm-1 col-sm-1 col-form-label" %>
+    <div class="col-sm-8 me-auto">
+      <%= form.number_field :price, autofocus: true, autocomplete: "off", class: "form-control" %>
     </div>
-  
-    <div class="form-group row my-3 mx-0.7">
-      <div class="col-sm-2">
-        <%= form.label :active, "Activo", class: "form-check-label" %>
+  </div>
+
+  <div class="row mb-3">
+    <div class="offset-sm-1">
+        <%= form.label :active, "El servicio debe estar activado", class: "form-check-label" %>
         <%= form.check_box :active, class: "form-check-input" %>
     </div>
+  </div>
   
-  <div>
-    <%= form.submit "Guardar", data: { confirm: "¿Estás de acuerdo con los cambios realizados?", turbo_confirm: "¿Estás de acuerdo con los cambios realizados?" }, class: "btn btn-success mt-3 me-5" %>
+  <div class="row">
+    <div class="col text-center">
+      <%= form.submit "Guardar", data: { confirm: "¿Estás de acuerdo con los cambios realizados?", turbo_confirm: "¿Estás de acuerdo con los cambios realizados?" }, class: "btn btn-primary mt-2" %>
+    </div>
   </div>
 <% end %>

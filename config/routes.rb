@@ -9,7 +9,12 @@ Rails.application.routes.draw do
     resources :dogs
   end
   
-  resources :services
+  resources :services do
+    member do
+      patch 'toggle_state'
+    end
+  end
+  
   resources :turn_forms
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
