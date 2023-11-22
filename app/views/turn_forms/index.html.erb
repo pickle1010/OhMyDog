@@ -52,8 +52,14 @@
               <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
                 <%= render turn_form %>
                 <p>
+                  <strong>Monto Enviado:</strong>
+                  $<%= turn_form.total_amount %>
+                </p>
+                <p>
                   <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary" %>
-                  <!-- Puedes agregar más acciones específicas para turnos confirmados aquí -->
+                  <% if turn_form.total_amount.nil? %>
+                    <%= link_to "Emitir Monto", emit_amount_turn_form_path(turn_form), method: :get, class: "btn btn-success" %>
+                  <% end %>
                 </p>
               </div>
             </div>

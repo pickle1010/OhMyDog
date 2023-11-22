@@ -79,6 +79,21 @@ class TurnFormsController < ApplicationController
     redirect_to turn_forms_url, notice: "Turno rechazado exitosamente."
   end
   
+  def emit_amount
+    @turn_form = TurnForm.find(params[:id])
+  end
+
+  def save_amount
+    @turn_form = TurnForm.find(params[:id])
+    if @turn_form.update(turn_form_params)
+      redirect_to turn_forms_path, notice: "Monto guardado exitosamente."
+    else
+      render 'emit_amount'
+    end
+  end
+  
+  
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -88,7 +103,7 @@ class TurnFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def turn_form_params
-      params.require(:turn_form).permit(:dateCons, :scheduleCons, :descriptionCons, :servicesCons, :confirmed, :dog_id)
+      params.require(:turn_form).permit(:dateCons, :scheduleCons, :descriptionCons, :servicesCons, :confirmed, :dog_id, :total_amount)
     end
 
     def check_if_not_admin

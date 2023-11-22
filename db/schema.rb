@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_20_202543) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_21_031309) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_20_202543) do
     t.integer "scheduleCons"
     t.boolean "confirmed", default: false
     t.bigint "dog_id"
+    t.decimal "total_amount"
     t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
   end

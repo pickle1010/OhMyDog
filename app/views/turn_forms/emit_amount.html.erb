@@ -1,0 +1,27 @@
+<!-- emit_amount.html.erb -->
+
+<h1>Emitir Monto</h1>
+
+<%= form_with(model: @turn_form, url: save_amount_turn_form_path(@turn_form), local: true, method: :post) do |form| %>
+  <!-- Campo para el monto total -->
+  <div class="row mb-3">
+    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
+      <div class="form-group">
+        <%= form.label :total_amount, "Monto total" %>
+      </div>
+    </div>
+    <div class="col-md-8 mb-3">
+      <div class="form-group">
+        <%= form.number_field :total_amount, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Otros campos relevantes (si los hay) -->
+
+  <div class="row justify-content-end my-4 mx-4">
+    <div class="col-auto">
+      <%= form.button "Enviar monto", class: "btn btn-primary", type: :submit %>
+    </div>
+  </div>
+<% end %>
