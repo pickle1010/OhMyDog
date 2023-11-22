@@ -84,7 +84,7 @@ class Admin::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :dni, :first_name, :last_name, :address, :role, dogs_attributes: [:id, :photo, :first_name, :last_name, :breed, :color, :sex, :birthday])
+      params.require(:user).permit(:email, :password, :password_confirmation, :dni, :first_name, :last_name, :address, :role, :positive_balance, dogs_attributes: [:id, :photo, :first_name, :last_name, :breed, :color, :sex, :birthday])
     end
 
     def allow_without_password
