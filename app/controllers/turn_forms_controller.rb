@@ -85,12 +85,29 @@ class TurnFormsController < ApplicationController
 
   def save_amount
     @turn_form = TurnForm.find(params[:id])
-    if @turn_form.update(turn_form_params)
+    monto_ingresado = turn_form_params[:total_amount].to_f
+    saldo_a_favor = @turn_form.user.positive_balance.to_f
+  
+    # Calcula el monto a descontar
+    monto_a_descontar = [monto_ingresado - saldo_a_favor, 0].max
+  
+    # Calcula el saldo a favor a actualizar
+    nuevo_saldo_a_favor = saldo_a_favor - monto_ingresado
+  
+    # Calcula el monto total a actualizar
+    nuevo_monto_total = monto_ingresado - saldo_a_favor
+  
+    # Actualiza el saldo a favor del cliente
+    @turn_form.user.update(positive_balance: [nuevo_saldo_a_favor, 0].max)
+  
+    # Actualiza el modelo TurnForm con el monto ingresado
+    if @turn_form.update(total_amount: [nuevo_monto_total, 0].max)
       redirect_to turn_forms_path, notice: "Monto guardado exitosamente."
     else
       render 'emit_amount'
     end
   end
+  
   
   
   
