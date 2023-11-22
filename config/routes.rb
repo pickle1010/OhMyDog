@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resources :users, shallow: true do
     resources :dogs
   end
+
+  resources :notifications, only: [:index]
   
   resources :services
   resources :turn_forms
