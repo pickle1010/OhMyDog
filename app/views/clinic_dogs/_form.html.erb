@@ -1,0 +1,43 @@
+<%= form_with(model: clinic_dog) do |form| %>
+  <% if clinic_dog.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(clinic_dog.errors.count, "error") %> prohibited this clinic_dog from being saved:</h2>
+
+      <ul>
+        <% clinic_dog.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :question, "Hubo vacunacion?", style: "display: block" %>
+    <%= form.check_box :question %>
+  </div>
+
+  <div>
+    <%= form.label :dateclinic, "Fecha en la cual lo vacuno", style: "display: block" %>
+    <%= form.date_field :dateclinic %>
+  </div>
+
+  <div>
+    <%= form.label :vaccines, "tipo de vacuna", style: "display: block" %>
+    <% if form.object.new_record? %> 
+            <%= form.select(:vaccines, [['', nil]] + ClinicDog.vaccines.keys.map { |vaccine| [t("activerecord.attributes.clinic_dog.vaccines.#{vaccine}").humanize, vaccine] },
+                  { selected: nil },
+                  { class: 'form-select' }) %>
+            <% else %>} 
+              <%= form.select(:vaccine, ClinicDog.vaccines.keys.map { |vaccine| [t("activerecord.attributes.clinic_dog.vaccines.#{vaccine}").humanize, vaccine] }, {selected: @clinic_dog.new_record? }, { class: 'form-select'}) %>
+          <% end %>
+  </div>
+
+  <div>
+    <%= form.label :description, "Escriba La historia medica",style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

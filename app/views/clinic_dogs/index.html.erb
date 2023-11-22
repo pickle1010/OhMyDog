@@ -1,0 +1,27 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Clinic dogs</h1>
+
+<div id="accordion">
+  <% @clinic_dogs.each do |clinic_dog| %>
+    <div class="accordion-item my-1" style="background-color: #C8D4D5; border: 1px solid #dee2e6;">
+        <h2 class="accordion-header" id="heading<%= clinic_dog.id %>">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse"data-bs-target="#collapse<%= clinic_dog.id%>" aria-expanded="true" aria-controls="collapse<% clinic_dog.id%>">
+            <p><strong>Historia Clinica </strong> <%clinic_dog.id %></p>
+          </button>
+        </h2>
+        <div id="collapse<%= clinic_dog.id %>" class="accordion-collapse collapse show" aria-labelledby="heading<%= clinic_dog.id %>" data-bs-parent="#accordion" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+        <div class="accordion-body">
+          <!-- Contenido de la historia clínica, por ejemplo: -->
+          <a href="<%= edit_clinic_dog_path(clinic_dog) %>" class="btn btn-warning ms-2">Editar</a>
+          <p><strong>Hubo vacunación:</strong> <%= clinic_dog.question ? 'Si' : 'No' %></p>
+          <p><strong>Fecha de vacunación:</strong> <%= clinic_dog.dateclinic %></p>
+          <p><strong>Tipo de vacuna:</strong> <%= clinic_dog.vaccines %></p>
+          <p><strong>Descripción:</strong> <%= clinic_dog.description %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "New clinic dog", new_clinic_dog_path %>
