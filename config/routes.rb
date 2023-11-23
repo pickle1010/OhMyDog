@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   end
 
   resources :users, shallow: true do
-    resources :dogs
+    resources :dogs do
+      resources :clinic_dogs, only: [:index, :new, :create, :edit, :update, :destroy]
+    end
   end
   
   resources :services
