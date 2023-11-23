@@ -1,7 +1,7 @@
 class TurnFormsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_not_admin, only:[:new, :create]
-  before_action :set_turn_form, only: %i[ show edit update destroy ]
+  before_action :set_turn_form, only: %i[ show edit update destroy confirm reject]
 
   # GET /turn_forms or /turn_forms.json
   def index
@@ -16,6 +16,10 @@ class TurnFormsController < ApplicationController
   # GET /turn_forms/new
   def new
     @turn_form = TurnForm.new
+    meetings = Meeting.where(name: :No_laborable_todo_el_dia)
+    @disabled_dates = meetings.pluck(:start_time)
+    # Puedes realizar cualquier formato necesario para las fechas antes de pasarlas a la vista
+    @disabled_dates = @disabled_dates.map { |date| date.strftime("%Y-%m-%d") }
   end
 
   # GET /turn_forms/1/edit
@@ -26,6 +30,7 @@ class TurnFormsController < ApplicationController
   def create
     @turn_form = TurnForm.new(turn_form_params)
     @turn_form.set_user(current_user)
+    @turn_form.dog = Dog.find(params[:turn_form][:dog_id]) if params[:turn_form][:dog_id].present?
     selected_service_ids = params[:turn_form][:service_ids]
     selected_services = Service.where(id: selected_service_ids)
 
@@ -34,7 +39,7 @@ class TurnFormsController < ApplicationController
 
     respond_to do |format|
       if @turn_form.save
-        format.html { redirect_to turn_form_url(@turn_form), notice: "Turn form was successfully created." }
+        format.html { redirect_to turn_form_url(@turn_form), success: "El turno fue solicitado exitosamente" }
         format.json { render :show, status: :created, location: @turn_form }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -47,7 +52,8 @@ class TurnFormsController < ApplicationController
   def update
     respond_to do |format|
       if @turn_form.update(turn_form_params)
-        format.html { redirect_to turn_form_url(@turn_form), notice: "Turn form was successfully updated." }
+        @turn_form.dog = Dog.find(params[:turn_form][:dog_id]) if params[:turn_form][:dog_id].present?
+        format.html { redirect_to turn_form_url(@turn_form), success: "La solicitud de turno fue editada exitosamente" }
         format.json { render :show, status: :ok, location: @turn_form }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -61,8 +67,47 @@ class TurnFormsController < ApplicationController
     @turn_form.destroy!
 
     respond_to do |format|
-      format.html { redirect_to turn_forms_url, notice: "Turn form was successfully destroyed." }
+      format.html { redirect_to turn_forms_url, success: "El turno fue destruido exitosamente" }
       format.json { head :no_content }
+    end
+  end
+
+  def confirm
+    @turn_form.update(confirmed: true)
+    redirect_to turn_forms_url, notice: "Turno confirmado exitosamente."
+  end
+  
+  def reject
+    @turn_form.destroy
+    redirect_to turn_forms_url, notice: "Turno rechazado exitosamente."
+  end
+  
+  def emit_amount
+    @turn_form = TurnForm.find(params[:id])
+  end
+
+  def save_amount
+    @turn_form = TurnForm.find(params[:id])
+    monto_ingresado = turn_form_params[:total_amount].to_f
+    saldo_a_favor = @turn_form.user.positive_balance.to_f
+    
+    # Calcula el monto a descontar
+    monto_a_descontar = [monto_ingresado - saldo_a_favor, 0].max
+  
+    # Calcula el saldo a favor a actualizar
+    nuevo_saldo_a_favor = saldo_a_favor - monto_ingresado
+  
+    # Calcula el monto total a actualizar
+    nuevo_monto_total = monto_ingresado - saldo_a_favor
+  
+    # Actualiza el saldo a favor del cliente
+    @turn_form.user.update(positive_balance: [nuevo_saldo_a_favor, 0].max)
+  
+    # Actualiza el modelo TurnForm con el monto ingresado
+    if @turn_form.update(total_amount: [nuevo_monto_total, 0].max)
+      redirect_to turn_forms_path, success: "Monto guardado exitosamente."
+    else
+      render 'emit_amount'
     end
   end
 
@@ -74,7 +119,7 @@ class TurnFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def turn_form_params
-      params.require(:turn_form).permit(:dateCons, :scheduleCons, :descriptionCons, :servicesCons)
+      params.require(:turn_form).permit(:dateCons, :schedule, :descriptionCons, :servicesCons, :confirmed, :dog_id, :total_amount)
     end
 
     def check_if_not_admin

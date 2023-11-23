@@ -9,3 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
       minDate: 'today' // Limitar la selección de fecha al día de hoy y posteriores
     });
   });
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    flatpickr('#date-picker', {
+      disable: JSON.parse(document.querySelector('#date-picker').getAttribute('data-disable')),
+      // Otros ajustes de Flatpickr, si es necesario
+    });
+  });
+  

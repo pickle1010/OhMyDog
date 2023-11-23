@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="card mb-2 shadow-sm">
+    <div class="card-header text-center">
+      <h1>Emitir Monto</h1>
+    </div>
+    <div class="card-body">
+      <div class=row>
+        <div class="col-lg-5">
+          <%= render @turn_form %> 
+        </div>
+
+        <div class="col-lg-7">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <div class="row my-3">
+                <div class="col-sm-5">
+                  <span class="mb-0">Saldo a favor del cliente:</span>
+                </div>
+                <div class="col-sm-7">
+                  <span class="text-muted mb-0">$<%= @turn_form.user.positive_balance %></span>
+                </div>
+              </div>
+
+              <%= form_with(model: @turn_form, url: save_amount_turn_form_path(@turn_form), local: true, method: :post) do |form| %>
+                <!-- Campo para el monto total -->
+                <div class="row mb-3">
+                  <%= form.label :total_amount, "Monto emitido", class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= form.number_field :total_amount, class: 'form-control', id: 'total_amount_field' %>
+                  </div>
+                </div>
+
+                <!-- Agregar campo de descripción adicional del veterinario -->
+                <div class="row mb-3">
+                  <%= form.label :vet_description, "Descripción adicional del veterinario", class: "col-sm-4 col-form-label" %>
+                  <div class="col-sm-8">
+                    <%= form.text_area :vet_description, class: 'form-control', rows: 4 %> 
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <%= link_to "Volver a turnos", turn_forms_path, method: :get, class: "btn btn-secondary mt-3" %>
+                  <%= form.submit "Enviar monto", data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, class: "btn btn-primary mt-3" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

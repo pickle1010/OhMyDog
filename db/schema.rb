@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_22_180514) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_23_045002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,17 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_180514) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "clinic_dogs", force: :cascade do |t|
+    t.boolean "question"
+    t.date "dateclinic"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "vaccines"
+    t.bigint "dog_id", null: false
+    t.index ["dog_id"], name: "index_clinic_dogs_on_dog_id"
   end
 
   create_table "dogs", force: :cascade do |t|
@@ -91,9 +102,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_180514) do
     t.string "servicesCons"
     t.bigint "user_id", null: false
     t.date "dateCons"
-    t.integer "scheduleCons"
+    t.integer "schedule"
     t.boolean "confirmed", default: false
     t.bigint "dog_id", null: false
+    t.decimal "total_amount"
+    t.text "vet_description"
     t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
   end
@@ -110,6 +123,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_180514) do
     t.string "last_name"
     t.string "address"
     t.integer "role"
+    t.decimal "positive_balance", precision: 10, scale: 2, default: "0.0"
     t.index ["dni"], name: "index_users_on_dni", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

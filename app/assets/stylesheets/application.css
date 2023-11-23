@@ -14,7 +14,7 @@
  *= require_self
  *= require flatpickr
  *= require flatpickr/plugins/confirmDate/confirmDate
- 
+ *= require simple_calendar
  */
 
  /* app/assets/stylesheets/application.css or a custom CSS file */
@@ -42,3 +42,4 @@
   .bg-brand-light-orange {
     background-color: rgb(255, 200, 120);
   }
+
