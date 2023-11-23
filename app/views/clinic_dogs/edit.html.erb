@@ -1,10 +1,15 @@
-<h1>Editing clinic dog</h1>
-
-<%= render "form", clinic_dog: @clinic_dog %>
-
-<br>
-
-<div>
-  <%= link_to "Show this clinic dog", @clinic_dog %> |
-  <%= link_to "Back to clinic dogs", clinic_dogs_path %>
+<div class="container">
+  <div class="card">
+    <div class="card-header text-center">
+      <h1>Editar historia clínica</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", clinic_dog: @clinic_dog %>
+    </div>
+    <div class="row mb-3">
+      <div class="col text-center">
+        <%= link_to "Cancelar", :back, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,10 +1,13 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @clinic_dog %>
-
-<div>
-  <%= link_to "Edit this clinic dog", edit_clinic_dog_path(@clinic_dog) %> |
-  <%= link_to "Back to clinic dogs", clinic_dogs_path %>
-
-  <%= button_to "Destroy this clinic dog", @clinic_dog, method: :delete %>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <%= render @clinic_dog %>
+      <div class="mt-3 text-center">
+        <% if current_user.admin? %>
+          <%= link_to "Editar", edit_clinic_dog_path(@clinic_dog), class: "btn btn-primary me-1"%>
+        <% end %>
+        <%= link_to "Volver a historia clínica", dog_clinic_dogs_path(@clinic_dog.dog), class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
 </div>

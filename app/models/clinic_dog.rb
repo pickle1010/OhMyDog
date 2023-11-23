@@ -1,11 +1,24 @@
 class ClinicDog < ApplicationRecord
     belongs_to :dog
+
     enum vaccines: [:antirrabica, :inmunologica, :ambas]
-    validates :description, presence: true
+
+    validates :description, :dateclinic, presence: true
+    validates :question, presence: true, if: :vaccines_present?
     validates :question, inclusion: { in: [true, false] }
-  
+    validate :date_cannot_be_in_the_future
+
     with_options if: :question? do |clinic_dog|
-      clinic_dog.validates :dateclinic, presence: true
       clinic_dog.validates :vaccines, presence: true
+    end
+
+    def vaccines_present?
+      vaccines.present?
+    end
+
+    def date_cannot_be_in_the_future
+      if dateclinic.present? && dateclinic > Date.today
+        errors.add(:dateclinic, "debe ser una fecha pasada o la fecha presente")
+      end
     end
 end
