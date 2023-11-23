@@ -1,5 +1,6 @@
 class Dog < ApplicationRecord
   belongs_to :user
+  has_one :turn_form
   has_one_attached :photo
 
   enum sex: [:male, :female]

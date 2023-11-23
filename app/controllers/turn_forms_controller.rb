@@ -87,7 +87,7 @@ class TurnFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def turn_form_params
-      params.require(:turn_form).permit(:dateCons, :scheduleCons, :descriptionCons, :servicesCons, :confirmed, :dog_id)
+      params.require(:turn_form).permit(:dateCons, :schedule, :descriptionCons, :servicesCons, :confirmed, :dog_id)
     end
 
     def check_if_not_admin

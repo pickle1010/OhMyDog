@@ -1,33 +1,62 @@
 <div id="<%= dom_id turn_form %>">
 
-  <% if current_user.admin? %>
-    <p>
-      <strong>Cliente:</strong>
-      <%= turn_form.user.first_name %> <%= turn_form.user.last_name %>
-    </p>
-  <% end %>
-  
-  <p>
-    <strong>Perro:</strong>
-    <%= turn_form.dog.first_name if turn_form.dog.present? %>
-  </p>
-
-  <p>
-    <strong>Fecha de consulta:</strong>
-    <%= turn_form.dateCons %>
-  </p>
-
-  <p>
-    <strong>Horario de la consulta:</strong>
-    <%= turn_form.scheduleCons %>
-  </p>
-
-  <p>
-    <strong>Descripción:</strong>
-    <%= turn_form.descriptionCons %>
-  </p>
-  <p>
-    <strong>Servicios solicitados:</strong>
-    <%= turn_form.servicesCons %>
-  </p>
+  <div class="card mb-2 shadow-sm">
+    <div class="card-body">
+      <% if current_user.admin? %>
+        <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Cliente</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"><%= turn_form.user.first_name %> <%= turn_form.user.last_name %></p>
+            </div>
+        </div>
+        <hr>
+      <% end %>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="mb-0">Perro</p>
+        </div>
+        <div class="col-sm-9">
+          <p class="text-muted mb-0"><%= turn_form.dog.first_name if turn_form.dog.present? %></p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="mb-0">Fecha de consulta:</p>
+        </div>
+        <div class="col-sm-9">
+          <p class="text-muted mb-0"><%= turn_form.dateCons %></p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="mb-0">Banda horaria</p>
+        </div>
+        <div class="col-sm-9">
+          <p class="text-muted mb-0"><%= t("activerecord.attributes.turn_form.schedules.#{turn_form.schedule}").humanize %></p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="mb-0">Servicios: </p>
+        </div>
+        <div class="col-sm-9">
+          <p class="text-muted mb-0"><%= turn_form.servicesCons %></p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="mb-0">Descripción: </p>
+        </div>
+        <div class="col-sm-9">
+          <p class="text-muted mb-0"><%= turn_form.descriptionCons %></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

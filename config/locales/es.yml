@@ -1,15 +1,4 @@
 es:
-  turn_form:
-    ScheduleCons:
-      morning: 'mañana'
-      afternoon: 'tarde' 
-  errors:
-    attributes:
-      dni:
-        not_a_number:
-    blank:
-    messages:
-      not_a_number:
   activerecord:
     models:
       user/dogs: 'perros del usuario'
@@ -61,7 +50,10 @@ es:
       turn_form:
         dateCons: 'Debe seleccionar'
         servicesCons: 'Debe seleccionar'
-        scheduleCons: 'horario de la consulta'
+        schedule: 'banda horaria'
+        schedules:
+          morning: 'mañana'
+          afternoon: 'tarde'
         descriptionCons: 'descripción'
       user:
         email: "correo electrónico"

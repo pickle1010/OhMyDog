@@ -1,9 +1,13 @@
 <div class="container">
-  <%= render "form", turn_form: @turn_form %>
-  
-  <br>
-
-  <div>
-    <%= link_to "Volver a turnos", turn_forms_path, method: :get, class: "btn btn-secondary" %>
+  <div class="card mb-2 shadow-sm">
+    <div class="card-header text-center">
+        <h1>Solicitar turno</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", turn_form: @turn_form %>
+      <div class="text-center">
+        <%= link_to "Volver a turnos", turn_forms_path, method: :get, class: "btn btn-secondary mt-3" %>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center">
+<div class="d-flex align-items-center mb-4">
   <div class="me-auto">
     <h1>Turnos</h1>
   </div>
@@ -12,62 +12,120 @@
   <% end %>
 </div>
 
-<div class="row">
-  <!-- Columna de Turnos Solicitados -->
-  <div class="col-md-6">
-    <h2>Turnos solicitados</h2>
-    <div id="turn_forms" class="my-3">
-      <% @turn_forms.each do |turn_form| %>
-        <% if current_user.client? %>
-          <!-- Solo el cliente verá los turnos confirmados -->
-          <div class="container">
-            <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
-              <%= render turn_form %>
-              <p>
-                <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary mr-2" %>
-              </p>
+<div class="card mb-4">
+  <div class="card-header text-center">
+    <h2>Solicitados</h2>
+  </div>
+  <div class="card-body">
+    <% if @turn_forms.where(confirmed: false).count > 0 %>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle caption-top">
+          <thead>
+            <tr class="table-secondary">
+              <% if current_user.admin? %>
+                <th scope="col">Cliente</th>
+              <% end %>
+              <th scope="col">Perro</th>
+              <th scope="col">Servicios</th>
+              <th scope="col">Fecha</th>      
+              <th scope="col">Banda horaria</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <div id="users">
+              <% @turn_forms.where(confirmed: false).each do |turn_form| %>
+                <tr scope="row">
+                  <% if current_user.admin? %>
+                    <td><%= turn_form.user.first_name %> <%= turn_form.user.last_name %></td>
+                  <% end %>
+                  <td><%= turn_form.dog.first_name %> <%= turn_form.dog.last_name %></td>
+                  <td><%= turn_form.servicesCons %></td>
+                  <td><%= turn_form.dateCons %></td>
+                  <td><%= t("activerecord.attributes.turn_form.schedules.#{turn_form.schedule}").humanize %></td>
+                  <td class="d-flex gap-3">
+                    <%= link_to turn_form, class: "btn btn-info" do %>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                      </svg>
+                    <% end %>
+                    <% if current_user.admin? %>
+                      <%= button_to reject_turn_form_path(turn_form), method: :patch, data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" }, class: "btn btn-danger" do %>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                        </svg>
+                        Rechazar
+                      <% end %>
+                      <%= button_to confirm_turn_form_path(turn_form), method: :patch, class: "btn btn-success" do %>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                        Confirmar
+                      <% end %>
+                    <% end %>
+                  </td>  
+                </tr>
+              <% end %>
             </div>
-          </div>
-        <% elsif current_user.admin? && !turn_form.confirmed? %>
-          <!-- Solo el veterinario verá los turnos no confirmados -->
-          <div class="container">
-            <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
-              <%= render turn_form %>
-              <p>
-                <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary mr-2" %>
-                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                  <%= button_to "Confirmar turno", confirm_turn_form_path(turn_form), method: :patch, class: "btn btn-success" %>
-                  <%= button_to "Rechazar turno", reject_turn_form_path(turn_form), method: :patch, class: "btn btn-danger ms-3" %>
-                </div>
-              </p>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <h4 class="text-muted text-center">No hay turnos solicitados</h4>
+    <% end %>
   </div>
 </div>
 
-  <!-- Columna de Turnos Confirmados -->
-  <% if current_user.admin? %>
-    <div class="col-md-6">
-      <h1>Turnos confirmados</h1>
+<div class="card">
+  <div class="card-header text-center">
+    <h2>Confirmados</h2>
+  </div>
+  <div class="card-body">
+    <% if @turn_forms.where(confirmed: true).count > 0 %>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle caption-top">
+          <thead>
+            <tr class="table-secondary">
+              <% if current_user.admin? %>
+                <th scope="col">Cliente</th>
+              <% end %>
+              <th scope="col">Perro</th>
+              <th scope="col">Servicios</th>
+              <th scope="col">Fecha</th>      
+              <th scope="col">Banda horaria</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
 
-      <div id="confirmed_turn_forms" class="my-3">
-        <% @turn_forms.each do |turn_form| %>
-          <% if turn_form.confirmed? %>
-            <div class="container"> <!-- Agregar un contenedor para centrar el contenido -->
-              <div class="row justify-content-center my-3" style="border: 2px solid rgba(122, 246, 254, 0.5);">
-                <%= render turn_form %>
-                <p>
-                  <%= link_to "Ver turno", turn_form, method: :get, class: "btn btn-primary" %>
-                  <!-- Puedes agregar más acciones específicas para turnos confirmados aquí -->
-                </p>
-              </div>
+          <tbody>
+            <div id="users">
+              <% @turn_forms.where(confirmed: true).each do |turn_form| %>
+                <tr scope="row">
+                  <% if current_user.admin? %>
+                    <td><%= turn_form.user.first_name %> <%= turn_form.user.last_name %></td>
+                  <% end %>
+                  <td><%= turn_form.dog.first_name %> <%= turn_form.dog.last_name %></td>
+                  <td><%= turn_form.servicesCons %></td>
+                  <td><%= turn_form.dateCons %></td>
+                  <td><%= t("activerecord.attributes.turn_form.schedules.#{turn_form.schedule}").humanize %></td>
+                  <td>
+                    <%= link_to turn_form, class: "btn btn-info" do %>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                      </svg>
+                    <% end %>
+                    <% if current_user.admin? %>
+                    <% end %>
+                  </td>  
+                </tr>
+              <% end %>
             </div>
-          <% end %>
-        <% end %>
+          </tbody>
+        </table>    
       </div>
-    </div>  
-  <% end %>
-</div>  
-
+    <% else %>
+      <h4 class="text-muted text-center">No hay turnos confirmados</h4>
+    <% end %>
+  </div>
+</div>

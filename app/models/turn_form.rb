@@ -1,12 +1,11 @@
 class TurnForm < ApplicationRecord
   belongs_to :user
   belongs_to :dog
-  has_many :services
 
-  enum scheduleCons: [:morning, :afternoon]
+  enum schedule: [:morning, :afternoon]
 
   validates :dateCons , presence: true
-  validates :scheduleCons, :servicesCons, presence: true
+  validates :schedule, :servicesCons, presence: true
   validate :date_cannot_be_in_the_past
   validate :unique_turn_for_dog, if: -> { user.client? }
   validate :must_not_be_morning_when_has_already_passed
@@ -31,8 +30,8 @@ class TurnForm < ApplicationRecord
   end
 
   def must_not_be_morning_when_has_already_passed
-    if dateCons.present? && dateCons == Date.today && Time.now > Time.parse("12:00 PM") && scheduleCons == "morning"
-      errors.add(:scheduleCons, "'mañana' no puede ser seleccionada para hoy si ya es la tarde")
+    if dateCons.present? && dateCons == Date.today && Time.now > Time.parse("12:00 PM") && schedule == "morning"
+      errors.add(:schedule, "'mañana' no puede ser seleccionada para hoy si ya es la tarde")
     end
   end
 end
