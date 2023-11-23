@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   resources :clinic_dogs
   resources :meetings
+  devise_for :users, :skip => [:registrations], :path_prefix => 'my'
+  as :user do
+    get 'my/users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+    put 'my/users' => 'devise/registrations#update', :as => 'user_registration'
+  end
+
+  resources :users, shallow: true do
+    resources :dogs
+  end
+  
   resources :services
   resources :turn_forms
   
@@ -11,8 +21,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
-
-
-
+  root "home#index"
 end

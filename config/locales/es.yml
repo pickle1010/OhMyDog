@@ -22,25 +22,104 @@ es:
       - Noviembre
       - Diciembre   
   turn_form:
-    ScheduleCons:
+    scheduleCons:
       morning: 'mañana'
-      afternoon: 'tarde'
+      afternoon: 'tarde' 
+  errors:
+    attributes:
+      dni:
+        not_a_number:
+    blank:
+    messages:
+      not_a_number:
   activerecord:
     models:
+      user/dogs: 'perros del usuario'
+      dog: 'perro'
       turn_form: 'turno'
       service: 'servicio'
+      user: 'usuario'
+      Meeting: 'Calendario'
     attributes:
+      user/dogs:
+        user_id: "id del dueño"
+        photo: 'foto del perro'
+        user: 'dueño'
+        first_name: 'nombre del perro'
+        last_name: 'apellido del perro'
+        breed: 'raza del perro'
+        color: 'color del perro'
+        sex: 'sexo del perro'
+        birthday: 'cumpleaños del perro'
+      dog:
+        user_id: "id del dueño"
+        photo: 'foto'
+        user: 'dueño'
+        first_name: 'nombre'
+        last_name: 'apellido'
+        birthday: 'fecha de nacimiento'
+        breed: 'raza'
+        breeds:
+          labrador: 'labrador'
+          golden_retriever: 'golden retriever'
+          beagle: 'beagle'
+          bulldog: 'bulldog'
+          rottweiler: 'rottweiler'
+          dachshund: 'salchicha'
+          chihuahua: 'chihuahua'
+          doberman: 'doberman'
+          german_shepherd: 'pastor aleman'
+          boxer: 'boxer'
+          dogo_argentino: 'dogo argentino'
+          border_collie: 'border collie'
+        color: 'color'
+        sex: 'sexo'
+        sexes:
+          male: 'macho'
+          female: 'hembra'
       service:
         name: 'nombre'
         price: 'precio'
         active: 'activo'
       turn_form:
-        DateCons: 'Debe seleccionar'
-        servicesCons: 'Debe seleccionar'
-        ScheduleCons: 'horario de la consulta'
+        dateCons: 'fecha'
+        servicesCons: 'servicios'
+        scheduleCons: 'banda horaria'
         descriptionCons: 'descripción'
+      user:
+        email: "correo electrónico"
+        dni: 'DNI'
+        first_name: 'nombre'
+        last_name: 'apellido'
+        address: 'dirección'
+        role: 'rol'
+        password: 'contraseña'
+        password_confirmation: 'confirmación de contraseña'
+        current_password: 'contraseña actual'
+      Meeting:
+        name: 'Opcion'
+        date: 'Fecha'
     errors:
+      messages:
+        not_a_number:
+        blank:
       models:
+        dog:
+          attributes:
+            first_name:
+              blank: 'no puede estar vacío'
+            last_name:
+              blank: 'no puede estar vacío'
+            breed: 
+              blank: 'no puede estar vacío' 
+            color:
+              blank: 'no puede estar vacío'   
+            sex: 
+              blank: 'no puede estar vacío'
+            birthday:
+              blank: 'no puede estar vacía'
+            user:
+              required: 'debe existir en el sistema'
         service:
           attributes:
             name:
@@ -48,18 +127,38 @@ es:
               taken: 'no puede repetirse dentro de la tabla de servicios'
         turn_form:
           attributes:
-            DateCons:
+            dateCons:
               blank: 'una fecha para su consulta'
             servicesCons:
               blank: 'al menos un servicio'
-            ScheduleCons:
+            scheduleCons:
               blank: 'no puede estar vacía'
             descriptionCons: 
-              blank: 'no puede estar vacía' 
-  activerecord:
-     models:
-       Meeting: 'Calendario'
-     attributes:
-       Meeting:
-         name: 'Opcion'
-         date: 'Fecha'
+              blank: 'no puede estar vacía'
+        user:
+          not_a_number:
+          blank:
+          attributes:
+            first_name: 
+              blank: 'no puede estar vacío' 
+            last_name:
+              blank: 'no puede estar vacío' 
+            dni:
+              blank: 'no puede estar vacío'
+              not_a_number: 'debe ser un número'
+              greater_than: 'debe ser mayor que cero'
+              taken: 'ya corresponde a un cliente' 
+            email:
+              blank: 'no puede estar vacío'
+              invalid: 'no es válido'
+              taken: 'ya corresponde a un cliente' 
+            address: 
+              blank: 'no puede estar vacía'
+            password: 
+              blank: 'no puede estar vacía'
+              too_short: 'tiene menos de 6 caracteres'
+            password_confirmation:
+              confirmation: 'errónea. Las contraseñas no coinciden' 
+            current_password:
+              blank: 'no puede estar vacía'
+              invalid: 'es erronea' 

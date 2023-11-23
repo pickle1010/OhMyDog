@@ -1,0 +1,72 @@
+<div id="<%= dom_id dog %>">  
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body text-center">
+          <div class="mt-2 mb-1">
+            <%= image_tag url_for(dog.photo), size: "16*16", class: "img-fluid rounded-circle" %>
+          </div>
+          <h4 class="my-3 fw-bold"><%= dog.first_name %> <%= dog.last_name %></h4>
+          
+          <div class="d-flex justify-content-center mb-2">
+            <% if current_user.admin? %>
+              <%= link_to "Dueño", user_path(dog.user), class: "btn btn-outline-info me-1" %>
+              <%= link_to "Editar", edit_dog_path(dog), class: "btn btn-outline-primary" %>
+              <%= button_to "Eliminar", dog_path(dog),  data: { confirm: "Estás seguro?", turbo_confirm: "¿Estás seguro?" }, method: :delete, class: "btn btn-danger ms-1" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Nombre completo</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"><%= dog.first_name %> <%= dog.last_name %></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Raza</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"><%= t("activerecord.attributes.dog.breeds.#{dog.breed}").humanize %></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Color</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"><%= dog.color %></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Sexo</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"><%= t("activerecord.attributes.dog.sexes.#{dog.sex}").humanize %></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Cumpleaños</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"><%= dog.birthday.strftime("%d/%m/%y") %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
