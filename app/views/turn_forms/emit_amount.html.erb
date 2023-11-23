@@ -1,0 +1,75 @@
+<!-- emit_amount.html.erb -->
+
+<h1>Emitir Monto</h1>
+
+<%= form_with(model: @turn_form, url: save_amount_turn_form_path(@turn_form), local: true, method: :post) do |form| %>
+
+  <!-- Mostrar nombre y apellido del dueño -->
+  <p><strong>Dueño:</strong> <%= @turn_form.user.first_name %> <%= @turn_form.user.last_name %></p>
+
+  <!-- Mostrar nombre del perro -->
+  <p><strong>Perro:</strong> <%= @turn_form.dog.first_name if @turn_form.dog.present? %></p>
+
+  <!-- Mostrar fecha de consulta -->
+  <p><strong>Fecha de consulta:</strong> <%= @turn_form.dateCons %></p>
+
+  <!-- Mostrar horario de consulta -->
+  <p><strong>Horario de consulta:</strong> <%= @turn_form.scheduleCons %></p>
+
+  <!-- Mostrar descripción por parte del cliente -->
+  <p><strong>Descripción por parte del cliente:</strong> <%= @turn_form.descriptionCons %></p>
+
+  <!-- Mostrar servicios solicitados -->
+  <p><strong>Servicios solicitados:</strong> <%= @turn_form.servicesCons %></p>
+
+<!-- Campo para el saldo a favor del cliente -->
+  <div class="row mb-3">
+    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
+      <div class="form-group">
+        <strong>Saldo a favor del cliente:</strong>
+      </div>
+    </div>
+    <div class="col-md-8 mb-3">
+      <div class="form-group">
+        $<%= @turn_form.user.positive_balance %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agregar campo de descripción adicional del veterinario -->
+  <div class="row mb-3">
+    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
+      <div class="form-group">
+        <%= form.label :vet_description, "Descripción adicional del veterinario" %>
+      </div>
+    </div>
+    <div class="col-md-8 mb-3">
+      <div class="form-group">
+        <%= form.text_area :vet_description, class: 'form-control', rows: 5 %> 
+      </div>
+    </div>
+  </div>
+
+  <!-- Campo para el monto total -->
+  <div class="row mb-3">
+    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
+      <div class="form-group">
+        <%= form.label :total_amount, "Monto total" %>
+      </div>
+    </div>
+    <div class="col-md-8 mb-3">
+      <div class="form-group">
+        <%= form.number_field :total_amount, class: 'form-control', id: 'total_amount_field' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row justify-content-end my-4 mx-4">
+    <div class="col-auto">
+      <%= form.button "Enviar monto", class: "btn btn-primary", type: :submit %>
+    </div>
+  </div>
+<% end %>
+
+
+

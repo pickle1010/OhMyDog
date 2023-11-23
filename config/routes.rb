@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     member do
       patch 'confirm'
       patch 'reject'
+      get 'emit_amount'
+      post 'save_amount'
     end
   end
   

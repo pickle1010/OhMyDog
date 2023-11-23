@@ -94,6 +94,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_040936) do
     t.integer "schedule"
     t.boolean "confirmed", default: false
     t.bigint "dog_id", null: false
+    t.decimal "total_amount"
+    t.text "vet_description"
     t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
   end
@@ -110,6 +112,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_040936) do
     t.string "last_name"
     t.string "address"
     t.integer "role"
+    t.decimal "positive_balance", precision: 10, scale: 2, default: "0.0"
     t.index ["dni"], name: "index_users_on_dni", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

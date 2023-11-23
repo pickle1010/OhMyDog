@@ -108,6 +108,9 @@
                   <td><%= turn_form.dog.first_name %> <%= turn_form.dog.last_name %></td>
                   <td><%= turn_form.servicesCons %></td>
                   <td><%= turn_form.dateCons %></td>
+                  <% if current_user.admin? && !turn_form.total_amount.nil? %>
+                    <td><%= turn_form.total_amount %></td>
+                  <% end %>
                   <td><%= t("activerecord.attributes.turn_form.schedules.#{turn_form.schedule}").humanize %></td>
                   <td>
                     <%= link_to turn_form, class: "btn btn-info" do %>
@@ -116,6 +119,9 @@
                       </svg>
                     <% end %>
                     <% if current_user.admin? %>
+                      <% if turn_form.total_amount.nil? %>
+                        <%= link_to "Emitir Monto", emit_amount_turn_form_path(turn_form), method: :get, class: "btn btn-success" %>
+                      <% end %>
                     <% end %>
                   </td>  
                 </tr>
