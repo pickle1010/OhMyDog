@@ -1,0 +1,69 @@
+<div class="d-flex align-items-center">
+  <div class="me-auto">
+    <h1>Historias clínicas de <%= @dog.first_name %></h1>
+  </div>
+  <% if current_user.admin? %>
+    <%= link_to new_dog_clinic_dog_path(@dog), class: "btn btn-primary" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+      </svg>
+      Agregar historia
+    <% end %>
+  <% end %>
+</div>
+
+<div class="mt-4">
+  <% @clinic_dogs.each do |clinic_dog| %>
+    <div class="accordion" id="accordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= clinic_dog.id%>" aria-expanded="true" aria-controls="collapse<% clinic_dog.id%>">
+            Fecha: <%= clinic_dog.dateclinic %>          
+          </button>
+        </h2>
+        <div id="collapse<%= clinic_dog.id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= clinic_dog.id %>" data-bs-parent="#accordion" >
+          <div class="accordion-body">
+            <div class="card">
+              <div class="card-body">
+                <div class="text-end">
+                  <%= link_to "Ver", clinic_dog_path(clinic_dog), class: "btn btn-primary"%>                
+                  <% if current_user.admin? %>
+                    <%= link_to "Editar", edit_clinic_dog_path(clinic_dog), class: "btn btn-primary ms-1"%>
+                  <% end %>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <p class="mb-0">¿Hubo vacunas aplicadas?</p>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="text-muted mb-0"><%= clinic_dog.question? ? "Si" : "No" %></p>
+                  </div>
+                </div>
+                <hr>
+                <% if clinic_dog.question? %>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <p class="mb-0">Vacunas aplicadas:</p>
+                    </div>
+                    <div class="col-sm-6">
+                      <p class="text-muted mb-0"><%= t("activerecord.attributes.clinic_dog.vaccines_options.#{clinic_dog.vaccines}").humanize %></p>
+                    </div>
+                  </div>
+                  <hr>
+                <% end %>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <p class="mb-0">Descripción:</p>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="text-muted mb-0"><%= clinic_dog.description %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -6,14 +6,28 @@ Rails.application.routes.draw do
   end
 
   resources :users, shallow: true do
-    resources :dogs
+    resources :dogs do
+      resources :clinic_dogs
+    end
+  end
+
+  resources :meetings
+  
+  resources :services do
+    member do
+      patch 'toggle_state'
+    end
   end
   
-  resources :services
-  resources :turn_forms
-  resources :clinic_dogs
-  resources :meetings
-  resources :credit_card, only: [:new, :create]
+  resources :turn_forms do
+    member do
+      patch 'confirm'
+      patch 'reject'
+      get 'emit_amount'
+      post 'save_amount'
+    end
+  end
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

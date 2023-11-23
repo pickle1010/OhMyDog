@@ -21,17 +21,6 @@ es:
       - Octubre
       - Noviembre
       - Diciembre   
-  turn_form:
-    scheduleCons:
-      morning: 'mañana'
-      afternoon: 'tarde' 
-  errors:
-    attributes:
-      dni:
-        not_a_number:
-    blank:
-    messages:
-      not_a_number:
   activerecord:
     models:
       user/dogs: 'perros del usuario'
@@ -40,6 +29,8 @@ es:
       service: 'servicio'
       meeting: 'evento'
       user: 'usuario'
+      meeting: 'Calendario'
+      clinic_dog: 'historia clínica'
     attributes:
       user/dogs:
         user_id: "id del dueño"
@@ -77,6 +68,15 @@ es:
         sexes:
           male: 'macho'
           female: 'hembra'
+      clinic_dog:
+        description: 'descripción'
+        question: 'casilla de verificación'
+        dateclinic: 'fecha de vacunación'
+        vaccines: 'vacunas aplicadas'
+        vaccines_options: 
+          antirrabica: 'antirrábica'
+          inmunologica: 'inmunológica'
+          ambas: 'ambas'
       service:
         name: 'nombre'
         price: 'precio'
@@ -91,9 +91,12 @@ es:
           Vacunacion: 'vacunación'
         date: 'fecha'
       turn_form:
-        dateCons: 'fecha'
-        servicesCons: 'servicios'
-        scheduleCons: 'banda horaria'
+        dateCons: 'Debe seleccionar'
+        servicesCons: 'Debe seleccionar'
+        schedule: 'banda horaria'
+        schedules:
+          morning: 'mañana'
+          afternoon: 'tarde'
         descriptionCons: 'descripción'
       user:
         email: "correo electrónico"
@@ -105,6 +108,9 @@ es:
         password: 'contraseña'
         password_confirmation: 'confirmación de contraseña'
         current_password: 'contraseña actual'
+      meeting:
+        name: 'Opcion'
+        date: 'Fecha'
     errors:
       messages:
         not_a_number:
@@ -126,6 +132,16 @@ es:
               blank: 'no puede estar vacía'
             user:
               required: 'debe existir en el sistema'
+        clinic_dog:
+          attributes:
+            question:
+              blank: 'debe estar seleccionada si hubo alguna vacuna aplicada'
+            description:
+              blank: 'no puede estar vacía'
+            dateclinic:
+              blank: 'no puede estar vacía'
+            vaccines:
+              blank: 'debe tener alguna selección'
         service:
           attributes:
             name:
@@ -137,9 +153,33 @@ es:
               blank: 'una fecha para su consulta'
             servicesCons:
               blank: 'al menos un servicio'
-            scheduleCons:
+            schedule:
               blank: 'no puede estar vacía'
             descriptionCons: 
-              blank: 'no puede estar vacía' 
-        
- 
+              blank: 'no puede estar vacía'
+        user:
+          not_a_number:
+          blank:
+          attributes:
+            first_name: 
+              blank: 'no puede estar vacío' 
+            last_name:
+              blank: 'no puede estar vacío' 
+            dni:
+              blank: 'no puede estar vacío'
+              not_a_number: 'debe ser un número'
+              greater_than: 'debe ser mayor que cero'
+              taken: 'ya corresponde a un cliente' 
+            email:
+              blank: 'no puede estar vacío'
+              invalid: 'no es válido'
+              taken: 'ya corresponde a un cliente' 
+            address: 
+              blank: 'no puede estar vacía'
+            password: 
+              blank: 'no puede estar vacía'
+              too_short: 'tiene menos de 6 caracteres'
+            password_confirmation:
+              confirmation: 'errónea. Las contraseñas no coinciden' 
+            current_password:
+              invalid: 'es erronea' 

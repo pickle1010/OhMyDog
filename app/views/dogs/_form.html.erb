@@ -2,10 +2,9 @@
   <% if dog.errors.any? %>
     <div class="alert alert-danger">
       <h4 class="alert-heading"><%= pluralize(dog.errors.count, "error", "errores") %> <%= (dog.errors.count == 1) ? "impide" : "impiden" %> que se guarden los datos del perro</h4>
-
       <ul>
         <% dog.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <li><%= error.full_message.humanize %></li>
         <% end %>
       </ul>
     </div>
@@ -43,7 +42,7 @@
       <% else %>
         <%= form.select(:breed, 
                   Dog.breeds.keys.map { |breed| [t("activerecord.attributes.dog.breeds.#{breed}").humanize, breed] },
-                  { selected: @dog.new_record? },
+                  { selected: @dog.breed },
                   { class: 'form-select' }) %>
       <% end %>
     </div>
