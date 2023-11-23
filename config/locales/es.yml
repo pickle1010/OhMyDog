@@ -93,11 +93,11 @@ es:
               taken: 'no puede repetirse dentro de la tabla de servicios'
         turn_form:
           attributes:
-            DateCons:
+            dateCons:
               blank: 'una fecha para su consulta'
             servicesCons:
               blank: 'al menos un servicio'
-            ScheduleCons:
+            schedule:
               blank: 'no puede estar vacía'
             descriptionCons: 
               blank: 'no puede estar vacía' 

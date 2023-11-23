@@ -86,7 +86,7 @@ class TurnFormsController < ApplicationController
     @turn_form = TurnForm.find(params[:id])
     monto_ingresado = turn_form_params[:total_amount].to_f
     saldo_a_favor = @turn_form.user.positive_balance.to_f
-  
+    
     # Calcula el monto a descontar
     monto_a_descontar = [monto_ingresado - saldo_a_favor, 0].max
   
@@ -101,15 +101,11 @@ class TurnFormsController < ApplicationController
   
     # Actualiza el modelo TurnForm con el monto ingresado
     if @turn_form.update(total_amount: [nuevo_monto_total, 0].max)
-      redirect_to turn_forms_path, notice: "Monto guardado exitosamente."
+      redirect_to turn_forms_path, success: "Monto guardado exitosamente."
     else
       render 'emit_amount'
     end
   end
-  
-  
-  
-  
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -1,75 +1,55 @@
-<!-- emit_amount.html.erb -->
-
-<h1>Emitir Monto</h1>
-
-<%= form_with(model: @turn_form, url: save_amount_turn_form_path(@turn_form), local: true, method: :post) do |form| %>
-
-  <!-- Mostrar nombre y apellido del dueño -->
-  <p><strong>Dueño:</strong> <%= @turn_form.user.first_name %> <%= @turn_form.user.last_name %></p>
-
-  <!-- Mostrar nombre del perro -->
-  <p><strong>Perro:</strong> <%= @turn_form.dog.first_name if @turn_form.dog.present? %></p>
-
-  <!-- Mostrar fecha de consulta -->
-  <p><strong>Fecha de consulta:</strong> <%= @turn_form.dateCons %></p>
-
-  <!-- Mostrar horario de consulta -->
-  <p><strong>Horario de consulta:</strong> <%= @turn_form.scheduleCons %></p>
-
-  <!-- Mostrar descripción por parte del cliente -->
-  <p><strong>Descripción por parte del cliente:</strong> <%= @turn_form.descriptionCons %></p>
-
-  <!-- Mostrar servicios solicitados -->
-  <p><strong>Servicios solicitados:</strong> <%= @turn_form.servicesCons %></p>
-
-<!-- Campo para el saldo a favor del cliente -->
-  <div class="row mb-3">
-    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
-      <div class="form-group">
-        <strong>Saldo a favor del cliente:</strong>
-      </div>
+<div class="container">
+  <div class="card mb-2 shadow-sm">
+    <div class="card-header text-center">
+      <h1>Emitir Monto</h1>
     </div>
-    <div class="col-md-8 mb-3">
-      <div class="form-group">
-        $<%= @turn_form.user.positive_balance %>
-      </div>
-    </div>
-  </div>
+    <div class="card-body">
+      <div class=row>
+        <div class="col-lg-5">
+          <%= render @turn_form %> 
+        </div>
 
-  <!-- Agregar campo de descripción adicional del veterinario -->
-  <div class="row mb-3">
-    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
-      <div class="form-group">
-        <%= form.label :vet_description, "Descripción adicional del veterinario" %>
-      </div>
-    </div>
-    <div class="col-md-8 mb-3">
-      <div class="form-group">
-        <%= form.text_area :vet_description, class: 'form-control', rows: 5 %> 
-      </div>
-    </div>
-  </div>
+        <div class="col-lg-7">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <div class="row my-3">
+                <div class="col-sm-5">
+                  <span class="mb-0">Saldo a favor del cliente:</span>
+                </div>
+                <div class="col-sm-7">
+                  <span class="text-muted mb-0">$<%= @turn_form.user.positive_balance %></span>
+                </div>
+              </div>
 
-  <!-- Campo para el monto total -->
-  <div class="row mb-3">
-    <div class="col-md-4 mb-3 d-flex align-items-center justify-content-center">
-      <div class="form-group">
-        <%= form.label :total_amount, "Monto total" %>
-      </div>
-    </div>
-    <div class="col-md-8 mb-3">
-      <div class="form-group">
-        <%= form.number_field :total_amount, class: 'form-control', id: 'total_amount_field' %>
+              <%= form_with(model: @turn_form, url: save_amount_turn_form_path(@turn_form), local: true, method: :post) do |form| %>
+                <!-- Campo para el monto total -->
+                <div class="row mb-3">
+                  <%= form.label :total_amount, "Monto emitido", class: "col-sm-4 col-form-label" %>
+                  <div class="col-md-8">
+                    <%= form.number_field :total_amount, class: 'form-control', id: 'total_amount_field' %>
+                  </div>
+                </div>
+
+                <!-- Agregar campo de descripción adicional del veterinario -->
+                <div class="row mb-3">
+                  <%= form.label :vet_description, "Descripción adicional del veterinario", class: "col-sm-4 col-form-label" %>
+                  <div class="col-sm-8">
+                    <%= form.text_area :vet_description, class: 'form-control', rows: 4 %> 
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <%= link_to "Volver a turnos", turn_forms_path, method: :get, class: "btn btn-secondary mt-3" %>
+                  <%= form.submit "Enviar monto", data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, class: "btn btn-primary mt-3" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  
-  <div class="row justify-content-end my-4 mx-4">
-    <div class="col-auto">
-      <%= form.button "Enviar monto", class: "btn btn-primary", type: :submit %>
-    </div>
-  </div>
-<% end %>
+</div>
 
 
 

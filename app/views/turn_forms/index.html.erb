@@ -44,7 +44,7 @@
                   <td><%= turn_form.servicesCons %></td>
                   <td><%= turn_form.dateCons %></td>
                   <td><%= t("activerecord.attributes.turn_form.schedules.#{turn_form.schedule}").humanize %></td>
-                  <td class="d-flex gap-3">
+                  <td class="d-flex gap-1">
                     <%= link_to turn_form, class: "btn btn-info" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -94,6 +94,9 @@
               <th scope="col">Servicios</th>
               <th scope="col">Fecha</th>      
               <th scope="col">Banda horaria</th>
+              <% if current_user.admin? %>
+                <th scope="col">Monto total</th>
+              <% end %>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
@@ -108,10 +111,10 @@
                   <td><%= turn_form.dog.first_name %> <%= turn_form.dog.last_name %></td>
                   <td><%= turn_form.servicesCons %></td>
                   <td><%= turn_form.dateCons %></td>
-                  <% if current_user.admin? && !turn_form.total_amount.nil? %>
+                  <td><%= t("activerecord.attributes.turn_form.schedules.#{turn_form.schedule}").humanize %></td>
+                  <% if current_user.admin? %>
                     <td><%= turn_form.total_amount %></td>
                   <% end %>
-                  <td><%= t("activerecord.attributes.turn_form.schedules.#{turn_form.schedule}").humanize %></td>
                   <td>
                     <%= link_to turn_form, class: "btn btn-info" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
