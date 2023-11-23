@@ -1,0 +1,32 @@
+<h1>New Credit Card Form</h1>
+
+<%= form_with(model: @credit_card, url: credit_card_index_path, local: true, method: :post) do |form| %>
+  <div>
+    <%= form.label :card_type %>
+    <%= form.select :card_type, ['Visa', 'MasterCard'] %>
+  </div>
+
+  <div>
+    <%= form.label :card_number %>
+    <%= form.text_field :card_number, maxlength: 16 %>
+  </div>
+
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :expiration_date %>
+    <%= form.text_field :expiration_date, placeholder: 'MM/YYYY' %>
+  </div>
+
+  <div>
+    <%= form.label :amount %>
+    <%= form.text_field :amount %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit" %>
+  </div>
+<% end %>
