@@ -1,4 +1,5 @@
 class ClinicDog < ApplicationRecord
+    belongs_to :dog
     enum vaccines: [:antirrabica, :inmunologica, :ambas]
     validates :description, presence: true
     validates :question, inclusion: { in: [true, false] }

@@ -1,6 +1,7 @@
 class Dog < ApplicationRecord
   belongs_to :user
   has_one_attached :photo
+  has_many :clinic_dogs, dependent: :destroy
 
   enum sex: [:male, :female]
   enum breed: [:labrador, :golden_retriever, :beagle, :bulldog, :rottweiler, :dachshund, :chihuahua, :doberman, :german_shepherd, :boxer, :dogo_argentino, :border_collie]
