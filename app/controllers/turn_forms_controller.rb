@@ -38,6 +38,7 @@ class TurnFormsController < ApplicationController
 
     respond_to do |format|
       if @turn_form.save
+        #Meeting.create(name: :Turno, start_time: @turn_form.dateCons, description: "sdasdasda")
         format.html { redirect_to turn_form_url(@turn_form), notice: "Turn form was successfully created." }
         format.json { render :show, status: :created, location: @turn_form }
       else

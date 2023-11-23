@@ -11,6 +11,7 @@
       <% meetings.each do |meeting| %>
         <div>
           <%= t("activerecord.attributes.meeting.names.#{meeting.name}").humanize %>
+          <%= meeting.description %>
         </div>
       <% end %>
     <% end %>

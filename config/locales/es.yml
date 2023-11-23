@@ -87,6 +87,7 @@ es:
           No_laborable_todo_el_dia: 'no laborable todo el día' 
           No_laborable_en_la_mañana: 'no laborable en la mañana'
           No_laborable_en_la_tarde: 'no laborable en la tarde'
+          Turno: 'Turno'
           Vacunacion: 'vacunación'
         date: 'fecha'
       turn_form:
