@@ -14,7 +14,15 @@ Rails.application.routes.draw do
   end
   
   resources :services
-  resources :turn_forms
+
+  resources :turn_forms do
+    member do
+      patch 'confirm'
+      patch 'reject'
+      get 'emit_amount'
+      post 'save_amount'
+    end
+  end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

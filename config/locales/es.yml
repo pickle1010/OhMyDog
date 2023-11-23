@@ -21,17 +21,6 @@ es:
       - Octubre
       - Noviembre
       - Diciembre   
-  turn_form:
-    scheduleCons:
-      morning: 'mañana'
-      afternoon: 'tarde' 
-  errors:
-    attributes:
-      dni:
-        not_a_number:
-    blank:
-    messages:
-      not_a_number:
   activerecord:
     models:
       user/dogs: 'perros del usuario'
@@ -82,9 +71,12 @@ es:
         price: 'precio'
         active: 'activo'
       turn_form:
-        dateCons: 'fecha'
-        servicesCons: 'servicios'
-        scheduleCons: 'banda horaria'
+        dateCons: 'Debe seleccionar'
+        servicesCons: 'Debe seleccionar'
+        schedule: 'banda horaria'
+        schedules:
+          morning: 'mañana'
+          afternoon: 'tarde'
         descriptionCons: 'descripción'
       user:
         email: "correo electrónico"
@@ -131,7 +123,7 @@ es:
               blank: 'una fecha para su consulta'
             servicesCons:
               blank: 'al menos un servicio'
-            scheduleCons:
+            schedule:
               blank: 'no puede estar vacía'
             descriptionCons: 
               blank: 'no puede estar vacía'
@@ -160,5 +152,4 @@ es:
             password_confirmation:
               confirmation: 'errónea. Las contraseñas no coinciden' 
             current_password:
-              blank: 'no puede estar vacía'
               invalid: 'es erronea' 
