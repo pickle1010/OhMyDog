@@ -13,7 +13,12 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :services
+  resources :services do
+    member do
+      patch 'toggle_state'
+    end
+  end
+  
 
   resources :turn_forms do
     member do

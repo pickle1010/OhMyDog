@@ -1,9 +1,15 @@
-<h1>Nuevo Servicio</h1>
-<div class="container text-center">
-
-  <%= render "form", service: @service %>
-
-  <div>
-    <%= link_to "Volver a servicios", services_path, class: "btn btn-primary mt-2 me-5" %>
+<div class="container">
+  <div class="card">
+    <div class="card-header text-center">
+      <h1>Nuevo Servicio</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", service: @service %>
+    </div>
+    <div class="row mb-3">
+      <div class="col text-center">
+        <%= link_to "Volver a tabla de servicios", services_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
   </div>
 </div>

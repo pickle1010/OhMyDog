@@ -1,9 +1,9 @@
 class ServicesController < ApplicationController
-  before_action :set_service, only: %i[ show edit update destroy ]
+  before_action :set_service, only: %i[ show edit update destroy toggle_state]
 
   # GET /services or /services.json
   def index
-    @services = Service.all
+    @services = Service.all.order(:name)
   end
 
   # GET /services/1 or /services/1.json
@@ -25,7 +25,7 @@ class ServicesController < ApplicationController
 
     respond_to do |format|
       if @service.save
-        format.html { redirect_to service_url(@service), notice: "Servicio agregado exitosamente" }
+        format.html { redirect_to services_path, success: "Servicio agregado exitosamente" }
         format.json { render :show, status: :created, location: @service }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class ServicesController < ApplicationController
   def update
     respond_to do |format|
       if @service.update(service_params)
-        format.html { redirect_to service_url(@service), notice: "Servicio actualizado exitosamente" }
+        format.html { redirect_to services_path, success: "Servicio actualizado exitosamente" }
         format.json { render :show, status: :ok, location: @service }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,8 +52,17 @@ class ServicesController < ApplicationController
     @service.destroy!
 
     respond_to do |format|
-      format.html { redirect_to services_url, notice: "Servicio eliminado exitosamente" }
+      format.html { redirect_to services_url, success: "Servicio eliminado exitosamente" }
       format.json { head :no_content }
+    end
+  end
+
+  def toggle_state
+    @service.update(active: !@service.active)
+    if @service.active
+      redirect_to services_path, success: "Servicio activado exitosamente"
+    else
+      redirect_to services_path, success: "Servicio desactivado exitosamente"
     end
   end
 
