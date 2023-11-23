@@ -1,21 +1,21 @@
 class TurnForm < ApplicationRecord
     belongs_to :user
     has_many :services
-    validates :DateCons , presence: true 
-    validates :ScheduleCons , presence: true
-    validates :servicesCons , presence: true   
-    validate :morning_option_available
+    enum scheduleCons: [:morning, :afternoon]
+    validates :dateCons , presence: true
+    validates :scheduleCons , presence: true
+    validates :servicesCons , presence: true
+    validate :dateCons_cannot_be_in_the_past
+    # validate :morning_option_available
 
-    def morning_option_available
-        if :DateCons == Date.today && :ScheduleCons == 'morning'
-          # Define your time range for "morning"
-          morning_start_time = Time.parse('21:00:00')
-          morning_end_time = Time.parse('22:00:00')
+    def set_user(user)
+      self.user_id = user.id
+    end
 
-          unless (morning_start_time..morning_end_time).cover?(Time.now)
-            errors.add(:ScheduleCons, 'The "Morning" option is not available outside the time range of 8:00 AM to 12:00 PM.')
-          end
-        end
+    def dateCons_cannot_be_in_the_past
+      if dateCons.present? && dateCons < Date.today
+        errors.add(:dateCons, "la fecha presente o una futura")
+      end
     end
 
     # def morning_option_available

@@ -28,7 +28,7 @@
               <li><%= link_to "Adopciones", root_path, class:"dropdown-item" %></li>
               <li><%= link_to "Perdidos y Encontrados", root_path, class:"dropdown-item" %></li>
               <li><%= link_to "Paseadores y Cuidadores", root_path, class:"dropdown-item" %></li>
-              <li><%= link_to "Calendario", "#", class:"dropdown-item" %></li>
+              <li><%= link_to "Calendario", meetings_path, class:"dropdown-item" %></li>
               <% if user_signed_in? %>
                 <li><%= link_to "Turnos", turn_forms_path, class:"dropdown-item" %></li>
                 <% if current_user.admin? %>
