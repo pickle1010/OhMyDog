@@ -28,7 +28,8 @@ es:
       turn_form: 'turno'
       service: 'servicio'
       user: 'usuario'
-      Meeting: 'Calendario'
+      meeting: 'Calendario'
+      clinic_dog: 'historia clínica'
     attributes:
       user/dogs:
         user_id: "id del dueño"
@@ -66,6 +67,15 @@ es:
         sexes:
           male: 'macho'
           female: 'hembra'
+      clinic_dog:
+        description: 'descripción'
+        question: 'casilla de verificación'
+        dateclinic: 'fecha de vacunación'
+        vaccines: 'vacunas aplicadas'
+        vaccines_options: 
+          antirrabica: 'antirrábica'
+          inmunologica: 'inmunológica'
+          ambas: 'ambas'
       service:
         name: 'nombre'
         price: 'precio'
@@ -88,8 +98,14 @@ es:
         password: 'contraseña'
         password_confirmation: 'confirmación de contraseña'
         current_password: 'contraseña actual'
-      Meeting:
-        name: 'Opcion'
+      meeting:
+        name: 'opcion'
+        names:
+          No_laborable_todo_el_dia: "no laborable todo el día"  
+          No_laborable_en_la_mañana: "no laborable en la mañana"
+          No_laborable_en_la_tarde: "no laborable en la tarde"
+          Vacunacion: "vacunación"
+          Turno: "turno"
         date: 'Fecha'
     errors:
       messages:
@@ -112,6 +128,16 @@ es:
               blank: 'no puede estar vacía'
             user:
               required: 'debe existir en el sistema'
+        clinic_dog:
+          attributes:
+            question:
+              blank: 'debe estar seleccionada si hubo alguna vacuna aplicada'
+            description:
+              blank: 'no puede estar vacía'
+            dateclinic:
+              blank: 'no puede estar vacía'
+            vaccines:
+              blank: 'debe tener alguna selección'
         service:
           attributes:
             name:

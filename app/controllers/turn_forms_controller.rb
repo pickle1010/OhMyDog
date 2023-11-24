@@ -39,6 +39,9 @@ class TurnFormsController < ApplicationController
 
     respond_to do |format|
       if @turn_form.save
+        User.where(role: :admin).each do |admin|
+          Message.create(user_id: admin.id, date: Date.today, title: "Turno solicitado", content: "#{@turn_form.user.first_name} (#{@turn_form.user.dni}) ha solicitado un turno para #{@turn_form.dog.first_name}")
+        end
         format.html { redirect_to turn_form_url(@turn_form), success: "El turno fue solicitado exitosamente" }
         format.json { render :show, status: :created, location: @turn_form }
       else
@@ -74,11 +77,13 @@ class TurnFormsController < ApplicationController
 
   def confirm
     @turn_form.update(confirmed: true)
+    Message.create(user_id: @turn_form.user.id, date: Date.today, title: "Turno confirmado", content: "Tu turno para #{@turn_form.dog.first_name} ha sido confirmado")
     redirect_to turn_forms_url, notice: "Turno confirmado exitosamente."
   end
   
   def reject
     @turn_form.destroy
+    Message.create(user_id: @turn_form.user.id, date: Date.today, title: "Turno rechazado", content: "Tu turno para #{@turn_form.dog.first_name} ha sido rechazado")
     redirect_to turn_forms_url, notice: "Turno rechazado exitosamente."
   end
   
@@ -88,6 +93,7 @@ class TurnFormsController < ApplicationController
 
   def save_amount
     @turn_form = TurnForm.find(params[:id])
+    vet_description = turn_form_params[:vet_description]
     monto_ingresado = turn_form_params[:total_amount].to_f
     saldo_a_favor = @turn_form.user.positive_balance.to_f
     
@@ -105,7 +111,8 @@ class TurnFormsController < ApplicationController
   
     # Actualiza el modelo TurnForm con el monto ingresado
     if @turn_form.update(total_amount: [nuevo_monto_total, 0].max)
-      redirect_to turn_forms_path, success: "Monto guardado exitosamente."
+      Message.create(user_id: @turn_form.user.id, date: Date.today, title: "Monto total recibido", content: "El monto total de tu turno para #{@turn_form.dog.first_name} es $#{@turn_form.total_amount}.\nDescripción adicional del veterinario: #{vet_description}")
+      redirect_to turn_forms_path, success: "Monto emitido exitosamente."
     else
       render 'emit_amount'
     end
@@ -119,7 +126,7 @@ class TurnFormsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def turn_form_params
-      params.require(:turn_form).permit(:dateCons, :schedule, :descriptionCons, :servicesCons, :confirmed, :dog_id, :total_amount)
+      params.require(:turn_form).permit(:dateCons, :schedule, :descriptionCons, :servicesCons, :confirmed, :dog_id, :total_amount, :vet_description)
     end
 
     def check_if_not_admin

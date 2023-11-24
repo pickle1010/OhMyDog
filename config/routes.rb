@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :users, shallow: true do
     resources :dogs do
-      resources :clinic_dogs, only: [:index, :new, :create, :edit, :update, :destroy]
+      resources :clinic_dogs
     end
   end
   
@@ -19,7 +19,6 @@ Rails.application.routes.draw do
     end
   end
   
-
   resources :turn_forms do
     member do
       patch 'confirm'
@@ -28,6 +27,8 @@ Rails.application.routes.draw do
       post 'save_amount'
     end
   end
+
+  resources :notifications, only: [:index]
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -2,7 +2,6 @@
   <% if service.errors.any? %>
     <div class="alert alert-danger">
       <h4 class="alert-heading"><%= pluralize(service.errors.count, "error","errores") %> <%= (service.errors.count == 1) ? "impide" : "impiden" %> que se guarde este servicio:</h4>
-
       <ul>
         <% service.errors.each do |error| %>
           <li><%= error.full_message.humanize %></li>
@@ -34,7 +33,7 @@
   
   <div class="row">
     <div class="col text-center">
-      <%= form.submit "Guardar", data: { confirm: "¿Estás de acuerdo con los cambios realizados?", turbo_confirm: "¿Estás de acuerdo con los cambios realizados?" }, class: "btn btn-primary mt-2" %>
+      <%= form.submit "Guardar", data: { confirm: "¿Estás seguro de los datos ingresados?", turbo_confirm: "¿Estás seguro de los datos ingresados?" }, class: "btn btn-primary mt-2" %>
     </div>
   </div>
 <% end %>
