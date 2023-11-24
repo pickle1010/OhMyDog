@@ -9,6 +9,7 @@ es:
       - Viernes
       - Sabado
     month_names:
+      - Diciembre
       - Enero
       - Febrero
       - Marzo
@@ -20,7 +21,6 @@ es:
       - Septiembre
       - Octubre
       - Noviembre
-      - Diciembre   
   activerecord:
     models:
       user/dogs: 'perros del usuario'
