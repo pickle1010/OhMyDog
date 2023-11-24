@@ -51,13 +51,13 @@
                   <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                 </svg>                
                 <% if current_user.messages.count > 0 %>
-                  <span class="badge rounded-pill badge-notification bg-danger"><%= current_user.messages.where('date <= ?', Date.today).count %></span>
+                  <span class="badge rounded-pill badge-notification bg-danger"><%= current_user.messages.where('datetime <= ?', DateTime.now).count %></span>
                 <% end %>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
                 <% if current_user.messages.count > 0 %>
-                  <% Message.where(user_id: current_user.id).order(date: :desc).first(5).each do |message| %>
-                    <% if message.date.nil? || message.date <= Date.today %>
+                  <% Message.where(user_id: current_user.id).order(datetime: :desc).first(5).each do |message| %>
+                    <% if message.datetime.nil? || message.datetime <= DateTime.now %>
                       <li><span class="dropdown-item-text"><%= message.title %></span></li>
                       <li><hr class="dropdown-divider"></li>
                     <% end %>

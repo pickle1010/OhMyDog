@@ -9,6 +9,8 @@ class TurnForm < ApplicationRecord
   validate :date_cannot_be_in_the_past
   validate :unique_turn_for_dog, if: -> { user.client? }
   validate :must_not_be_morning_when_has_already_passed
+  validates :total_amount, presence: true, on: :save_total_amount
+  validates :total_amount, numericality: { greater_than: 0 }, on: :save_total_amount
 
   def set_user(user)
     self.user_id = user.id

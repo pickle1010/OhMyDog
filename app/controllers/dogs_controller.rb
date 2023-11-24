@@ -31,8 +31,8 @@ class DogsController < ApplicationController
     respond_to do |format|
       if @dog.save
         if @dog.age_in_months < 2
-          schedule_date = @dog.birthday + 2.months
-          Message.create(user_id: @dog.user.id, date: schedule_date, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
+          schedule_datetime = @dog.birthday.to_datetime + 2.months
+          Message.create(user_id: @dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
         end
         format.html { redirect_to @dog, success: 'El perro fue creado exitosamente' }
         format.json { render :show, status: :created, location: @dog }
@@ -48,8 +48,8 @@ class DogsController < ApplicationController
     respond_to do |format|
       if @dog.update(dog_params)
         if @dog.age_in_months <= 2
-          schedule_date = @dog.birthday + 2.months
-          Message.create(user_id: @dog.user.id, date: schedule_date, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
+          schedule_datetime = @dog.birthday.to_datetime + 2.months
+          Message.create(user_id: @dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
         end
         format.html { redirect_to @dog, success: "El perro fue actualizado exitosamente" }
         format.json { render :show, status: :ok, location: @dog }

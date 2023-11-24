@@ -88,6 +88,7 @@ es:
           morning: 'mañana'
           afternoon: 'tarde'
         descriptionCons: 'descripción'
+        total_amount: 'monto total'
       user:
         email: "correo electrónico"
         dni: 'DNI'
@@ -153,6 +154,10 @@ es:
               blank: 'no puede estar vacía'
             descriptionCons: 
               blank: 'no puede estar vacía'
+            total_amount:
+              blank: 'no puede estar vacío'
+              not_a_number: 'debe ser un número'
+              greater_than: 'debe ser mayor que cero'
         user:
           not_a_number:
           blank:

@@ -94,9 +94,6 @@
               <th scope="col">Servicios</th>
               <th scope="col">Fecha</th>      
               <th scope="col">Banda horaria</th>
-              <% if current_user.admin? %>
-                <th scope="col">Monto total</th>
-              <% end %>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
@@ -112,9 +109,6 @@
                   <td><%= turn_form.servicesCons %></td>
                   <td><%= turn_form.dateCons %></td>
                   <td><%= t("activerecord.attributes.turn_form.schedules.#{turn_form.schedule}").humanize %></td>
-                  <% if current_user.admin? %>
-                    <td><%= turn_form.total_amount %></td>
-                  <% end %>
                   <td>
                     <%= link_to turn_form, class: "btn btn-info" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
