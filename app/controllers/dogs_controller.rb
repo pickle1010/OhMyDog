@@ -33,6 +33,7 @@ class DogsController < ApplicationController
         if @dog.age_in_months < 2
           schedule_datetime = @dog.birthday.to_datetime + 2.months
           Message.create(user_id: @dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
+          Meeting.create(name: :Vacunacion, user_id: @user.id, dog_id: @dog.id, start_time: schedule_datetime.to_date, description:"#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
         end
         format.html { redirect_to @dog, success: 'El perro fue creado exitosamente' }
         format.json { render :show, status: :created, location: @dog }
@@ -50,6 +51,7 @@ class DogsController < ApplicationController
         if @dog.age_in_months <= 2
           schedule_datetime = @dog.birthday.to_datetime + 2.months
           Message.create(user_id: @dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
+          @dog.meeting.update(start_time: schedule_datetime.to_date)
         end
         format.html { redirect_to @dog, success: "El perro fue actualizado exitosamente" }
         format.json { render :show, status: :ok, location: @dog }

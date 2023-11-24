@@ -39,7 +39,6 @@ class TurnFormsController < ApplicationController
 
     respond_to do |format|
       if @turn_form.save
-        Meeting.create(name: :Turno, start_time: @turn_form.dateCons, description:"Cliente: #{@turn_form.user.first_name} #{@turn_form.user.last_name}, Perro: #{@turn_form.dog.first_name}")
         User.where(role: :admin).each do |admin|
           Message.create(user_id: admin.id, datetime: DateTime.now, title: "Turno solicitado", content: "#{@turn_form.user.first_name} (#{@turn_form.user.dni}) ha solicitado un turno para #{@turn_form.dog.first_name}")
         end
@@ -78,6 +77,7 @@ class TurnFormsController < ApplicationController
 
   def confirm
     @turn_form.update(confirmed: true)
+    Meeting.create(name: :Turno, user_id: @turn_form.user.id, turn_form_id: @turn_form.id, start_time: @turn_form.dateCons, description:"Cliente: #{@turn_form.user.first_name} #{@turn_form.user.last_name}, Perro: #{@turn_form.dog.first_name}")
     Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Turno confirmado", content: "Tu turno para #{@turn_form.dog.first_name} ha sido confirmado")
     redirect_to turn_forms_url, success: "Turno confirmado exitosamente."
   end

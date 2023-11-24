@@ -1,6 +1,4 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Meetings</h1>
+<h1>Calendario</h1>
 
 <div class="container">
   <div class="row justify-content-center">
@@ -22,7 +20,7 @@
   <% @meetings.each do |meeting| %>
     <%= render meeting %>
     <p>
-      <%= link_to "Show this meeting", meeting %>
+      <%= link_to "Ver evento", meeting %>
     </p>
   <% end %>
 </div>

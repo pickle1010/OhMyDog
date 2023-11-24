@@ -41,6 +41,7 @@ class ClinicDogsController < ApplicationController
           end
           vaccine_dose = @clinic_dog.ambas? ? "inmunológica y antirrábica" : t("activerecord.attributes.clinic_dog.vaccines_options.#{@clinic_dog.vaccines}")
           Message.create(user_id: @clinic_dog.dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
+          Meeting.create(name: :Vacunacion, user_id: @dog.user.id, clinic_dog_id: @clinic_dog.id, start_time: schedule_datetime.to_date, description:"#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
         end
         format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La historia clínica fue creada exitosamente" }
         format.json { render :show, status: :created, location: @clinic_dog }
@@ -67,6 +68,7 @@ class ClinicDogsController < ApplicationController
           end
           vaccine_dose = @clinic_dog.ambas? ? "inmunológica y antirrábica" : t("activerecord.attributes.clinic_dog.vaccines_options.#{@clinic_dog.vaccines}")
           Message.create(user_id: @clinic_dog.dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
+          @clinic_dog.meeting.update(start_time: schedule_datetime.to_date)
         end
         format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La historia clínica fue actualizada exitosamente." }
         format.json { render :show, status: :ok, location: @clinic_dog }

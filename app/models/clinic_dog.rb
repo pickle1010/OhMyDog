@@ -1,5 +1,6 @@
 class ClinicDog < ApplicationRecord
     belongs_to :dog
+    has_one :meeting, dependent: :destroy
 
     enum vaccines: [:antirrabica, :inmunologica, :ambas]
 

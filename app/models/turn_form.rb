@@ -1,6 +1,7 @@
 class TurnForm < ApplicationRecord
   belongs_to :user
   belongs_to :dog
+  has_one :meeting, dependent: :destroy
 
   enum schedule: [:morning, :afternoon]
 

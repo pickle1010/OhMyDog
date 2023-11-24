@@ -1,11 +1,11 @@
 <div id="<%= dom_id meeting %>">
   <p>
-    <strong>Name:</strong>
-    <%= meeting.name %>
+    <strong>Opciones:</strong>
+    <%= t("activerecord.attributes.meeting.names.#{meeting.name}") %>
   </p>
 
   <p>
-    <strong>Start time:</strong>
+    <strong>Fecha:</strong>
     <%= meeting.start_time %>
   </p>
 

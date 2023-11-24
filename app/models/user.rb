@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :dogs, dependent: :destroy
   has_many :turn_forms, dependent: :destroy
   has_many :messages
+  has_many :meetings
   has_many :notifications, as: :recipient, dependent: :destroy
   
   accepts_nested_attributes_for :dogs

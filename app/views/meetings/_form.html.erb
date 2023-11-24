@@ -1,11 +1,10 @@
 <%= form_with(model: meeting) do |form| %>
   <% if meeting.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(meeting.errors.count, "error") %> prohibited this meeting from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(meeting.errors.count, "error", "errores") %> evitaron que este evento se guardara:</h4>
       <ul>
         <% meeting.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <li><%= error.full_message.humanize %></li>
         <% end %>
       </ul>
     </div>
