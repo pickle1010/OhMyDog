@@ -39,7 +39,7 @@ class TurnFormsController < ApplicationController
 
     respond_to do |format|
       if @turn_form.save
-        Meeting.create(name: :Turno, start_time: @turn_form.dateCons, description:"Cliente: #{@turn_form.user.first_name} #{@turn_form.user.last_name}, Perro: #{@turn_form.dog.first_name}")
+        #Meeting.create(name: :Turno, start_time: @turn_form.dateCons, description:"Cliente: #{@turn_form.user.first_name} #{@turn_form.user.last_name}, Perro: #{@turn_form.dog.first_name}")
         format.html { redirect_to turn_form_url(@turn_form), success: "El turno fue solicitado exitosamente" }
         format.json { render :show, status: :created, location: @turn_form }
       else
@@ -75,6 +75,7 @@ class TurnFormsController < ApplicationController
 
   def confirm
     @turn_form.update(confirmed: true)
+    Meeting.create(name: :Turno, start_time: @turn_form.dateCons, description:"Cliente: #{@turn_form.user.first_name} #{@turn_form.user.last_name}, Perro: #{@turn_form.dog.first_name}")
     redirect_to turn_forms_url, notice: "Turno confirmado exitosamente."
   end
   

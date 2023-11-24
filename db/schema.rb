@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_23_185253) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_24_010840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,12 +92,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_185253) do
     t.datetime "updated_at", null: false
     t.string "servicesCons"
     t.bigint "user_id", null: false
-    t.date "dateCons"
     t.integer "schedule"
     t.boolean "confirmed", default: false
     t.bigint "dog_id", null: false
     t.decimal "total_amount"
     t.text "vet_description"
+    t.date "dateCons"
     t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
   end
@@ -122,8 +122,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_185253) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "clinic_dogs", "dogs"
   add_foreign_key "dogs", "users"
   add_foreign_key "meetings", "turn_forms"
   add_foreign_key "meetings", "users"
+  add_foreign_key "turn_forms", "dogs"
   add_foreign_key "turn_forms", "users"
 end
