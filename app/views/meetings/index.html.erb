@@ -10,7 +10,8 @@
 
       <% meetings.each do |meeting| %>
         <div>
-          <%= meeting.name %>
+          <%= t("activerecord.attributes.meeting.names.#{meeting.name}").humanize %>
+          <%= meeting.description %>
         </div>
       <% end %>
     <% end %>

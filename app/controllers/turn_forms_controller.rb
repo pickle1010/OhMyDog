@@ -39,6 +39,7 @@ class TurnFormsController < ApplicationController
 
     respond_to do |format|
       if @turn_form.save
+        Meeting.create(name: :Turno, start_time: @turn_form.dateCons, description:"Cliente: #{@turn_form.user.first_name} #{@turn_form.user.last_name}, Perro: #{@turn_form.dog.first_name}")
         User.where(role: :admin).each do |admin|
           Message.create(user_id: admin.id, datetime: DateTime.now, title: "Turno solicitado", content: "#{@turn_form.user.first_name} (#{@turn_form.user.dni}) ha solicitado un turno para #{@turn_form.dog.first_name}")
         end

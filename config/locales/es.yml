@@ -27,6 +27,7 @@ es:
       dog: 'perro'
       turn_form: 'turno'
       service: 'servicio'
+      meeting: 'evento'
       user: 'usuario'
       meeting: 'Calendario'
       clinic_dog: 'historia clínica'
@@ -80,6 +81,15 @@ es:
         name: 'nombre'
         price: 'precio'
         active: 'activo'
+      meeting:
+        name: 'opcion'
+        names:
+          No_laborable_todo_el_dia: 'no laborable todo el día' 
+          No_laborable_en_la_mañana: 'no laborable en la mañana'
+          No_laborable_en_la_tarde: 'no laborable en la tarde'
+          Turno: 'Turno'
+          Vacunacion: 'vacunación'
+        date: 'fecha'
       turn_form:
         dateCons: 'Debe seleccionar'
         servicesCons: 'Debe seleccionar'
