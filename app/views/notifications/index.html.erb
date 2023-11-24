@@ -2,16 +2,18 @@
 
 <% if @notifications.any? %>
   <ul class="list-group">
-    <% @notifications.each do |notification| %>
-      <li class="list-group-item">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1"><%= notification.to_notification.title %></h5>
-        </div>
-        <p class="mb-1"><%= notification.to_notification.message %></p>
-        <small>Recibido el <%= notification.created_at.to_date %></small>
-      </li>
+    <% Message.where(user_id: current_user.id).order(date: :desc).each do |message| %>
+      <% if message.date.nil? || message.date <= Date.today %>
+        <li class="list-group-item">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1"><%= message.title %></h5>
+          </div>
+          <p class="mb-1"><%= message.content %></p>
+          <small>Recibido el <%= message.date %></small>
+        </li>
+      <% end %>
     <% end %>
   </ul>
 <% else %>
-  <p>No notifications found.</p>
+  <p>No tienes notificationes.</p>
 <% end %>

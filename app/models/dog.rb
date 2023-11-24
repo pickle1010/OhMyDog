@@ -12,7 +12,16 @@ class Dog < ApplicationRecord
   validate :birthday_cannot_be_in_the_future
   validate :photo_attached?
 
-  #Pendiente validar nombre del perro segun perros existentes del dueño y cambiar :sex por tipo enum: macho o hembra.
+  def age_in_months
+    today = Date.today
+    age_in_months = (today.year * 12 + today.month) - (birthday.year * 12 + birthday.month)
+
+    # Adjust age if the birthday hasn't occurred yet this month
+    age_in_months -= 1 if today.day < birthday.day
+
+    age_in_months
+  end
+
   private
 
   def birthday_cannot_be_in_the_future

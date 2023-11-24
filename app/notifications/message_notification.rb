@@ -25,6 +25,10 @@ class MessageNotification < Noticed::Base
     params[:message].title
   end
 
+  def date
+    params[:message].date
+  end
+
   def url
     message_path(params[:message])
   end

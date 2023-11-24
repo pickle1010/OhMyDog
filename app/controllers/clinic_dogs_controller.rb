@@ -31,6 +31,17 @@ class ClinicDogsController < ApplicationController
 
     respond_to do |format|
       if @clinic_dog.save
+        if @clinic_dog.question? 
+          schedule_date = @clinic_dog.dateclinic
+          age_in_months = @clinic_dog.dog.age_in_months
+          if age_in_months > 4
+            schedule_date += 1.year
+          else
+            schedule_date += 21
+          end
+          vaccine_dose = @clinic_dog.ambas? ? "inmunológica y antirrábica" : t("activerecord.attributes.clinic_dog.vaccines_options.#{@clinic_dog.vaccines}")
+          Message.create(user_id: @clinic_dog.dog.user.id, date: schedule_date, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
+        end
         format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La historia clínica fue creada exitosamente" }
         format.json { render :show, status: :created, location: @clinic_dog }
       else
@@ -44,6 +55,19 @@ class ClinicDogsController < ApplicationController
   def update
     respond_to do |format|
       if @clinic_dog.update(clinic_dog_params)
+        if @clinic.dog.question
+          schedule_date = @clinic_dog.dateclinic
+          age_in_months = @clinic_dog.dog.age_in_months
+          if age_in_months > 4
+            schedule_date = schedule_date + 1.year
+          elsif age_in_months > 2
+            schedule_date = schedule_date + 21
+          else 
+            schedule_date = @clinic_dog.dog.birthday + 2.months
+          end
+          vaccine_dose = @clinic_dog.ambas? ? "inmunológica y antirrábica" : t("activerecord.attributes.clinic_dog.vaccines_options.#{@clinic_dog.vaccines}")
+          Message.create(user_id: @clinic_dog.dog.user.id, date: schedule_date, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
+        end
         format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La historia clínica fue actualizada exitosamente." }
         format.json { render :show, status: :ok, location: @clinic_dog }
       else

@@ -3,7 +3,7 @@
 Cada turno es para un único perro. Si tienes más de un perro, por favor, saca un turno para cada uno.
 </div>
 
-<%= form_with(model: @turn_form, local: true) do |form| %>
+<%= form_with(model: @turn_form) do |form| %>
     <!--Error messages-->
     <% if @turn_form.errors.any? %>
         <div class="alert alert-danger">
