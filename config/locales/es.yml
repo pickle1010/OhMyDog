@@ -70,7 +70,7 @@ es:
       clinic_dog:
         description: 'descripción'
         question: 'casilla de verificación'
-        dateclinic: 'fecha de vacunación'
+        dateclinic: 'fecha'
         vaccines: 'vacunas aplicadas'
         vaccines_options: 
           antirrabica: 'antirrábica'
@@ -99,8 +99,8 @@ es:
         password_confirmation: 'confirmación de contraseña'
         current_password: 'contraseña actual'
       meeting:
-        name: 'opcion'
-        start_time: 'fecha'
+        name: 'Motivo'
+        start_time: 'Fecha'
         names:
           No_laborable_todo_el_dia: "no laborable todo el día"  
           No_laborable_en_la_mañana: "no laborable en la mañana"
@@ -138,7 +138,7 @@ es:
             dateclinic:
               blank: 'no puede estar vacía'
             vaccines:
-              blank: 'debe tener alguna selección'
+              blank: 'no puede estar vacía'
         service:
           attributes:
             name:
@@ -183,6 +183,6 @@ es:
         meeting:
           attributes:
             start_time:
-              blank: 'no puede estar vacio'
+              blank: 'no puede estar vacía'
             name:
-              blank: 'no puede estar vacio'
+              blank: 'no puede estar vacío'

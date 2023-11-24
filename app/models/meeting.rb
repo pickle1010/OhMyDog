@@ -8,7 +8,7 @@ class Meeting < ApplicationRecord
 
     def date_cannot_be_in_the_past
         if start_time.present? && start_time < Date.today
-          errors.add(:start_time, "la fecha presente o una futura")
+          errors.add(:start_time, "debe ser presente o futura")
         end
       end
 
