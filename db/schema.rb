@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_24_045318) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_23_233205) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,6 +71,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_045318) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "name"
+    t.bigint "turn_form_id"
+    t.string "description"
+    t.bigint "user_id"
+    t.index ["turn_form_id"], name: "index_meetings_on_turn_form_id"
+    t.index ["user_id"], name: "index_meetings_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -141,8 +146,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_045318) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clinic_dogs", "dogs"
+  add_foreign_key "dogs", "users"
+  add_foreign_key "meetings", "turn_forms"
+  add_foreign_key "meetings", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "turn_forms", "dogs"
-  add_foreign_key "dogs", "users"
   add_foreign_key "turn_forms", "users"
 end
