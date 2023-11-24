@@ -71,6 +71,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_054902) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "name"
+    t.bigint "turn_form_id"
+    t.string "description"
+    t.bigint "user_id"
+    t.index ["turn_form_id"], name: "index_meetings_on_turn_form_id"
+    t.index ["user_id"], name: "index_meetings_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -112,9 +117,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_054902) do
     t.date "dateCons"
     t.integer "schedule"
     t.boolean "confirmed", default: false
-    t.bigint "dog_id", null: false
+    t.bigint "dog_id"
     t.decimal "total_amount"
     t.text "vet_description"
+    t.date "block_date"
     t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
   end
@@ -140,6 +146,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_054902) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clinic_dogs", "dogs"
+  add_foreign_key "dogs", "users"
+  add_foreign_key "meetings", "turn_forms"
+  add_foreign_key "meetings", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "turn_forms", "dogs"
   add_foreign_key "turn_forms", "users"
