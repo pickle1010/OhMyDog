@@ -11,12 +11,12 @@ class TurnForm < ApplicationRecord
   validate :must_not_be_morning_when_has_already_passed
   validate :validate_morning_meeting, if: -> { user.client?} 
   validate :validate_evening_meeting, if: -> { user.client?}
-  #validate :validate_allday_meeting, if: -> { user.client?}
+  validate :validate_allday_meeting, if: -> { user.client?}
 
   def validate_morning_meeting
     if dateCons.present?
-      morningmeeting = Meeting.where(name: :No_laborable_en_la_mañana).where(start_time: :dateCons)
-      if morningmeeting && schedule == "morning"
+      morningmeeting = Meeting.where(name: :No_laborable_en_la_mañana).where(start_time: dateCons).count
+      if morningmeeting > 0 && schedule == "morning"
         errors.add( :base, "La franja horaria elegida de ese dia no esta disponible.")
       end
     end
@@ -24,21 +24,21 @@ class TurnForm < ApplicationRecord
 
   def validate_evening_meeting
     if dateCons.present?
-      eveningmeeting = Meeting.where(name: :No_laborable_en_la_tarde).where(start_time: :dateCons)
-      if eveningmeeting && schedule == "afternoon"
-        errors.add( :base, "La franja horaria de la tarde no esta disponible ese dia")
+      eveningmeeting = Meeting.where(name: :No_laborable_en_la_tarde).where(start_time: dateCons).count
+      if eveningmeeting > 0 && schedule == "afternoon"
+        errors.add(:base, "La franja horaria de la tarde no esta disponible ese dia")
       end
     end
   end
 
-  #def validate_allday_meeting
-  #  if dateCons.present?
-  #    morningmeeting = Meeting.where(name: :No_laborable_todo_el_dia).where(start_time: dateCons)
-  #    if morningmeeting && schedule == "morning"
-  #      errors.add( :base, "La franja horaria elegida de ese dia no esta disponible.")
-  #    end
-  #  end
-  #end
+  def validate_allday_meeting
+    if dateCons.present?
+      morningmeeting = Meeting.where(name: :No_laborable_todo_el_dia).where(start_time: dateCons).count
+      if morningmeeting > 0
+        errors.add(:base, "Ese dia no es laborable")
+      end
+    end
+  end
 
   def set_user(user)
     self.user_id = user.id

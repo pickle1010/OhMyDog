@@ -2,9 +2,10 @@
 
 <h1>Meetings</h1>
 
+<%= link_to "Nuevo Evento", new_meeting_path, class: "btn btn-primary my-3 mx-5" %>
+
 <div class="container">
   <div class="row justify-content-center">
-    <%= link_to "New meeting", new_meeting_path %>
     <%= month_calendar(events: @meetings) do |date, meetings| %>
       <%= date.day %>
 
@@ -22,7 +23,7 @@
   <% @meetings.each do |meeting| %>
     <%= render meeting %>
     <p>
-      <%= link_to "Show this meeting", meeting %>
+      <%= link_to "Mostrar acciones", meeting %>
     </p>
   <% end %>
 </div>
