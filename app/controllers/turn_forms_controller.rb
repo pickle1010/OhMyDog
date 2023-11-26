@@ -117,18 +117,22 @@ class TurnFormsController < ApplicationController
       Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Monto total recibido", content: "El monto total de tu turno para #{@turn_form.dog.first_name} es $#{@turn_form.total_amount}.Descripción adicional del veterinario: #{vet_description}")
       @turn_form.destroy!
       redirect_to turn_forms_path, success: "Monto emitido exitosamente."
+    
     else
       if @turn_form.errors.any? 
-        flash.now[:danger] = "El monto enviado no debe estar vacío"
-      end
-      if @turn_form.errors.where(:total_amount, :not_a_number).count > 0
-        flash.now[:danger] = "El monto enviado debe ser un número"
-      end
-      if @turn_form.errors.where(:total_amount, :greater_than).count > 0
-        flash.now[:danger] = "El monto enviado debe ser mayor a cero"
+        flash.now[:alert] = "Error al enviar el monto:"
+        
+        if @turn_form.errors[:total_amount].include?(:blank)
+          flash.now[:alert] += " El monto enviado no debe estar vacío."
+        elsif @turn_form.errors[:total_amount].include?(:not_a_number)
+          flash.now[:alert] += " El monto enviado debe ser un número."
+        elsif @turn_form.errors[:total_amount].include?(:greater_than)
+          flash.now[:alert] += " El monto enviado debe ser mayor a cero."
+        end
       end
       render 'emit_amount'
     end
+    
   end
 
   private

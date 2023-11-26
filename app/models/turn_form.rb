@@ -10,8 +10,11 @@ class TurnForm < ApplicationRecord
   validate :date_cannot_be_in_the_past
   validate :unique_turn_for_dog, if: -> { user.client? }
   validate :must_not_be_morning_when_has_already_passed
+  validate :date_must_be_laborable, if: -> { user.client? }
+  validate :date_and_schedule_must_be_laborable, if: -> { user.client? }
   validates :total_amount, presence: true, on: :save_total_amount
   validates :total_amount, numericality: { greater_than: 0 }, on: :save_total_amount
+
 
   def set_user(user)
     self.user_id = user.id
@@ -19,7 +22,7 @@ class TurnForm < ApplicationRecord
 
   def date_cannot_be_in_the_past
     if dateCons.present? && dateCons < Date.today
-      errors.add(:dateCons, "la fecha presente o una futura")
+      errors.add(:dateCons, "debe ser presente o futura")
     end
   end
 
@@ -37,4 +40,36 @@ class TurnForm < ApplicationRecord
       errors.add(:schedule, "'mañana' no puede ser seleccionada para hoy si ya es la tarde")
     end
   end
+
+  def date_must_be_laborable
+    # Obtener todas las reuniones para la fecha seleccionada
+    meetings_on_selected_date = Meeting.where(start_time: dateCons.beginning_of_day..dateCons.end_of_day)
+
+    # Verificar si alguna reunión tiene el nombre "No_laborable_todo_el_dia"
+    if meetings_on_selected_date.exists?(name: Meeting.names[:No_laborable_todo_el_dia])
+      errors.add(:dateCons, "no laborable, por favor, revisa el calendario para conocer nuestras bandas horarias y días laborables.")
+    end
+  end
+
+  def date_and_schedule_must_be_laborable
+    # Obtener todas las reuniones para la fecha y banda horaria seleccionadas
+    meetings_on_selected_date_and_schedule = Meeting.where(
+      start_time: dateCons.beginning_of_day..dateCons.end_of_day,
+      name: Meeting.names[meeting_schedule]
+    )
+
+    # Verificar si hay reuniones marcadas como no laborables para la fecha y banda horaria seleccionadas
+    if meetings_on_selected_date_and_schedule.exists?
+      errors.add(:base, "La banda horaria seleccionada es no laborable, por favor, revisa el calendario para conocer nuestras bandas horarias y días laborables.")
+    end
+  end
+
+  def meeting_schedule
+    case schedule
+    when "morning" then :No_laborable_en_la_mañana
+    when "afternoon" then :No_laborable_en_la_tarde
+    else nil
+    end
+  end
+
 end
