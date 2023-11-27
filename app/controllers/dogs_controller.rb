@@ -7,7 +7,7 @@ class DogsController < ApplicationController
   # GET /user/:user_id/dogs or /user/:user_id/dogs.json
   def index
     redirect_to root_path unless current_user.admin? || @user == current_user
-    @dogs = @user.dogs
+    @dogs = @user.dogs.order(:first_name)
   end
 
   # GET /dogs/1 or /dogs/1.json

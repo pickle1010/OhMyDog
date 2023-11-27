@@ -9,6 +9,7 @@ class Dog < ApplicationRecord
   
   validates :first_name, :last_name, :breed, :color, :sex, :birthday, presence: true
   validates :first_name, :last_name, :color, format: {with: /\A[^0-9]+\z/, message: "solo permite ingresar letras"}
+  validates :first_name, uniqueness: { scope: :user_id, case_sensitive: false }
   validate :birthday_cannot_be_in_the_future
   validate :photo_attached?
 

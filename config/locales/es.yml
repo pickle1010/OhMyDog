@@ -121,6 +121,7 @@ es:
           attributes:
             first_name:
               blank: 'no puede estar vacío'
+              taken: 'ya esta tomado por otra mascota del cliente'
             last_name:
               blank: 'no puede estar vacío'
             breed: 
@@ -170,7 +171,7 @@ es:
           blank:
           attributes:
             first_name: 
-              blank: 'no puede estar vacío' 
+              blank: 'no puede estar vacío'
             last_name:
               blank: 'no puede estar vacío' 
             dni:
@@ -190,4 +191,4 @@ es:
             password_confirmation:
               confirmation: 'errónea. Las contraseñas no coinciden' 
             current_password:
-              invalid: 'es erronea' 
+              invalid: 'es erronea'
