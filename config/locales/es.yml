@@ -92,6 +92,7 @@ es:
           No_laborable_en_la_tarde: 'no laborable en la tarde'
           Turno: 'Turno'
           Vacunacion: 'vacunación'
+        start_time: 'Fecha'
         date: 'fecha'
       turn_form:
         dateCons: 'Fecha de consulta'
@@ -191,4 +192,10 @@ es:
             password_confirmation:
               confirmation: 'errónea. Las contraseñas no coinciden' 
             current_password:
-              invalid: 'es erronea'
+              invalid: 'es erronea' 
+        meeting:
+          attributes:
+            name:
+              blank: 'no ha sido seleccionada'
+            start_time:
+              blank: 'no ha sido seleccionada'

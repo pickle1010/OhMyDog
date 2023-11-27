@@ -8,6 +8,7 @@ class Dog < ApplicationRecord
   enum breed: [:labrador, :golden_retriever, :beagle, :bulldog, :rottweiler, :dachshund, :chihuahua, :doberman, :german_shepherd, :boxer, :dogo_argentino, :border_collie]
   
   validates :first_name, :last_name, :breed, :color, :sex, :birthday, presence: true
+  validates :first_name, uniqueness: { scope: :user_id, case_sensitive: false }
   validates :first_name, :last_name, :color, format: {with: /\A[^0-9]+\z/, message: "solo permite ingresar letras"}
   validates :first_name, uniqueness: { scope: :user_id, case_sensitive: false }
   validate :birthday_cannot_be_in_the_future
