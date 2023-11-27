@@ -48,10 +48,10 @@
   </div>
 
   <div class="actions mb-4">
-    <%= f.submit "Editar", data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, class: "btn btn-primary" %>
+    <%= f.submit "Guardar", data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, class: "btn btn-primary" %>
   </div>
 <% end %>
 
 <%# <%= button_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "Estás seguro?", turbo_confirm: "Estás seguro?" }, method: :delete, class: "mb-3 btn btn-danger" %>
 
-<%= link_to "Volver", :back, class: "btn btn-secondary" %>
+<%= link_to "Volver a mi perfil", user_path(resource), class: "btn btn-secondary" %>
