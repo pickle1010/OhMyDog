@@ -8,4 +8,13 @@ class Meeting < ApplicationRecord
     
     validates :name, presence: true, uniqueness: false
     validates :start_time, presence: true
+
+    validate :start_time_cannot_be_in_the_past
+
+    private
+  
+    def start_time_cannot_be_in_the_past
+      errors.add(:start_time, "debe ser actual o futura") if start_time.present? && start_time < Date.today
+    end
+
 end
