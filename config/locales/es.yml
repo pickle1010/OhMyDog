@@ -191,7 +191,8 @@ es:
             password_confirmation:
               confirmation: 'errónea. Las contraseñas no coinciden' 
             current_password:
-              invalid: 'es erronea' 
+              invalid: 'es errónea'
+              blank: 'debe ser ingresada' 
         meeting:
           attributes:
             name:

@@ -31,7 +31,7 @@ class ClinicDogsController < ApplicationController
 
     respond_to do |format|
       if @clinic_dog.save
-        if @clinic_dog.question? 
+        if @clinic_dog.question?
           schedule_datetime = @clinic_dog.dateclinic.to_datetime
           age_in_months = @clinic_dog.dog.age_in_months
           if age_in_months > 4
@@ -43,7 +43,7 @@ class ClinicDogsController < ApplicationController
           Message.create(user_id: @clinic_dog.dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
           Meeting.create(name: :Vacunacion, user_id: @dog.user.id, clinic_dog_id: @clinic_dog.id, start_time: schedule_datetime.to_date, description:"#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
         end
-        format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La historia clínica fue creada exitosamente" }
+        format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La nueva entrada fue agregada a la historia clínica exitosamente" }
         format.json { render :show, status: :created, location: @clinic_dog }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class ClinicDogsController < ApplicationController
   def update
     respond_to do |format|
       if @clinic_dog.update(clinic_dog_params)
-        if @clinic.dog.question
+        if @clinic_dog.dog.question
           schedule_datetime = @clinic_dog.dateclinic.to_datetime
           age_in_months = @clinic_dog.dog.age_in_months
           if age_in_months > 4
@@ -70,7 +70,7 @@ class ClinicDogsController < ApplicationController
           Message.create(user_id: @clinic_dog.dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
           @clinic_dog.meeting.update(start_time: schedule_datetime.to_date)
         end
-        format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La historia clínica fue actualizada exitosamente." }
+        format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La entrada de la historia clínica fue actualizada exitosamente." }
         format.json { render :show, status: :ok, location: @clinic_dog }
       else
         format.html { render :edit, status: :unprocessable_entity }
