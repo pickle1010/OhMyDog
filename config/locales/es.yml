@@ -155,7 +155,7 @@ es:
         turn_form:
           attributes:
             dateCons:
-              blank: 'una fecha para su consulta'
+              blank: 'no ha sido seleccionada'
             servicesCons:
               blank: 'no han sido seleccionados'
             schedule:

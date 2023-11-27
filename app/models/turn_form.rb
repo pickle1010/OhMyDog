@@ -20,7 +20,7 @@ class TurnForm < ApplicationRecord
     if dateCons.present?
       morningmeeting = Meeting.where(name: :No_laborable_en_la_mañana).where(start_time: dateCons).count
       if morningmeeting > 0 && schedule == "morning"
-        errors.add( :base, "La franja horaria elegida de ese dia no esta disponible.")
+        errors.add( :base, "La banda horaria seleccionada es no laborable. Por favor, revisa el calendario para conocer nuestras bandas y días laborables")
       end
     end
   end
@@ -29,7 +29,7 @@ class TurnForm < ApplicationRecord
     if dateCons.present?
       eveningmeeting = Meeting.where(name: :No_laborable_en_la_tarde).where(start_time: dateCons).count
       if eveningmeeting > 0 && schedule == "afternoon"
-        errors.add(:base, "La franja horaria de la tarde no esta disponible ese dia")
+        errors.add(:base, "La banda horaria seleccionada es no laborable. Por favor, revisa el calendario para conocer nuestras bandas y días laborables")
       end
     end
   end
@@ -38,7 +38,7 @@ class TurnForm < ApplicationRecord
     if dateCons.present?
       morningmeeting = Meeting.where(name: :No_laborable_todo_el_dia).where(start_time: dateCons).count
       if morningmeeting > 0
-        errors.add(:base, "Ese dia no es laborable")
+        errors.add(:base, "Fecha de consulta no laborable. Por favor, revisa el calendario para conocer nuestras bandas y días laborables")
       end
     end
   end
