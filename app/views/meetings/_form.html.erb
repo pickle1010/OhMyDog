@@ -18,7 +18,7 @@
             <%= form.select(:name, [['', nil]] + Meeting.names.keys.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] },
                   { selected: nil },
                   { class: 'form-select' }) %>
-            <% else %>} 
+            <% else %>
               <%= form.select(:name, Meeting.names.keys.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] }, {selected: @meeting.new_record? }, { class: 'form-select'}) %>
           <% end %>
     </div>
