@@ -154,6 +154,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_095403) do
   add_foreign_key "meetings", "clinic_dogs"
   add_foreign_key "meetings", "turn_forms"
   add_foreign_key "meetings", "users"
+  add_foreign_key "turn_forms", "dogs"
   add_foreign_key "messages", "dogs"
   add_foreign_key "messages", "users"
   add_foreign_key "turn_forms", "dogs"

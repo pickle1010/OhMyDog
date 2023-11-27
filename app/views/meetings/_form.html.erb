@@ -1,35 +1,42 @@
-<%= form_with(model: meeting) do |form| %>
-  <% if meeting.errors.any? %>
-    <div class="alert alert-danger">
-      <h4 class="alert-heading"><%= pluralize(meeting.errors.count, "error", "errores") %> evitaron que este evento se guardara:</h4>
-      <ul>
-        <% meeting.errors.each do |error| %>
-          <li><%= error.full_message.humanize %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="card">
+  <div class="card-header">
+    <h5 class="card-title">Calendario administrativo</h5>
+  </div>
+  <div class="card-body">
+    <%= form_with(model: meeting) do |form| %>
+      <% if meeting.errors.any? %>
+        <div class="alert alert-danger">
+          <h6 class="alert-heading"><%= pluralize(meeting.errors.count, "error","errores") %> <%= (meeting.errors.count == 1) ? "impide" : "impiden" %> que se guarde este evento:</h6>
 
-  <div class="row mb-3">
-    <%= form.label :name, t("activerecord.attributes.meeting.name").humanize, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-        <div class="col-sm-10">
+          <ul>
+            <% meeting.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= form.label :name, t("activerecord.attributes.meeting.name").humanize, class: "form-label" %>
+        <div>
           <% if form.object.new_record? %> 
             <%= form.select(:name, [['', nil]] + Meeting.names.keys.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] },
                   { selected: nil },
                   { class: 'form-select' }) %>
-            <% else %>
-              <%= form.select(:name, Meeting.names.keys.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] }, {selected: @meeting.new_record? }, { class: 'form-select'}) %>
+          <% else %>
+            <%= form.select(:name, Meeting.names.keys.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] }, { selected: @meeting.new_record? }, { class: 'form-select' }) %>
           <% end %>
-    </div>
-  </div>
+        </div>
+      </div>
 
-  <div>
-    <%= form.label :start_time, style: "display: block" %>
-    <%= form.date_field :start_time %>
-  </div>
+      <div class="mb-3">
+        <%= form.label :start_time, class: "form-label" %>
+        <%= form.date_field :start_time, class: 'form-control' %>
+      </div>
 
-  <div>
-    <%= form.submit %>
+      <div class="text-center">
+        <%= form.submit class: 'btn btn-primary' %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

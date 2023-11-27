@@ -1,8 +1,7 @@
 <%= render @meeting %>
 
 <div>
-  <%= link_to "Editar este evento", edit_meeting_path(@meeting) %> |
-  <%= link_to "Volver al calendario", meetings_path %>
-
-  <%= button_to "Eliminar este evento", @meeting, method: :delete %>
+  <%= link_to "Modificar Evento", edit_meeting_path(@meeting), class: "btn btn-primary" %> |
+  <%= link_to "Volver a Calendario", meetings_path, class: "btn btn-primary" %>
+  <%= button_to "Borrar evento", @meeting, method: :delete, class: "btn btn-primary my-3" %>
 </div>

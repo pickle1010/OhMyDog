@@ -19,7 +19,7 @@ class ClinicDog < ApplicationRecord
 
     def date_cannot_be_in_the_future
       if dateclinic.present? && dateclinic > Date.today
-        errors.add(:dateclinic, "debe ser una fecha pasada o la fecha presente")
+        errors.add(:dateclinic, "debe ser previa o actual")
       end
     end
 end

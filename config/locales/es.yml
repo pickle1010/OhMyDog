@@ -12,7 +12,7 @@ es:
       - Viernes
       - Sabado
     month_names:
-      - Diciembre   
+      - Diciembre
       - Enero
       - Febrero
       - Marzo
@@ -30,7 +30,6 @@ es:
       dog: 'perro'
       turn_form: 'turno'
       service: 'servicio'
-      meeting: 'evento'
       user: 'usuario'
       meeting: 'Calendario'
       clinic_dog: 'historia clínica'
@@ -74,7 +73,7 @@ es:
       clinic_dog:
         description: 'descripción'
         question: 'casilla de verificación'
-        dateclinic: 'fecha de vacunación'
+        dateclinic: 'fecha'
         vaccines: 'vacunas aplicadas'
         vaccines_options: 
           antirrabica: 'antirrábica'
@@ -85,14 +84,14 @@ es:
         price: 'precio'
         active: 'activo'
       meeting:
-        name: 'opción'
+        name: 'opcion'
         names:
           No_laborable_todo_el_dia: 'no laborable todo el día' 
           No_laborable_en_la_mañana: 'no laborable en la mañana'
           No_laborable_en_la_tarde: 'no laborable en la tarde'
           Turno: 'Turno'
           Vacunacion: 'vacunación'
-        start_time: 'Fecha'
+        start_time: 'Fecha del evento'
         date: 'fecha'
       turn_form:
         dateCons: 'Fecha de consulta'
@@ -144,7 +143,7 @@ es:
             dateclinic:
               blank: 'no puede estar vacía'
             vaccines:
-              blank: 'debe tener alguna selección'
+              blank: 'no puede estar vacía'
         service:
           attributes:
             name:
