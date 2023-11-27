@@ -1,18 +1,24 @@
 class ClinicDogsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_if_admin, except: %i[ index show ]
+  before_action :set_dog, only: %i[ index new create ]
   before_action :set_clinic_dog, only: %i[ show edit update destroy ]
+  
 
   # GET /clinic_dogs or /clinic_dogs.json
   def index
-    @clinic_dogs = ClinicDog.all
+    redirect_to root_path unless current_user.admin? || @dog.user == current_user
+    @clinic_dogs = @dog.clinic_dogs.order(dateclinic: :desc)
   end
 
   # GET /clinic_dogs/1 or /clinic_dogs/1.json
   def show
+    redirect_to root_path unless current_user.admin? || @clinic_dog.dog.user == current_user
   end
 
   # GET /clinic_dogs/new
   def new
-    @clinic_dog = ClinicDog.new
+    @clinic_dog = ClinicDog.new(dog_id: @dog.id)
   end
 
   # GET /clinic_dogs/1/edit
@@ -21,11 +27,23 @@ class ClinicDogsController < ApplicationController
 
   # POST /clinic_dogs or /clinic_dogs.json
   def create
-    @clinic_dog = ClinicDog.new(clinic_dog_params)
+    @clinic_dog = ClinicDog.new(clinic_dog_params.merge(dog_id: @dog.id))
 
     respond_to do |format|
       if @clinic_dog.save
-        format.html { redirect_to clinic_dog_url(@clinic_dog), notice: "Clinic dog was successfully created." }
+        if @clinic_dog.question?
+          schedule_datetime = @clinic_dog.dateclinic.to_datetime
+          age_in_months = @clinic_dog.dog.age_in_months
+          if age_in_months > 4
+            schedule_datetime += 1.year
+          else
+            schedule_datetime += 21
+          end
+          vaccine_dose = @clinic_dog.ambas? ? "inmunológica y antirrábica" : t("activerecord.attributes.clinic_dog.vaccines_options.#{@clinic_dog.vaccines}")
+          Message.create(user_id: @clinic_dog.dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
+          Meeting.create(name: :Vacunacion, user_id: @dog.user.id, clinic_dog_id: @clinic_dog.id, start_time: schedule_datetime.to_date, description:"#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
+        end
+        format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La nueva entrada fue agregada a la historia clínica exitosamente" }
         format.json { render :show, status: :created, location: @clinic_dog }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +56,21 @@ class ClinicDogsController < ApplicationController
   def update
     respond_to do |format|
       if @clinic_dog.update(clinic_dog_params)
-        format.html { redirect_to clinic_dog_url(@clinic_dog), notice: "Clinic dog was successfully updated." }
+        if @clinic_dog.dog.question
+          schedule_datetime = @clinic_dog.dateclinic.to_datetime
+          age_in_months = @clinic_dog.dog.age_in_months
+          if age_in_months > 4
+            schedule_datetime = schedule_datetime + 1.year
+          elsif age_in_months > 2
+            schedule_datetime = schedule_datetime + 21
+          else 
+            schedule_datetime = @clinic_dog.dog.birthday + 2.months
+          end
+          vaccine_dose = @clinic_dog.ambas? ? "inmunológica y antirrábica" : t("activerecord.attributes.clinic_dog.vaccines_options.#{@clinic_dog.vaccines}")
+          Message.create(user_id: @clinic_dog.dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
+          @clinic_dog.meeting.update(start_time: schedule_datetime.to_date)
+        end
+        format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La entrada de la historia clínica fue actualizada exitosamente." }
         format.json { render :show, status: :ok, location: @clinic_dog }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +84,7 @@ class ClinicDogsController < ApplicationController
     @clinic_dog.destroy!
 
     respond_to do |format|
-      format.html { redirect_to clinic_dogs_url, notice: "Clinic dog was successfully destroyed." }
+      format.html { redirect_to clinic_dogs_url, success: "La historia clínica fue eliminada exitosamente." }
       format.json { head :no_content }
     end
   end
@@ -63,8 +95,12 @@ class ClinicDogsController < ApplicationController
       @clinic_dog = ClinicDog.find(params[:id])
     end
 
+    def set_dog
+      @dog = Dog.find(params[:dog_id])
+    end
+
     # Only allow a list of trusted parameters through.
     def clinic_dog_params
-      params.require(:clinic_dog).permit(:question, :dateclinic, :description, :vaccines)
+      params.require(:clinic_dog).permit(:question, :dateclinic, :description, :vaccines, :dog_id)
     end
 end

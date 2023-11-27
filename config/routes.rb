@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :clinic_dogs
-  resources :meetings
   devise_for :users, :skip => [:registrations], :path_prefix => 'my'
   as :user do
     get 'my/users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
@@ -9,9 +7,11 @@ Rails.application.routes.draw do
 
   resources :users, shallow: true do
     resources :dogs do
-      resources :clinic_dogs, only: [:index, :new, :create, :edit, :update, :destroy]
+      resources :clinic_dogs
     end
   end
+
+  resources :meetings
   
   resources :services do
     member do
@@ -19,7 +19,6 @@ Rails.application.routes.draw do
     end
   end
   
-
   resources :turn_forms do
     member do
       patch 'confirm'
@@ -28,6 +27,8 @@ Rails.application.routes.draw do
       post 'save_amount'
     end
   end
+
+  resources :notifications, only: [:index]
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

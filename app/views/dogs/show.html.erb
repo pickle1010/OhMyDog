@@ -1,9 +1,13 @@
 <div class="container">
   <%= render @dog %>
-
+  
   <div class="row">
     <div class="col-lg-4 text-center mt-2 mt-lg-2">
-      <%= link_to "Volver a mascotas", user_dogs_path(@dog.user), class: "btn btn-secondary" %>
+      <% if current_user == @dog.user %>
+        <%= link_to "Volver a mis mascotas", user_dogs_path(@dog.user), class: "btn btn-secondary" %>
+      <% else %>
+        <%= link_to "Volver a las mascotas del cliente", user_dogs_path(@dog.user), class: "btn btn-secondary" %>
+      <% end %>
     <div>
   </div>
 </div>

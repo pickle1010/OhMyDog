@@ -1,4 +1,6 @@
 class ServicesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_if_admin
   before_action :set_service, only: %i[ show edit update destroy toggle_state]
 
   # GET /services or /services.json

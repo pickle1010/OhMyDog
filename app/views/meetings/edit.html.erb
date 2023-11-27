@@ -1,10 +1,10 @@
-<h1>Editing meeting</h1>
+<h1>Editar evento</h1>
 
 <%= render "form", meeting: @meeting %>
 
 <br>
 
 <div>
-  <%= link_to "Show this meeting", @meeting %> |
-  <%= link_to "Back to meetings", meetings_path %>
+  <%= link_to "Mostrar evento", @meeting, class: "btn btn-primary" %> |
+  <%= link_to "Volver a Calendario", meetings_path, class: "btn btn-primary" %>
 </div>

@@ -1,11 +1,11 @@
 <div id="<%= dom_id meeting %>">
   <p>
-    <strong>Name:</strong>
-    <%= meeting.name %>
+    <strong>Evento:</strong>
+    <%= t("activerecord.attributes.meeting.names.#{meeting.name}").humanize %>
   </p>
 
   <p>
-    <strong>Start time:</strong>
+    <strong>Fecha:</strong>
     <%= meeting.start_time %>
   </p>
 
