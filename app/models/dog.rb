@@ -1,6 +1,8 @@
 class Dog < ApplicationRecord
   belongs_to :user
   has_one :turn_form, dependent: :destroy
+  has_one :meeting, dependent: :destroy
+  has_one :message
   has_one_attached :photo
   has_many :clinic_dogs, dependent: :destroy
 

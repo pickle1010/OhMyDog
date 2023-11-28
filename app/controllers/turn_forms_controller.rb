@@ -1,7 +1,8 @@
 class TurnFormsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_if_not_admin, only:[:new, :create]
-  before_action :set_turn_form, only: %i[ show edit update destroy confirm reject emit_amount save_amount]
+  before_action :check_if_not_admin, only: [:new, :create, :cancel]
+  before_action :check_if_admin, only: [:confirm, :reject]
+  before_action :set_turn_form, only: %i[ show edit update destroy confirm reject cancel emit_amount save_amount]
 
   # GET /turn_forms or /turn_forms.json
   def index
@@ -86,6 +87,16 @@ class TurnFormsController < ApplicationController
     @turn_form.destroy
     Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Turno rechazado", content: "Tu turno para #{@turn_form.dog.first_name} ha sido rechazado")
     redirect_to turn_forms_url, success: "Turno rechazado exitosamente."
+  end
+
+  def cancel
+    @turn_form.destroy
+    if @turn_form.confirmed
+      User.where(role: :admin).each do |admin|
+        Message.create(user_id: admin.id, datetime: DateTime.now, title: "Turno cancelado", content: "El turno de #{@turn_form.user.first_name} (#{@turn_form.user.dni}) para #{@turn_form.dog.first_name} ha sido cancelado")
+      end
+    end
+    redirect_to turn_forms_url, success: "Turno cancelado exitosamente."
   end
   
   def emit_amount

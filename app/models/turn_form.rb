@@ -17,16 +17,16 @@ class TurnForm < ApplicationRecord
   validate :validate_allday_meeting, if: -> { user.client?}
 
   def validate_morning_meeting
-    if dateCons.present?
+    if dateCons.present? && schedule.present?
       morningmeeting = Meeting.where(name: :No_laborable_en_la_mañana).where(start_time: dateCons).count
       if morningmeeting > 0 && schedule == "morning"
-        errors.add( :base, "La banda horaria seleccionada es no laborable. Por favor, revisa el calendario para conocer nuestras bandas y días laborables")
+        errors.add(:base, "La banda horaria seleccionada es no laborable. Por favor, revisa el calendario para conocer nuestras bandas y días laborables")
       end
     end
   end
 
   def validate_evening_meeting
-    if dateCons.present?
+    if dateCons.present? && schedule.present?
       eveningmeeting = Meeting.where(name: :No_laborable_en_la_tarde).where(start_time: dateCons).count
       if eveningmeeting > 0 && schedule == "afternoon"
         errors.add(:base, "La banda horaria seleccionada es no laborable. Por favor, revisa el calendario para conocer nuestras bandas y días laborables")
@@ -67,36 +67,4 @@ class TurnForm < ApplicationRecord
       errors.add(:schedule, "'mañana' no puede ser seleccionada para hoy si ya es la tarde")
     end
   end
-
-  def date_must_be_laborable
-    # Obtener todas las reuniones para la fecha seleccionada
-    meetings_on_selected_date = Meeting.where(start_time: dateCons.beginning_of_day..dateCons.end_of_day)
-
-    # Verificar si alguna reunión tiene el nombre "No_laborable_todo_el_dia"
-    if meetings_on_selected_date.exists?(name: Meeting.names[:No_laborable_todo_el_dia])
-      errors.add(:dateCons, "no laborable, por favor, revisa el calendario para conocer nuestras bandas horarias y días laborables.")
-    end
-  end
-
-  def date_and_schedule_must_be_laborable
-    # Obtener todas las reuniones para la fecha y banda horaria seleccionadas
-    meetings_on_selected_date_and_schedule = Meeting.where(
-      start_time: dateCons.beginning_of_day..dateCons.end_of_day,
-      name: Meeting.names[meeting_schedule]
-    )
-
-    # Verificar si hay reuniones marcadas como no laborables para la fecha y banda horaria seleccionadas
-    if meetings_on_selected_date_and_schedule.exists?
-      errors.add(:base, "La banda horaria seleccionada es no laborable, por favor, revisa el calendario para conocer nuestras bandas horarias y días laborables.")
-    end
-  end
-
-  def meeting_schedule
-    case schedule
-    when "morning" then :No_laborable_en_la_mañana
-    when "afternoon" then :No_laborable_en_la_tarde
-    else nil
-    end
-  end
-
 end

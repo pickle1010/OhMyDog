@@ -12,7 +12,8 @@ class Meeting < ApplicationRecord
     validate :date_can_only_have_one_non_business_schedule, on: :create
 
     def date_cannot_be_in_the_past
-      if start_time.present? && start_time < Date.today
+      non_business_schedules = ["No_laborable_en_la_mañana", "No_laborable_en_la_tarde", "No_laborable_todo_el_dia"]
+      if start_time.present? && start_time < Date.today && non_business_schedules.include?(name)
         errors.add(:start_time, "debe ser presente o futura")
       end
     end

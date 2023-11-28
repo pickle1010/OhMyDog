@@ -79,6 +79,7 @@ es:
         dateclinic: 'fecha'
         vaccines: 'vacunas aplicadas'
         vaccines_options: 
+          ninguna: 'ninguna'
           antirrabica: 'antirrábica'
           inmunologica: 'inmunológica'
           ambas: 'ambas'
