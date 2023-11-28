@@ -1,10 +1,16 @@
-<h1>Editar evento</h1>
-
-<%= render "form", meeting: @meeting %>
-
-<br>
-
-<div>
-  <%= link_to "Mostrar evento", @meeting, class: "btn btn-primary" %> |
-  <%= link_to "Volver a Calendario", meetings_path, class: "btn btn-primary" %>
+<div class="container">
+  <div class="card">
+    <div class="card-header text-center">
+      <h1>Editar evento</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", meeting: @meeting %>
+    </div>
+    <div class="row mb-3">
+      <div class="col text-center">
+        <%= link_to "Ver este evento", @meeting, class: "btn btn-info" %>
+        <%= link_to "Volver al calendario", meetings_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
 </div>
