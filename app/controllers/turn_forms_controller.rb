@@ -41,7 +41,7 @@ class TurnFormsController < ApplicationController
     respond_to do |format|
       if @turn_form.save
         User.where(role: :admin).each do |admin|
-          Message.create(user_id: admin.id, datetime: DateTime.now, title: "Turno solicitado", content: "#{@turn_form.user.first_name} (#{@turn_form.user.dni}) ha solicitado un turno para #{@turn_form.dog.first_name}")
+          Message.create(user_id: admin.id, datetime: DateTime.now, title: "Turno solicitado", content: "#{@turn_form.user.first_name} con DNI #{@turn_form.user.dni} ha solicitado un turno para #{@turn_form.dog.first_name}")
         end
         format.html { redirect_to turn_form_url(@turn_form), success: "El turno fue solicitado exitosamente" }
         format.json { render :show, status: :created, location: @turn_form }
@@ -78,7 +78,7 @@ class TurnFormsController < ApplicationController
 
   def confirm
     @turn_form.update(confirmed: true)
-    Meeting.create(name: :Turno, user_id: @turn_form.user.id, turn_form_id: @turn_form.id, start_time: @turn_form.dateCons, description:"Cliente: #{@turn_form.user.first_name} #{@turn_form.user.last_name}, Perro: #{@turn_form.dog.first_name}")
+    Meeting.create(name: :Turno, user_id: @turn_form.user.id, turn_form_id: @turn_form.id, start_time: @turn_form.dateCons, description:"Cliente: #{@turn_form.user.first_name} #{@turn_form.user.last_name}, DNI: #{@turn_form.user.dni}, Mascota: #{@turn_form.dog.first_name}")
     Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Turno confirmado", content: "Tu turno para #{@turn_form.dog.first_name} ha sido confirmado")
     redirect_to turn_forms_url, success: "Turno confirmado exitosamente."
   end
@@ -93,7 +93,7 @@ class TurnFormsController < ApplicationController
     @turn_form.destroy
     if @turn_form.confirmed
       User.where(role: :admin).each do |admin|
-        Message.create(user_id: admin.id, datetime: DateTime.now, title: "Turno cancelado", content: "El turno de #{@turn_form.user.first_name} (#{@turn_form.user.dni}) para #{@turn_form.dog.first_name} ha sido cancelado")
+        Message.create(user_id: admin.id, datetime: DateTime.now, title: "Turno cancelado", content: "#{@turn_form.user.first_name} con DNI #{@turn_form.user.dni} ha cancelado el turno para #{@turn_form.dog.first_name}")
       end
     end
     redirect_to turn_forms_url, success: "Turno cancelado exitosamente."

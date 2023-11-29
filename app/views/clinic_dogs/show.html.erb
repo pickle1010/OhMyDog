@@ -6,7 +6,7 @@
         <% if current_user.admin? %>
           <%= link_to "Editar", edit_clinic_dog_path(@clinic_dog), class: "btn btn-primary me-1"%>
         <% end %>
-        <%= link_to "Volver a lista de historias clínicas", dog_clinic_dogs_path(@clinic_dog.dog), class: "btn btn-secondary" %>
+        <%= link_to "Volver a la historia clínica", dog_clinic_dogs_path(@clinic_dog.dog), class: "btn btn-secondary" %>
       </div>
     </div>
   </div>
