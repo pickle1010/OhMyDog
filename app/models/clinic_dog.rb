@@ -5,7 +5,7 @@ class ClinicDog < ApplicationRecord
 
     enum vaccines: [:ninguna, :antirrabica, :inmunologica, :ambas]
 
-    validates :description, :dateclinic, presence: true
+    validates :description, :dateclinic, :vaccines, presence: true
     validate :date_cannot_be_in_the_future
 
     def date_cannot_be_in_the_future
