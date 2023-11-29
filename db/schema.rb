@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_24_095403) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_28_185758) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,7 +75,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_095403) do
     t.string "description"
     t.bigint "user_id"
     t.bigint "clinic_dog_id"
+    t.bigint "dog_id"
     t.index ["clinic_dog_id"], name: "index_meetings_on_clinic_dog_id"
+    t.index ["dog_id"], name: "index_meetings_on_dog_id"
     t.index ["turn_form_id"], name: "index_meetings_on_turn_form_id"
     t.index ["user_id"], name: "index_meetings_on_user_id"
   end
@@ -88,6 +90,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_095403) do
     t.string "title"
     t.datetime "datetime"
     t.bigint "dog_id"
+    t.bigint "clinic_dog_id"
+    t.index ["clinic_dog_id"], name: "index_messages_on_clinic_dog_id"
     t.index ["dog_id"], name: "index_messages_on_dog_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
@@ -121,10 +125,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_095403) do
     t.date "dateCons"
     t.integer "schedule"
     t.boolean "confirmed", default: false
-    t.bigint "dog_id"
+    t.bigint "dog_id", null: false
     t.decimal "total_amount"
     t.text "vet_description"
-    t.date "block_date"
     t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
   end
@@ -150,11 +153,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_095403) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clinic_dogs", "dogs"
-  add_foreign_key "dogs", "users"
   add_foreign_key "meetings", "clinic_dogs"
+  add_foreign_key "meetings", "dogs"
   add_foreign_key "meetings", "turn_forms"
   add_foreign_key "meetings", "users"
-  add_foreign_key "turn_forms", "dogs"
+  add_foreign_key "messages", "clinic_dogs"
   add_foreign_key "messages", "dogs"
   add_foreign_key "messages", "users"
   add_foreign_key "turn_forms", "dogs"

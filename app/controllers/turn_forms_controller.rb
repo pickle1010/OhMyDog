@@ -1,7 +1,8 @@
 class TurnFormsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_if_not_admin, only:[:new, :create]
-  before_action :set_turn_form, only: %i[ show edit update destroy confirm reject emit_amount save_amount]
+  before_action :check_if_not_admin, only: [:new, :create, :cancel]
+  before_action :check_if_admin, only: [:confirm, :reject, :emit_amount, :save_amount]
+  before_action :set_turn_form, only: %i[ show edit update destroy confirm reject cancel emit_amount save_amount]
 
   # GET /turn_forms or /turn_forms.json
   def index
@@ -87,17 +88,25 @@ class TurnFormsController < ApplicationController
     Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Turno rechazado", content: "Tu turno para #{@turn_form.dog.first_name} ha sido rechazado")
     redirect_to turn_forms_url, success: "Turno rechazado exitosamente."
   end
+
+  def cancel
+    @turn_form.destroy
+    if @turn_form.confirmed
+      User.where(role: :admin).each do |admin|
+        Message.create(user_id: admin.id, datetime: DateTime.now, title: "Turno cancelado", content: "El turno de #{@turn_form.user.first_name} (#{@turn_form.user.dni}) para #{@turn_form.dog.first_name} ha sido cancelado")
+      end
+    end
+    redirect_to turn_forms_url, success: "Turno cancelado exitosamente."
+  end
   
   def emit_amount
   end
 
   def save_amount
-    vet_description = turn_form_params[:vet_description]
+    @turn_form.assign_attributes(turn_form_params)
 
-    @turn_form.total_amount = turn_form_params[:total_amount]
-
-    if @turn_form.save(context: :save_total_amount)
-      monto_ingresado = turn_form_params[:total_amount].to_f
+    if @turn_form.valid?(:save_total_amount)
+      monto_ingresado = @turn_form.total_amount.to_f
       saldo_a_favor = @turn_form.user.positive_balance.to_f
       
       # Calcula el monto a descontar
@@ -107,32 +116,17 @@ class TurnFormsController < ApplicationController
       nuevo_saldo_a_favor = saldo_a_favor - monto_ingresado
     
       # Calcula el monto total a actualizar
-      nuevo_monto_total = [(monto_ingresado - saldo_a_favor), 0].max
+      @turn_form.total_amount = [(monto_ingresado - saldo_a_favor), 0].max
     
       # Actualiza el saldo a favor del cliente  
       @turn_form.user.update(positive_balance: [nuevo_saldo_a_favor, 0].max)
 
-      @turn_form.update(total_amount: nuevo_monto_total)
-
-      Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Monto total recibido", content: "El monto total de tu turno para #{@turn_form.dog.first_name} es $#{@turn_form.total_amount}.Descripción adicional del veterinario: #{vet_description}")
+      Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Monto total recibido", content: "El monto total de tu turno para #{@turn_form.dog.first_name} es $#{@turn_form.total_amount}. Descripción adicional del veterinario: #{@turn_form.vet_description}")
       @turn_form.destroy!
-      redirect_to turn_forms_path, success: "Monto emitido exitosamente."
-    
+      redirect_to turn_forms_path, success: "Monto emitido exitosamente"
     else
-      if @turn_form.errors.any? 
-        flash.now[:alert] = "Error al enviar el monto:"
-        
-        if @turn_form.errors[:total_amount].include?(:blank)
-          flash.now[:alert] += " El monto enviado no debe estar vacío."
-        elsif @turn_form.errors[:total_amount].include?(:not_a_number)
-          flash.now[:alert] += " El monto enviado debe ser un número."
-        elsif @turn_form.errors[:total_amount].include?(:greater_than)
-          flash.now[:alert] += " El monto enviado debe ser mayor a cero."
-        end
-      end
       render 'emit_amount'
     end
-    
   end
 
   private

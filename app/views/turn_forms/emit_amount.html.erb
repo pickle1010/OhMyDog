@@ -22,16 +22,16 @@
                 </div>
               </div>
 
-              <%= form_with(model: @turn_form, url: save_amount_turn_form_path(@turn_form), local: true, method: :post, context: :save_total_amount) do |form| %>
+              <%= form_with(model: @turn_form, url: save_amount_turn_form_path(@turn_form), local: true, method: :post) do |form| %>
 
                 <% if @turn_form.errors.any? %>
                   <div class="alert alert-danger">
-                      <h4 class="alert-heading"><%= pluralize(@turn_form.errors.count, "error","errores") %> <%= (@turn_form.errors.count == 1) ? "impide" : "impiden" %> que se envíe el monto:</h4>
-                      <ul>
-                          <% @turn_form.errors.each do |error| %>
-                            <li><%= error.full_message.humanize %></li>
-                          <% end %>
-                      </ul>
+                    <h4 class="alert-heading"><%= pluralize(@turn_form.errors.count, "error","errores") %> <%= (@turn_form.errors.count == 1) ? "impide" : "impiden" %> que se envíe el monto:</h4>
+                    <ul>
+                        <% @turn_form.errors.each do |error| %>
+                          <li><%= error.full_message.humanize %></li>
+                        <% end %>
+                    </ul>
                   </div>
                 <% end %>
                 
@@ -39,7 +39,7 @@
                 <div class="row mb-3">
                   <%= form.label :total_amount, "Monto emitido", class: "col-sm-4 col-form-label" %>
                   <div class="col-md-8">
-                    <%= form.number_field :total_amount, class: 'form-control', id: 'total_amount_field' %>
+                    <%= form.number_field :total_amount, class: 'form-control', id: 'total_amount_field', value: '0', min: "1" %>
                   </div>
                 </div>
 

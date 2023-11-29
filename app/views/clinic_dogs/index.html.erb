@@ -26,31 +26,20 @@
             <div class="card">
               <div class="card-body">
                 <div class="text-end">
-                  <%= link_to "Ver", clinic_dog_path(clinic_dog), class: "btn btn-primary"%>                
+                  <%= link_to "Ver", clinic_dog_path(clinic_dog), class: "btn btn-primary"%>
                   <% if current_user.admin? %>
                     <%= link_to "Editar", edit_clinic_dog_path(clinic_dog), class: "btn btn-primary ms-1"%>
                   <% end %>
                 </div>
                 <div class="row">
                   <div class="col-sm-6">
-                    <p class="mb-0">¿Hubo vacunas aplicadas?</p>
+                    <p class="mb-0">Vacunas aplicadas:</p>
                   </div>
                   <div class="col-sm-6">
-                    <p class="text-muted mb-0"><%= clinic_dog.question? ? "Si" : "No" %></p>
+                    <p class="text-muted mb-0"><%= t("activerecord.attributes.clinic_dog.vaccines_options.#{clinic_dog.vaccines}").humanize %></p>
                   </div>
                 </div>
                 <hr>
-                <% if clinic_dog.question? %>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <p class="mb-0">Vacunas aplicadas:</p>
-                    </div>
-                    <div class="col-sm-6">
-                      <p class="text-muted mb-0"><%= t("activerecord.attributes.clinic_dog.vaccines_options.#{clinic_dog.vaccines}").humanize %></p>
-                    </div>
-                  </div>
-                  <hr>
-                <% end %>
                 <div class="row">
                   <div class="col-sm-6">
                     <p class="mb-0">Descripción:</p>

@@ -2,6 +2,9 @@ es:
   errors:
     messages:
       not_a_number: 'no es un número'
+  simple_calendar:
+    previous: 'Anterior'
+    next: 'Siguiente'
   date:
     abbr_day_names: 
       - Domingo
@@ -31,7 +34,7 @@ es:
       turn_form: 'turno'
       service: 'servicio'
       user: 'usuario'
-      meeting: 'Calendario'
+      meeting: 'evento'
       clinic_dog: 'historia clínica'
     attributes:
       user/dogs:
@@ -49,7 +52,7 @@ es:
         photo: 'foto'
         user: 'dueño'
         first_name: 'nombre'
-        last_name: 'apellido'
+        last_name: 'apellidos'
         birthday: 'fecha de nacimiento'
         breed: 'raza'
         breeds:
@@ -76,6 +79,7 @@ es:
         dateclinic: 'fecha'
         vaccines: 'vacunas aplicadas'
         vaccines_options: 
+          ninguna: 'ninguna'
           antirrabica: 'antirrábica'
           inmunologica: 'inmunológica'
           ambas: 'ambas'
@@ -84,7 +88,7 @@ es:
         price: 'precio'
         active: 'activo'
       meeting:
-        name: 'opcion'
+        name: 'evento'
         names:
           No_laborable_todo_el_dia: 'no laborable todo el día' 
           No_laborable_en_la_mañana: 'no laborable en la mañana'
@@ -106,7 +110,7 @@ es:
         email: "correo electrónico"
         dni: 'DNI'
         first_name: 'nombre'
-        last_name: 'apellido'
+        last_name: 'apellidos'
         address: 'dirección'
         role: 'rol'
         password: 'contraseña'
@@ -125,7 +129,7 @@ es:
             last_name:
               blank: 'no puede estar vacío'
             breed: 
-              blank: 'no puede estar vacío' 
+              blank: 'no puede estar vacía' 
             color:
               blank: 'no puede estar vacío'   
             sex: 

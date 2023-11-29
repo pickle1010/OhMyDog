@@ -30,9 +30,9 @@ class DogsController < ApplicationController
 
     respond_to do |format|
       if @dog.save
-        if @dog.age_in_months < 2
-          schedule_datetime = @dog.birthday.to_datetime + 2.months
-          Message.create(user_id: @dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
+        schedule_datetime = @dog.birthday.to_datetime + 2.months
+        if @dog.age_in_months <= 2 && schedule_datetime.to_date >= Date.today
+          Message.create(user_id: @user.id, dog_id: @dog.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
           Meeting.create(name: :Vacunacion, user_id: @user.id, dog_id: @dog.id, start_time: schedule_datetime.to_date, description:"#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
         end
         format.html { redirect_to @dog, success: 'El perro fue creado exitosamente' }
@@ -47,11 +47,26 @@ class DogsController < ApplicationController
   # PATCH/PUT /dogs/1 or /dogs/1.json
   def update
     respond_to do |format|
-      if @dog.update(dog_params)
-        if @dog.age_in_months <= 2
-          schedule_datetime = @dog.birthday.to_datetime + 2.months
-          Message.create(user_id: @dog.user.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
-          @dog.meeting.update(start_time: schedule_datetime.to_date)
+      if @dog.update(dog_params)        
+        schedule_datetime = @dog.birthday.to_datetime + 2.months
+        if @dog.age_in_months <= 2 && schedule_datetime.to_date >= Date.today
+          unless @dog.message.nil?
+            @dog.message.update(datetime: schedule_datetime)
+          else
+            Message.create(user_id: @dog.user.id, dog_id: @dog.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@dog.first_name}!", content: "#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
+          end
+          unless @dog.meeting.nil?
+            @dog.meeting.update(start_time: schedule_datetime.to_date)
+          else
+            Meeting.create(name: :Vacunacion, user_id: @dog.user.id, dog_id: @dog.id, start_time: schedule_datetime.to_date, description:"#{@dog.first_name} ya es apto para recibir una vacuna inmunológica")
+          end
+        else
+          unless @dog.message.nil?
+            @dog.message.destroy
+          end
+          unless @dog.meeting.nil?
+            @dog.meeting.destroy
+          end
         end
         format.html { redirect_to @dog, success: "El perro fue actualizado exitosamente" }
         format.json { render :show, status: :ok, location: @dog }
