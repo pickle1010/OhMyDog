@@ -23,7 +23,7 @@
         <% else %>
           <%= form.select(:name, 
               allowed_names.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] }, 
-              {selected: @meeting.new_record? }, 
+              {selected: @meeting.name }, 
               { class: 'form-select'}) %>
       <% end %>
     </div>
