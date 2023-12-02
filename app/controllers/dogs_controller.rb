@@ -2,7 +2,7 @@ class DogsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_admin, except: %i[ index show ]
   before_action :set_user, only: %i[ index new create ]
-  before_action :set_dog, only: %i[ show edit update destroy ]
+  before_action :set_dog, only: %i[ show edit update destroy toggle_state ]
 
   # GET /user/:user_id/dogs or /user/:user_id/dogs.json
   def index
@@ -84,6 +84,15 @@ class DogsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to user_dogs_path(@dog.user), success: "El perro fue eliminado exitosamente" }
       format.json { head :no_content }
+    end
+  end
+
+  def toggle_state
+    @dog.update(state: !@dog.state)
+    if @dog.state
+      redirect_to @dog, success: "El perro ha sido habilitado"
+    else
+      redirect_to @dog, success: "El perro ha sido deshabilitado"
     end
   end
 

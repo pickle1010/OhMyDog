@@ -1,10 +1,17 @@
 <div class="container">
+  <% unless @clinic_dog.dog.state %>
+    <div class="row justify-content-center">
+      <div class="col-md-8 alert alert-warning text-center" role="alert" id="warning-message">
+        Este perro está deshabilitado
+      </div>
+    </div>
+  <% end %>
   <div class="row justify-content-center">
     <div class="col-md-8">
       <%= render @clinic_dog %>
       <div class="mt-3 text-center">
         <% if current_user.admin? %>
-          <%= link_to "Editar", edit_clinic_dog_path(@clinic_dog), class: "btn btn-primary me-1"%>
+          <%= link_to "Editar", edit_clinic_dog_path(@clinic_dog), class: "btn btn-primary me-1 #{@clinic_dog.dog.state ? '' : 'disabled'}"%>
         <% end %>
         <%= link_to "Volver a la historia clínica", dog_clinic_dogs_path(@clinic_dog.dog), class: "btn btn-secondary" %>
       </div>

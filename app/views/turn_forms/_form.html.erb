@@ -72,7 +72,7 @@ Cada turno es para un único perro. Si tienes más de un perro, por favor, saca 
     <div class="row mb-3">
         <%= form.label :dog_id, "Seleccione a su mascota", class: "col-sm-3 col-form-label" %>
         <div class="col-md-9">
-            <%= form.collection_select(:dog_id, current_user.dogs, :id, :first_name, { prompt: "", required: true }, { class: 'form-select' }) %>
+            <%= form.collection_select(:dog_id, current_user.dogs.where(state: true) , :id, :first_name, { prompt: "", required: true }, { class: 'form-select' }) %>
         </div>
     </div>
 
