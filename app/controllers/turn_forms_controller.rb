@@ -125,7 +125,7 @@ class TurnFormsController < ApplicationController
       @turn_form.destroy!
       redirect_to turn_forms_path, success: "Monto emitido exitosamente"
     else
-      render 'emit_amount'
+      render 'emit_amount', status: :unprocessable_entity
     end
   end
 

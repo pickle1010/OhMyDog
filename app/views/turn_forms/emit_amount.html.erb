@@ -13,27 +13,27 @@
           <div class="card mb-4 shadow-sm">
             <div class="card-body">
 
+              <% if @turn_form.errors.any? %>
+                <div class="alert alert-danger">
+                  <h4 class="alert-heading"><%= pluralize(@turn_form.errors.count, "error","errores") %> <%= (@turn_form.errors.count == 1) ? "impide" : "impiden" %> que se envíe el monto:</h4>
+                  <ul>
+                      <% @turn_form.errors.each do |error| %>
+                        <li><%= error.full_message.humanize %></li>
+                      <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
               <div class="row my-3">
-                <div class="col-sm-5">
+                <div class="col-sm-4">
                   <span class="mb-0">Saldo a favor del cliente:</span>
                 </div>
-                <div class="col-sm-7">
+                <div class="col-sm-8">
                   <span class="text-muted mb-0">$<%= @turn_form.user.positive_balance %></span>
                 </div>
               </div>
 
               <%= form_with(model: @turn_form, url: save_amount_turn_form_path(@turn_form), local: true, method: :post) do |form| %>
-
-                <% if @turn_form.errors.any? %>
-                  <div class="alert alert-danger">
-                    <h4 class="alert-heading"><%= pluralize(@turn_form.errors.count, "error","errores") %> <%= (@turn_form.errors.count == 1) ? "impide" : "impiden" %> que se envíe el monto:</h4>
-                    <ul>
-                        <% @turn_form.errors.each do |error| %>
-                          <li><%= error.full_message.humanize %></li>
-                        <% end %>
-                    </ul>
-                  </div>
-                <% end %>
                 
                 <!-- Campo para el monto total -->
                 <div class="row mb-3">
@@ -45,9 +45,9 @@
 
                 <!-- Agregar campo de descripción adicional del veterinario -->
                 <div class="row mb-3">
-                  <%= form.label :vet_description, "Descripción adicional del veterinario", class: "col-sm-4 col-form-label" %>
+                  <%= form.label :vet_description, "Descripción adicional del veterinario (opcional)", class: "col-sm-4 col-form-label" %>
                   <div class="col-sm-8">
-                    <%= form.text_area :vet_description, class: 'form-control', rows: 4 %> 
+                    <%= form.text_area :vet_description, class: 'form-control', rows: 4 %>
                   </div>
                 </div>
 
