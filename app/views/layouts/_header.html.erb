@@ -26,7 +26,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><%= link_to "Adopciones", "#", class:"dropdown-item disabled" %></li>
-              <li><%= link_to "Perdidos y Encontrados", "#", class:"dropdown-item disabled" %></li>
+              <li><%= link_to "Perdidos y Encontrados", wanted_posts_path, class:"dropdown-item" %></li>
               <li><%= link_to "Paseadores y Cuidadores", "#", class:"dropdown-item disabled" %></li>
               <li><%= link_to "Calendario", meetings_path, class:"dropdown-item" %></li>
               <% if user_signed_in? %>
