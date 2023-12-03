@@ -11,14 +11,21 @@
   <% end %>
 
   <div class="row mb-3">
-    <%= form.label :dateclinic, "Fecha", class: "offset-sm-1 col-sm-3 col-form-label" %>
+    <%= form.label :dateclinic, "Perro", class: "offset-sm-2 col-sm-2 col-form-label" %>
+    <div class="col-sm-6 me-auto">
+      <input class="form-control" id="disabledInput" type="text" placeholder="<%= clinic_dog.dog.first_name %> <%= clinic_dog.dog.last_name %>" disabled>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <%= form.label :dateclinic, "Fecha", class: "offset-sm-2 col-sm-2 col-form-label" %>
     <div class="col-sm-6 me-auto">
       <%= form.date_field :dateclinic, autofocus: true, autocomplete: "off", class: "form-control" %>
     </div>
   </div>
 
   <div class="row mb-3">
-    <%= form.label :vaccines, "Vacunas aplicadas", class: "offset-sm-1 col-sm-3 col-form-label" %>
+    <%= form.label :vaccines, "Vacunas aplicadas", class: "offset-sm-2 col-sm-2 col-form-label" %>
     <div class="col-sm-6 me-auto">
       <% if form.object.new_record? %> 
         <%= form.select(:vaccines, [['', nil]] + ClinicDog.vaccines.keys.map { |vaccine| [t("activerecord.attributes.clinic_dog.vaccines_options.#{vaccine}").humanize, vaccine] },
@@ -34,7 +41,7 @@
   </div>
 
   <div class="row mb-3 align-items-center">
-    <%= form.label :description, "Descripción", class: "offset-sm-1 col-sm-3 col-form-label" %>
+    <%= form.label :description, "Descripción", class: "offset-sm-2 col-sm-2 col-form-label" %>
     <div class="col-sm-6 me-auto">
       <%= form.text_area :description, class: 'form-control', rows: 4 %>
     </div>
