@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_23_185253) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_03_180951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,24 +42,18 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_185253) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "clinic_dogs", force: :cascade do |t|
-    t.boolean "question"
-    t.date "dateclinic"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "vaccines"
-  end
-
   create_table "credit_cards", force: :cascade do |t|
-    t.string "card_type"
-    t.string "card_number"
+    t.string "number"
+    t.integer "expiration_month"
+    t.integer "expiration_year"
+    t.string "cvv"
     t.string "name"
     t.string "last_name"
-    t.string "expiration_date"
-    t.decimal "amount"
+    t.integer "amount"
+    t.integer "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "card_type"
   end
 
   create_table "dogs", force: :cascade do |t|
