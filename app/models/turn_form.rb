@@ -54,7 +54,7 @@ class TurnForm < ApplicationRecord
   end
 
   def unique_turn_for_dog
-    existing_turns = TurnForm.where(user: user, dog: dog)
+    existing_turns = TurnForm.where(user: user, dog: dog, done: false)
     existing_turns = existing_turns.where.not(id: id) if persisted?  # Excluye el turno actual si está siendo editado
 
     if existing_turns.exists?
