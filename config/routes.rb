@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :adoption_posts
+
   resources :meetings
   
   resources :services do

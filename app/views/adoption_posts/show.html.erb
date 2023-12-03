@@ -1,0 +1,8 @@
+<%= render @adoption_post %>
+
+<div>
+  <%= link_to "Edit this adoption post", edit_adoption_post_path(@adoption_post) %> |
+  <%= link_to "Back to adoption posts", adoption_posts_path %>
+
+  <%= button_to "Destroy this adoption post", @adoption_post, method: :delete %>
+</div>

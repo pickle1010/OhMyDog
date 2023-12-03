@@ -1,0 +1,18 @@
+<%= form_with(model: adoption_post) do |form| %>
+  <% if adoption_post.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(adoption_post.errors.count, "error", "errores") %> <%= (adoption_post.errors.count == 1) ? "impide" : "impiden" %> que se guarde la publicación</h4>
+      <ul>
+        <% adoption_post.errors.each do |error| %>
+          <li><%= error.full_message.humanize %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.text_area :body, class: 'form-control mb-3', rows: 4, placeholder: "Escribe aquí tu publicación" %>
+
+  <%= form.submit "#{form.object.new_record? ? "Publicar" : "Editar"}", class: "btn btn-primary" %>
+  <%= link_to "Volver a Adopciones", adoption_posts_path, class: "btn btn-secondary" %>
+
+<% end %>

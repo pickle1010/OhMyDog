@@ -1,0 +1,38 @@
+<div id="<%= dom_id adoption_post %>">
+  <div class="card round-2">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="card-title">
+            <%= adoption_post.user.first_name %> <%= adoption_post.user.last_name %> <span class="text-secondary">#<%= adoption_post.user_id %></span>
+          </h5>
+          <% if adoption_post.user.admin? %>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              <%= t("activerecord.attributes.user.roles.#{adoption_post.user.role}").humanize %>
+            </h6>
+          <% end %>
+        </div>
+        <% if user_signed_in? && (current_user == adoption_post.user || current_user.admin?) %>
+          <div class="dropdown">
+            <button class="btn btn-link rounded-circle dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+              </svg>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <% if current_user == adoption_post.user %>
+                <li><%= link_to "Editar", edit_adoption_post_path(adoption_post), class: "dropdown-item" %></li>
+                <li><hr class="dropdown-divider"></li>
+              <% end %>
+              <li><%= button_to "Borrar", adoption_post, method: :delete, class: "dropdown-item" %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+      <p class="card-text"><%= adoption_post.body %></p>
+    </div>
+    <div class="card-footer text-body-secondary">
+      Publicado hace <%= time_ago_in_words(adoption_post.created_at) %>
+    </div>
+  </div>
+</div>
