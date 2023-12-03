@@ -1,8 +1,8 @@
 class TurnFormsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_if_not_admin, only: [:new, :create, :cancel]
-  before_action :check_if_admin, only: [:confirm, :reject, :emit_amount, :save_amount]
-  before_action :set_turn_form, only: %i[ show edit update destroy confirm reject cancel emit_amount save_amount]
+  before_action :check_if_admin, only: [:confirm, :confirm_reject, :reject, :emit_amount, :save_amount]
+  before_action :set_turn_form, only: %i[ show edit update destroy confirm reject confirm_reject cancel emit_amount save_amount]
 
   # GET /turn_forms or /turn_forms.json
   def index
@@ -82,11 +82,23 @@ class TurnFormsController < ApplicationController
     Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Turno confirmado", content: "Tu turno para #{@turn_form.dog.first_name} ha sido confirmado")
     redirect_to turn_forms_url, success: "Turno confirmado exitosamente."
   end
-  
+
   def reject
-    @turn_form.destroy
-    Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Turno rechazado", content: "Tu turno para #{@turn_form.dog.first_name} ha sido rechazado")
-    redirect_to turn_forms_url, success: "Turno rechazado exitosamente."
+    @rejection_message = Message.new
+  end
+  
+  def confirm_reject
+    @rejection_message = Message.new(message_params)
+    @rejection_message.assign_attributes(user: @turn_form.user, datetime: DateTime.now, title: "Turno rechazado")
+
+    if @rejection_message.valid?
+      @rejection_message.content = "Tu turno para #{@turn_form.dog.first_name} ha sido rechazado. Motivo: #{@rejection_message.content}"
+      @rejection_message.save
+      @turn_form.destroy
+      redirect_to turn_forms_url, success: "Turno rechazado exitosamente."
+    else
+      render :reject, status: :unprocessable_entity
+    end
   end
 
   def cancel
@@ -138,6 +150,10 @@ class TurnFormsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def turn_form_params
       params.require(:turn_form).permit(:dateCons, :schedule, :descriptionCons, :servicesCons, :confirmed, :dog_id, :total_amount, :vet_description)
+    end
+
+    def message_params
+      params.require(:message).permit(:content)
     end
 
     def check_if_not_admin

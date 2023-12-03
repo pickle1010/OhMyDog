@@ -36,6 +36,7 @@ es:
       user: 'usuario'
       meeting: 'evento'
       clinic_dog: 'historia clínica'
+      message: 'notificación'
     attributes:
       user/dogs:
         user_id: "id del dueño"
@@ -107,7 +108,7 @@ es:
         descriptionCons: 'descripción'
         total_amount: 'monto total'
       user:
-        email: "correo electrónico"
+        email: 'correo electrónico'
         dni: 'DNI'
         first_name: 'nombre'
         last_name: 'apellidos'
@@ -116,6 +117,11 @@ es:
         password: 'contraseña'
         password_confirmation: 'confirmación de contraseña'
         current_password: 'contraseña actual'
+      message:
+        title: 'título'
+        content: 'contenido del mensaje'
+        datetime: 'fecha programada de envío'
+        user: 'destinatario'
     errors:
       messages:
         not_a_number:
@@ -203,3 +209,13 @@ es:
               blank: 'no ha sido seleccionada'
             start_time:
               blank: 'no ha sido seleccionada'
+        message:
+          attributes:
+            title:
+              blank: 'no puede estar vacío'
+            content:
+              blank: 'no puede estar vacío'
+            datetime:
+              blank: 'no puede estar vacía'
+            user:
+              required: 'es requerido'

@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="offset-md-1 col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title mb-4">Rechazar turno</h1>
+            <%= form_with(model: @rejection_message, url: confirm_reject_turn_form_path(@turn_form), method: :patch) do |form| %>
+
+                <% if @rejection_message.errors.any? %>
+                    <div class="alert alert-danger">
+                    <h4 class="alert-heading"><%= pluralize(@rejection_message.errors.count, "error", "errores") %> <%= (@rejection_message.errors.count == 1) ? "impide" : "impiden" %> que se rechaze el turno</h4>
+                    <ul>
+                        <% @rejection_message.errors.each do |error| %>
+                        <li><%= error.full_message.humanize %></li>
+                        <% end %>
+                    </ul>
+                    </div>
+                <% end %>
+
+                <%= form.text_area :content, class: 'form-control mb-3', rows: 4, placeholder: "Escribe el mensaje indicando el motivo del rechazo" %>
+
+                <%= form.submit 'Confirmar Rechazo', data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" }, class: 'btn btn-danger' %>
+                <%= link_to "Volver a Turnos", turn_forms_path, class: "btn btn-secondary" %>
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,8 @@ class Message < ApplicationRecord
 
   after_create_commit :notify_user
 
+  validates :content, :title, :datetime, presence: true
+
   def notify_user
     MessageNotification.with(message: self).deliver_later(user)
   end

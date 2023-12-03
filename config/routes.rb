@@ -22,7 +22,8 @@ Rails.application.routes.draw do
   resources :turn_forms do
     member do
       patch 'confirm'
-      patch 'reject'
+      get 'reject'
+      patch 'confirm_reject'
       patch 'cancel'
       get 'emit_amount'
       post 'save_amount'
