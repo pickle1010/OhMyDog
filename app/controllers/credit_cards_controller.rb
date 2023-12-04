@@ -23,13 +23,17 @@ class CreditCardsController < ApplicationController
     def create
       @credit_card = CreditCard.new(credit_card_params)
   
-      if @credit_card.save
-        redirect_to @credit_card, notice: 'Credit card was successfully created.'
-      else
-        puts @credit_card.errors.full_messages
-        render :new
+      respond_to do |format|
+        if @credit_card.save
+          format.html { redirect_to credit_card_url(@credit_card), notice: "Turn form was successfully created." }
+          format.json { render :show, status: :created, location: @credit_card }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @credit_card.errors, status: :unprocessable_entity }
+        end
       end
     end
+
   
     # PATCH/PUT /credit_cards/1
     def update
