@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :users, shallow: true do
     resources :dogs do
       resources :clinic_dogs
+      member do
+        patch 'toggle_state'
+      end
     end
   end
 
