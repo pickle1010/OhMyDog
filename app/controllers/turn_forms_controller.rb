@@ -127,14 +127,14 @@ class TurnFormsController < ApplicationController
       # Calcula el saldo a favor a actualizar
       nuevo_saldo_a_favor = saldo_a_favor - monto_ingresado
     
-      # Calcula el monto total a actualizar
-      @turn_form.total_amount = [(monto_ingresado - saldo_a_favor), 0].max
+      # Calcula el monto total a actualizar y actualiza el turno con el monto resultante
+      # Además, también actualiza el turno con la descripción adicional del veterinario y lo marca como atendido
+      @turn_form.update(total_amount: [(monto_ingresado - saldo_a_favor), 0].max, done: true)
     
-      # Actualiza el saldo a favor del cliente  
+      # Actualiza el saldo a favor del cliente
       @turn_form.user.update(positive_balance: [nuevo_saldo_a_favor, 0].max)
 
       Message.create(user_id: @turn_form.user.id, datetime: DateTime.now, title: "Monto total recibido", content: "El monto total de tu turno para #{@turn_form.dog.first_name} es $#{@turn_form.total_amount}. Descripción adicional del veterinario: #{@turn_form.vet_description}")
-      @turn_form.destroy!
       redirect_to turn_forms_path, success: "Monto emitido exitosamente"
     else
       render 'emit_amount', status: :unprocessable_entity

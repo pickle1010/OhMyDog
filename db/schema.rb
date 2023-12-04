@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_30_190401) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_02_204353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -129,6 +129,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_30_190401) do
     t.bigint "dog_id", null: false
     t.decimal "total_amount"
     t.text "vet_description"
+    t.boolean "done", default: false
     t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
   end

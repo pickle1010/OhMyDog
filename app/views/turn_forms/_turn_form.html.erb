@@ -50,12 +50,32 @@
       <hr>
       <div class="row">
         <div class="col-sm-6">
-          <p class="mb-0">Descripción: </p>
+          <p class="mb-0">Descripción del cliente: </p>
         </div>
         <div class="col-sm-6">
           <p class="text-muted mb-0"><%= turn_form.descriptionCons %></p>
         </div>
       </div>
+      <% if turn_form.done %>
+        <hr>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="mb-0">Monto total del turno: </p>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-muted mb-0"><%= turn_form.total_amount %></p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="mb-0">Descripción del veterinario: </p>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-muted mb-0"><%= turn_form.vet_description %></p>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
