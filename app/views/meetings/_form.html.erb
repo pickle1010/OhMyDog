@@ -1,36 +1,51 @@
 <%= form_with(model: meeting) do |form| %>
   <% if meeting.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(meeting.errors.count, "error") %> prohibited this meeting from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(meeting.errors.count, "error","errores") %> <%= (meeting.errors.count == 1) ? "impide" : "impiden" %> que se guarde este evento:</h4>
       <ul>
         <% meeting.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <li><%= error.full_message.humanize %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="row mb-3">
-    <%= form.label :name, t("activerecord.attributes.meeting.name").humanize, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-        <div class="col-sm-10">
-          <% if form.object.new_record? %> 
-            <%= form.select(:name, [['', nil]] + Meeting.names.keys.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] },
-                  { selected: nil },
-                  { class: 'form-select' }) %>
-            <% else %>} 
-              <%= form.select(:name, Meeting.names.keys.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] }, {selected: @meeting.new_record? }, { class: 'form-select'}) %>
-          <% end %>
+    <%= form.label :name, t("activerecord.attributes.meeting.name").humanize, class: "offset-sm-1 col-sm-1 col-form-label" %>
+    <div class="col-sm-9 me-auto">
+      <% unwanted_names = ['Vacunacion', 'Turno'] %>
+      <% allowed_names = Meeting.names.keys.reject { |name| unwanted_names.include?(name) } %>
+      <% if form.object.new_record? %> 
+        <%= form.select(:name, 
+              [['', nil]] + allowed_names.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] },
+              { selected: nil },
+              { class: 'form-select' }) %>
+        <% else %>
+          <%= form.select(:name, 
+              allowed_names.map { |name| [t("activerecord.attributes.meeting.names.#{name}").humanize, name] }, 
+              {selected: @meeting.new_record? }, 
+              { class: 'form-select'}) %>
+      <% end %>
     </div>
   </div>
 
-  <div>
-    <%= form.label :start_time, style: "display: block" %>
-    <%= form.date_field :start_time %>
+  <div class="row mb-3">
+    <%= form.label :start_time, "Fecha", class: "offset-sm-1 col-sm-1 col-form-label" %>
+    <div class="col-md-9 me-auto">
+      <%= form.date_field :start_time, class: 'form-control' %>
+    </div>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="row mb-3 align-items-center">
+    <%= form.label :description, "Descripción (opcional)", class: "offset-sm-1 col-sm-2 col-form-label" %>
+    <div class="col-md-8 me-auto">
+        <%= form.text_area :description, class: 'form-control', rows: 4 %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col text-center">
+      <%= form.submit "Guardar", data: { confirm: "¿Estás seguro de los datos ingresados?", turbo_confirm: "¿Estás seguro de los datos ingresados?" }, class: "btn btn-primary mt-2" %>
+    </div>
   </div>
 <% end %>

@@ -1,43 +1,70 @@
 class TurnForm < ApplicationRecord
-    belongs_to :user
-    has_many :services
-    enum scheduleCons: [:morning, :afternoon]
-    validates :dateCons , presence: true
-    validates :scheduleCons , presence: true
-    validates :servicesCons , presence: true
-    validate :dateCons_cannot_be_in_the_past
-    # validate :morning_option_available
+  belongs_to :user
+  belongs_to :dog
+  has_one :meeting, dependent: :destroy
 
-    def set_user(user)
-      self.user_id = user.id
-    end
+  enum schedule: [:morning, :afternoon]
 
-    def dateCons_cannot_be_in_the_past
-      if dateCons.present? && dateCons < Date.today
-        errors.add(:dateCons, "la fecha presente o una futura")
+  validates :dateCons , presence: true
+  validates :schedule, :servicesCons, presence: true
+  validates :total_amount, presence: true, on: :save_total_amount
+  validates :total_amount, numericality: { greater_than: 0 }, on: :save_total_amount
+  validate :date_cannot_be_in_the_past
+  validate :unique_turn_for_dog, if: -> { user.client? }
+  validate :must_not_be_morning_when_has_already_passed
+  validate :validate_morning_meeting, if: -> { user.client?} 
+  validate :validate_evening_meeting, if: -> { user.client?}
+  validate :validate_allday_meeting, if: -> { user.client?}
+
+  def validate_morning_meeting
+    if dateCons.present? && schedule.present?
+      morningmeeting = Meeting.where(name: :No_laborable_en_la_mañana).where(start_time: dateCons).count
+      if morningmeeting > 0 && schedule == "morning"
+        errors.add(:base, "La banda horaria seleccionada es no laborable. Por favor, revisa el calendario para conocer nuestras bandas y días laborables")
       end
     end
+  end
 
-    # def morning_option_available
-    #   # Check if the :date is today, and the :schedule is set to "morning" when it's already afternoon
-    #   # if dateCons.present? && scheduleCons == "morning" && afternoon_for_today?
-    #   #   errors.add(:scheduleCons, "cannot be morning for today as it's already afternoon.")
-    #   # end
-    #   # if scheduleCons == "morning" && dateCons == Date.current && Time.current >= Time.zone.parse("03:40 AM")
-    #   #   errors.add(:scheduleCons, "You cannot choose 'morning' for today if it's already afternoon.")
-    #   # end
-    #   if Time.now >= Time.zone.parse("04:00 AM")
-    #     errors.add(:scheduleCons, "You cannot choose 'morning' for today if it's already afternoon.")
-    #   end
-    # end
-  
-    # def afternoon_for_today?
-    #   # Compare the current time with the afternoon threshold
-    #   Time.current >= Time.parse('00:02:00')
-    # end
-  
-    # def afternoon_threshold
-    #   # Set the threshold time for considering it as afternoon (e.g., 12:00 PM)
-    #   Time.current.midday
-    # end
+  def validate_evening_meeting
+    if dateCons.present? && schedule.present?
+      eveningmeeting = Meeting.where(name: :No_laborable_en_la_tarde).where(start_time: dateCons).count
+      if eveningmeeting > 0 && schedule == "afternoon"
+        errors.add(:base, "La banda horaria seleccionada es no laborable. Por favor, revisa el calendario para conocer nuestras bandas y días laborables")
+      end
+    end
+  end
+
+  def validate_allday_meeting
+    if dateCons.present?
+      morningmeeting = Meeting.where(name: :No_laborable_todo_el_dia).where(start_time: dateCons).count
+      if morningmeeting > 0
+        errors.add(:base, "Fecha de consulta no laborable. Por favor, revisa el calendario para conocer nuestras bandas y días laborables")
+      end
+    end
+  end
+
+  def set_user(user)
+    self.user_id = user.id
+  end
+
+  def date_cannot_be_in_the_past
+    if dateCons.present? && dateCons < Date.today
+      errors.add(:dateCons, "debe ser presente o futura")
+    end
+  end
+
+  def unique_turn_for_dog
+    existing_turns = TurnForm.where(user: user, dog: dog)
+    existing_turns = existing_turns.where.not(id: id) if persisted?  # Excluye el turno actual si está siendo editado
+
+    if existing_turns.exists?
+      errors.add(:base, "Ya has solicitado un turno para este perro.")
+    end
+  end
+
+  def must_not_be_morning_when_has_already_passed
+    if dateCons.present? && dateCons == Date.today && Time.now > Time.parse("12:00 PM") && schedule == "morning"
+      errors.add(:schedule, "'mañana' no puede ser seleccionada para hoy si ya es la tarde")
+    end
+  end
 end

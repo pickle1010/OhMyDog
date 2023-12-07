@@ -1,0 +1,2 @@
+module ClinicDogsHelper
+end

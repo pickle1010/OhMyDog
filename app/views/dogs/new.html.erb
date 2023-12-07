@@ -5,5 +5,9 @@
 <br>
 
 <div>
-  <%= link_to "Volver", :back, class: "btn btn-secondary" %>
+  <% if current_user == @user %>
+    <%= link_to "Volver a mis mascotas", user_dogs_path(@user), class: "btn btn-secondary" %>
+  <% else %>
+    <%= link_to "Volver a las mascotas del cliente", user_dogs_path(@user), class: "btn btn-secondary" %>
+  <% end %>
 </div>

@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header text-center">
+      <h1>Nueva entrada</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", clinic_dog: @clinic_dog %>
+    </div>
+    <div class="row mb-3">
+      <div class="col text-center">
+        <%= link_to "Volver a la historia clínica", dog_clinic_dogs_path(@clinic_dog.dog), class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>

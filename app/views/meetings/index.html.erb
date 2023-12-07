@@ -1,29 +1,33 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Meetings</h1>
+<div class="d-flex align-items-center">
+  <div class="me-auto">
+    <h1>Calendario</h1>
+  </div>
+  <% if user_signed_in? && current_user.admin? %>
+    <%= link_to new_meeting_path, class: "btn btn-primary btn-lg" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+      </svg>
+      Agregar evento
+    <% end %>
+  <% end %>
+</div>
 
 <div class="container">
   <div class="row justify-content-center">
-    <%= link_to "New meeting", new_meeting_path %>
     <%= month_calendar(events: @meetings) do |date, meetings| %>
       <%= date.day %>
 
       <% meetings.each do |meeting| %>
-        <div>
-          <%= t("activerecord.attributes.meeting.names.#{meeting.name}").humanize %>
-          <%= meeting.description %>
-        </div>
+        <%= link_to meeting, class: "link-underline link-underline-opacity-0" do %>
+          <div class="card">
+            <div class="card-body text-center">
+              <div>
+                <%= t("activerecord.attributes.meeting.names.#{meeting.name}").humanize %>
+              </div>
+            </div>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
   </div>
-</div>  
-
-<div id="meetings">
-  <% @meetings.each do |meeting| %>
-    <%= render meeting %>
-    <p>
-      <%= link_to "Show this meeting", meeting %>
-    </p>
-  <% end %>
 </div>
-

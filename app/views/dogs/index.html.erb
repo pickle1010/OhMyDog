@@ -1,5 +1,4 @@
-
-<div class="d-flex align-items-center">
+<div class="d-flex align-items-center gap-1">
   <div class="me-auto">
     <% if current_user == @user %>
       <h1>Mis mascotas</h1>
@@ -7,9 +6,12 @@
       <h1>Mascotas de <%= @user.first_name %> <%= @user.last_name %></h1>
     <% end %>
   </div>
+  <% if current_user != @user %>
+    <%= link_to "Volver al cliente", user_path(@user), class: "btn btn-secondary btn-lg" %>
+  <% end %>
   <% if current_user.admin? %>
-    <%= link_to new_user_dog_path(@user.id), class: "btn btn-primary" do %>
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+    <%= link_to new_user_dog_path(@user.id), class: "btn btn-primary btn-lg" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
       </svg>
       Agregar mascota

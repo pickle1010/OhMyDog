@@ -1,4 +1,10 @@
-es: 
+es:
+  errors:
+    messages:
+      not_a_number: 'no es un número'
+  simple_calendar:
+    previous: 'Anterior'
+    next: 'Siguiente'
   date:
     abbr_day_names: 
       - Domingo
@@ -9,6 +15,7 @@ es:
       - Viernes
       - Sabado
     month_names:
+      - Diciembre
       - Enero
       - Febrero
       - Marzo
@@ -20,26 +27,15 @@ es:
       - Septiembre
       - Octubre
       - Noviembre
-      - Diciembre   
-  turn_form:
-    scheduleCons:
-      morning: 'mañana'
-      afternoon: 'tarde' 
-  errors:
-    attributes:
-      dni:
-        not_a_number:
-    blank:
-    messages:
-      not_a_number:
   activerecord:
     models:
       user/dogs: 'perros del usuario'
       dog: 'perro'
       turn_form: 'turno'
       service: 'servicio'
-      meeting: 'evento'
       user: 'usuario'
+      meeting: 'evento'
+      clinic_dog: 'historia clínica'
     attributes:
       user/dogs:
         user_id: "id del dueño"
@@ -56,7 +52,7 @@ es:
         photo: 'foto'
         user: 'dueño'
         first_name: 'nombre'
-        last_name: 'apellido'
+        last_name: 'apellidos'
         birthday: 'fecha de nacimiento'
         breed: 'raza'
         breeds:
@@ -77,29 +73,44 @@ es:
         sexes:
           male: 'macho'
           female: 'hembra'
+      clinic_dog:
+        description: 'descripción'
+        question: 'casilla de verificación'
+        dateclinic: 'fecha'
+        vaccines: 'vacunas aplicadas'
+        vaccines_options: 
+          ninguna: 'ninguna'
+          antirrabica: 'antirrábica'
+          inmunologica: 'inmunológica'
+          ambas: 'ambas'
       service:
         name: 'nombre'
         price: 'precio'
         active: 'activo'
       meeting:
-        name: 'opcion'
+        name: 'evento'
         names:
           No_laborable_todo_el_dia: 'no laborable todo el día' 
           No_laborable_en_la_mañana: 'no laborable en la mañana'
           No_laborable_en_la_tarde: 'no laborable en la tarde'
           Turno: 'Turno'
           Vacunacion: 'vacunación'
+        start_time: 'Fecha del evento'
         date: 'fecha'
       turn_form:
-        dateCons: 'fecha'
-        servicesCons: 'servicios'
-        scheduleCons: 'banda horaria'
+        dateCons: 'Fecha de consulta'
+        servicesCons: 'Servicios disponibles'
+        schedule: 'banda horaria'
+        schedules:
+          morning: 'mañana'
+          afternoon: 'tarde'
         descriptionCons: 'descripción'
+        total_amount: 'monto total'
       user:
         email: "correo electrónico"
         dni: 'DNI'
         first_name: 'nombre'
-        last_name: 'apellido'
+        last_name: 'apellidos'
         address: 'dirección'
         role: 'rol'
         password: 'contraseña'
@@ -114,10 +125,11 @@ es:
           attributes:
             first_name:
               blank: 'no puede estar vacío'
+              taken: 'ya esta tomado por otra mascota del cliente'
             last_name:
               blank: 'no puede estar vacío'
             breed: 
-              blank: 'no puede estar vacío' 
+              blank: 'no puede estar vacía' 
             color:
               blank: 'no puede estar vacío'   
             sex: 
@@ -126,20 +138,68 @@ es:
               blank: 'no puede estar vacía'
             user:
               required: 'debe existir en el sistema'
+        clinic_dog:
+          attributes:
+            question:
+              blank: 'debe estar seleccionada si hubo alguna vacuna aplicada'
+            description:
+              blank: 'no puede estar vacía'
+            dateclinic:
+              blank: 'no puede estar vacía'
+            vaccines:
+              blank: 'no puede estar vacía'
         service:
           attributes:
             name:
               blank: 'no puede estar vacío'
               taken: 'no puede repetirse dentro de la tabla de servicios'
+            price:
+              not_a_number: 'no es un número'
+              greater_than_or_equal_to: 'debe ser mayor o igual que cero'
         turn_form:
           attributes:
             dateCons:
-              blank: 'una fecha para su consulta'
+              blank: 'no ha sido seleccionada'
             servicesCons:
-              blank: 'al menos un servicio'
-            scheduleCons:
+              blank: 'no han sido seleccionados'
+            schedule:
               blank: 'no puede estar vacía'
             descriptionCons: 
-              blank: 'no puede estar vacía' 
-        
- 
+              blank: 'no puede estar vacía'
+            total_amount:
+              blank: 'no puede estar vacío'
+              not_a_number: 'debe ser un número'
+              greater_than: 'debe ser mayor que cero'
+        user:
+          not_a_number:
+          blank:
+          attributes:
+            first_name: 
+              blank: 'no puede estar vacío'
+            last_name:
+              blank: 'no puede estar vacío' 
+            dni:
+              blank: 'no puede estar vacío'
+              not_a_number: 'debe ser un número'
+              greater_than: 'debe ser mayor que cero'
+              taken: 'ya corresponde a un cliente' 
+            email:
+              blank: 'no puede estar vacío'
+              invalid: 'no es válido'
+              taken: 'ya corresponde a un cliente' 
+            address: 
+              blank: 'no puede estar vacía'
+            password: 
+              blank: 'no puede estar vacía'
+              too_short: 'tiene menos de 6 caracteres'
+            password_confirmation:
+              confirmation: 'errónea. Las contraseñas no coinciden' 
+            current_password:
+              invalid: 'es errónea'
+              blank: 'debe ser ingresada' 
+        meeting:
+          attributes:
+            name:
+              blank: 'no ha sido seleccionada'
+            start_time:
+              blank: 'no ha sido seleccionada'

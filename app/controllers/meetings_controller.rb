@@ -1,9 +1,17 @@
 class MeetingsController < ApplicationController
+  before_action :authenticate_user!, except: %i[ index show ]
+  before_action :check_if_admin, except: %i[ index show ]
   before_action :set_meeting, only: %i[ show edit update destroy ]
 
   # GET /meetings or /meetings.json
   def index
-    @meetings = Meeting.all
+    if !user_signed_in?
+      @meetings = Meeting.where.not(name: [:Vacunacion, :Turno])
+    elsif current_user.admin?
+      @meetings = Meeting.where.not(name: [:Vacunacion])
+    else
+      @meetings = Meeting.where.not(name: [:Vacunacion, :Turno]).or(current_user.meetings)
+    end
   end
 
   # GET /meetings/1 or /meetings/1.json
@@ -27,7 +35,7 @@ class MeetingsController < ApplicationController
 
     respond_to do |format|
       if @meeting.save
-        format.html { redirect_to meeting_url(@meeting), notice: "Meeting was successfully created." }
+        format.html { redirect_to meeting_url(@meeting), success: "El evento fue creado exitosamente." }
         format.json { render :show, status: :created, location: @meeting }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +48,7 @@ class MeetingsController < ApplicationController
   def update
     respond_to do |format|
       if @meeting.update(meeting_params)
-        format.html { redirect_to meeting_url(@meeting), notice: "Meeting was successfully updated." }
+        format.html { redirect_to meeting_url(@meeting), success: "El evento fue actualizado exitosamente." }
         format.json { render :show, status: :ok, location: @meeting }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +62,7 @@ class MeetingsController < ApplicationController
     @meeting.destroy!
 
     respond_to do |format|
-      format.html { redirect_to meetings_url, notice: "Meeting was successfully destroyed." }
+      format.html { redirect_to meetings_url, success: "El evento fue eliminado exitosamente." }
       format.json { head :no_content }
     end
   end
@@ -67,6 +75,6 @@ class MeetingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def meeting_params
-      params.require(:meeting).permit(:name, :start_time)
+      params.require(:meeting).permit(:name, :start_time, :description)
     end
 end

@@ -1,0 +1,19 @@
+<h1>Inbox</h1>
+
+<% if @notifications.any? %>
+  <ul class="list-group">
+    <% Message.where(user_id: current_user.id).order(datetime: :desc).each do |message| %>
+      <% if message.datetime.nil? || message.datetime <= DateTime.now %>
+        <li class="list-group-item">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1"><%= message.title %></h5>
+          </div>
+          <p class="mb-1"><%= message.content %></p>
+          <small>Recibido el <%= message.datetime.strftime("%Y-%m-%d %H:%M:%S") %></small>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No tienes notificationes.</p>
+<% end %>

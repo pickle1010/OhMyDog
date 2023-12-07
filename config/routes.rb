@@ -7,14 +7,31 @@ Rails.application.routes.draw do
   end
 
   resources :users, shallow: true do
-    resources :dogs
+    resources :dogs do
+      resources :clinic_dogs
+    end
   end
-  
-  resources :services
-  resources :turn_forms
-  resources :clinic_dogs
+
   resources :meetings
   resources :credit_cards
+  
+  resources :services do
+    member do
+      patch 'toggle_state'
+    end
+  end
+  
+  resources :turn_forms do
+    member do
+      patch 'confirm'
+      patch 'reject'
+      patch 'cancel'
+      get 'emit_amount'
+      post 'save_amount'
+    end
+  end
+
+  resources :notifications, only: [:index]
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
