@@ -3,7 +3,7 @@
     <%= form_with(model: credit_card) do |form| %>
       <% if credit_card.errors.any? %>
         <div class="alert alert-danger">
-          <h2><%= pluralize(credit_card.errors.count, "error") %> prohibited this credit_card from being saved:</h2>
+          <h2><%= pluralize(credit_card.errors.count, "error","errores") %> <%= (credit_card.errors.count == 1) ? "impide" : "impiden" %> que se carguen los datos de la tarjeta:</h2>
 
           <ul>
             <% credit_card.errors.each do |error| %>

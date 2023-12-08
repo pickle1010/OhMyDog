@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_03_233601) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_03_180951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,25 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_233601) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "adoption_posts", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_adoption_posts_on_user_id"
+  end
+
+  create_table "clinic_dogs", force: :cascade do |t|
+    t.boolean "question"
+    t.date "dateclinic"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "vaccines"
+    t.bigint "dog_id", null: false
+    t.index ["dog_id"], name: "index_clinic_dogs_on_dog_id"
+  end
+
   create_table "credit_cards", force: :cascade do |t|
     t.string "number"
     t.integer "expiration_month"
@@ -56,16 +75,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_233601) do
     t.string "card_type"
   end
 
-  create_table "dog_walkers", force: :cascade do |t|
-    t.string "name"
-    t.string "lastname"
-    t.string "workplace"
-    t.string "service"
-    t.string "contact"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "dogs", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -76,6 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_233601) do
     t.datetime "updated_at", null: false
     t.integer "sex"
     t.integer "breed"
+    t.boolean "state", default: true
     t.index ["user_id"], name: "index_dogs_on_user_id"
   end
 
@@ -87,8 +97,38 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_233601) do
     t.bigint "turn_form_id"
     t.string "description"
     t.bigint "user_id"
+    t.bigint "clinic_dog_id"
+    t.bigint "dog_id"
+    t.index ["clinic_dog_id"], name: "index_meetings_on_clinic_dog_id"
+    t.index ["dog_id"], name: "index_meetings_on_dog_id"
     t.index ["turn_form_id"], name: "index_meetings_on_turn_form_id"
     t.index ["user_id"], name: "index_meetings_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.datetime "datetime"
+    t.bigint "dog_id"
+    t.bigint "clinic_dog_id"
+    t.index ["clinic_dog_id"], name: "index_messages_on_clinic_dog_id"
+    t.index ["dog_id"], name: "index_messages_on_dog_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "recipient_type", null: false
+    t.bigint "recipient_id", null: false
+    t.string "type", null: false
+    t.jsonb "params"
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["read_at"], name: "index_notifications_on_read_at"
+    t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
   end
 
   create_table "services", force: :cascade do |t|
@@ -106,8 +146,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_233601) do
     t.string "servicesCons"
     t.bigint "user_id", null: false
     t.date "dateCons"
-    t.integer "scheduleCons"
+    t.integer "schedule"
+    t.boolean "confirmed", default: false
+    t.bigint "dog_id"
+    t.decimal "total_amount"
+    t.text "vet_description"
     t.date "block_date"
+    t.boolean "done", default: false
+    t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
   end
 
@@ -123,6 +169,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_233601) do
     t.string "last_name"
     t.string "address"
     t.integer "role"
+    t.decimal "positive_balance", precision: 10, scale: 2, default: "0.0"
     t.index ["dni"], name: "index_users_on_dni", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -130,8 +177,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_233601) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "adoption_posts", "users"
+  add_foreign_key "clinic_dogs", "dogs"
   add_foreign_key "dogs", "users"
+  add_foreign_key "meetings", "clinic_dogs"
+  add_foreign_key "meetings", "dogs"
   add_foreign_key "meetings", "turn_forms"
   add_foreign_key "meetings", "users"
+  add_foreign_key "messages", "clinic_dogs"
+  add_foreign_key "messages", "dogs"
+  add_foreign_key "messages", "users"
+  add_foreign_key "turn_forms", "dogs"
   add_foreign_key "turn_forms", "users"
 end
