@@ -114,7 +114,7 @@ es:
         name: 'nombre'
         last_name: 'apellido'
         amount: 'monto'
-        type: 'tipo'
+        card_type: 'tipo de tarjeta'
     errors:
       messages:
         not_a_number:
