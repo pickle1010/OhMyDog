@@ -11,7 +11,7 @@
   <% end %>
 
   <div class="row mb-3">
-    <%= form.label :dateclinic, "Perro", class: "offset-sm-2 col-sm-2 col-form-label" %>
+    <%= form.label "Perro", class: "offset-sm-2 col-sm-2 col-form-label" %>
     <div class="col-sm-6 me-auto">
       <input class="form-control" id="disabledInput" type="text" placeholder="<%= clinic_dog.dog.first_name %> <%= clinic_dog.dog.last_name %>" disabled>
     </div>
@@ -24,21 +24,42 @@
     </div>
   </div>
 
-  <div class="row mb-3">
-    <%= form.label :vaccines, "Vacunas aplicadas", class: "offset-sm-2 col-sm-2 col-form-label" %>
-    <div class="col-sm-6 me-auto">
-      <% if form.object.new_record? %> 
-        <%= form.select(:vaccines, [['', nil]] + ClinicDog.vaccines.keys.map { |vaccine| [t("activerecord.attributes.clinic_dog.vaccines_options.#{vaccine}").humanize, vaccine] },
-              { selected: nil },
-              { class: 'form-select' }) %>
-      <% else %>
-        <%= form.select(:vaccines, 
-              ClinicDog.vaccines.keys.map { |vaccine| [t("activerecord.attributes.clinic_dog.vaccines_options.#{vaccine}").humanize, vaccine] }, 
-              {selected: @clinic_dog.vaccines }, 
-              { class: 'form-select'}) %>
-      <% end %>
+  <hr class="offset-sm-2 col-sm-8">
+
+  <div class="row mb-1">
+    <div class="offset-sm-2 col d-flex flex-column">
+      <%= form.label "Vacunas aplicadas", class: "form-label mb-0" %>
+      <div class="form-text mt-1 mb-2">
+        Si alguna de estas vacunas no fue aplicada, deje la misma en blanco
+      </div>
     </div>
   </div>
+
+  <div class="row mb-3 align-items-center">
+    <div class="offset-sm-3 col-sm-2 text-secondary">
+      Antirrábica
+    </div>
+    <div class="col-sm-2">
+      <%= form.text_field :rabies_batch, class: "form-control", placeholder: "Lote" %>
+    </div>
+    <div class="col-sm-2">
+      <%= form.number_field :rabies_dosage, class: "form-control", placeholder: "Dosis (mg)", step: "0.01", min: "0" %>
+    </div>
+  </div>
+
+  <div class="row mb-3 align-items-center">
+    <div class="offset-sm-3 col-sm-2 text-secondary">
+      Inmunológica
+    </div>
+    <div class="col-sm-2">
+      <%= form.text_field :inmunological_batch, class: "form-control", placeholder: "Lote" %>
+    </div>
+    <div class="col-sm-2">
+      <%= form.number_field :inmunological_dosage, class: "form-control", placeholder: "Dosis (mg)", step: "0.01", min: "0" %>
+    </div>
+  </div>
+
+  <hr class="offset-sm-2 col-sm-8">
 
   <div class="row mb-3 align-items-center">
     <%= form.label :description, "Descripción", class: "offset-sm-2 col-sm-2 col-form-label" %>

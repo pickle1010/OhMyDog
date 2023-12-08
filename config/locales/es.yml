@@ -76,14 +76,11 @@ es:
           female: 'hembra'
       clinic_dog:
         description: 'descripción'
-        question: 'casilla de verificación'
         dateclinic: 'fecha'
-        vaccines: 'vacunas aplicadas'
-        vaccines_options: 
-          ninguna: 'ninguna'
-          antirrabica: 'antirrábica'
-          inmunologica: 'inmunológica'
-          ambas: 'ambas'
+        rabies_batch: 'lote de la vacuna antirrábica'
+        rabies_dosage: 'dosis de la vacuna antirrábica'
+        inmunological_batch: 'lote de la vacuna inmunológica'
+        inmunological_dosage: 'dosis de la vacuna inmunológica'
       service:
         name: 'nombre'
         price: 'precio'
@@ -146,14 +143,16 @@ es:
               required: 'debe existir en el sistema'
         clinic_dog:
           attributes:
-            question:
-              blank: 'debe estar seleccionada si hubo alguna vacuna aplicada'
             description:
               blank: 'no puede estar vacía'
             dateclinic:
               blank: 'no puede estar vacía'
-            vaccines:
-              blank: 'no puede estar vacía'
+            rabies_dosage:
+              not_a_number: 'no es un número'
+              greater_than: 'debe ser mayor que cero'
+            inmunological_dosage:
+              not_a_number: 'no es un número'
+              greater_than: 'debe ser mayor que cero'
         service:
           attributes:
             name:

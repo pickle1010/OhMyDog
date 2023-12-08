@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_02_204353) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_07_210345) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_02_204353) do
     t.datetime "updated_at", null: false
     t.integer "vaccines"
     t.bigint "dog_id", null: false
+    t.decimal "rabies_dosage"
+    t.string "rabies_batch"
+    t.decimal "inmunological_dosage"
+    t.string "inmunological_batch"
     t.index ["dog_id"], name: "index_clinic_dogs_on_dog_id"
   end
 

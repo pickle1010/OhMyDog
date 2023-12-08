@@ -31,17 +31,25 @@ class ClinicDogsController < ApplicationController
 
     respond_to do |format|
       if @clinic_dog.save
-        unless @clinic_dog.ninguna?
-          schedule_datetime = @clinic_dog.dateclinic.to_datetime
+        if @clinic_dog.rabies_applied || @clinic_dog.inmunological_applied
           age_in_months = @clinic_dog.dog.age_in_months
-          if age_in_months > 4
-            schedule_datetime += 1.year
-          else
-            schedule_datetime += 21
+          if age_in_months > 2
+            schedule_datetime = @clinic_dog.dateclinic.to_datetime
+            if age_in_months > 4
+              schedule_datetime += 1.year
+            else
+              schedule_datetime += 21
+            end
+            if @clinic_dog.rabies_applied && @clinic_dog.inmunological_applied
+              vaccines_applied = "antirrábica e inmunológica"
+            elsif @clinic_dog.rabies_applied
+              vaccines_applied = "antirrábica"
+            else
+              vaccines_applied = "inmunológica"
+            end
+            Message.create(user_id: @dog.user.id, clinic_dog_id: @clinic_dog.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una nueva dosis de #{vaccines_applied}")
+            Meeting.create(name: :Vacunacion, user_id: @dog.user.id, clinic_dog_id: @clinic_dog.id, start_time: schedule_datetime.to_date, description: "#{@clinic_dog.dog.first_name} ya es apto para recibir una nueva dosis de #{vaccines_applied}")
           end
-          vaccine_dose = @clinic_dog.ambas? ? "inmunológica y antirrábica" : t("activerecord.attributes.clinic_dog.vaccines_options.#{@clinic_dog.vaccines}")
-          Message.create(user_id: @dog.user.id, clinic_dog_id: @clinic_dog.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
-          Meeting.create(name: :Vacunacion, user_id: @dog.user.id, clinic_dog_id: @clinic_dog.id, start_time: schedule_datetime.to_date, description: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
         end
         format.html { redirect_to clinic_dog_url(@clinic_dog), success: "La nueva entrada fue agregada a la historia clínica exitosamente" }
         format.json { render :show, status: :created, location: @clinic_dog }
@@ -56,25 +64,33 @@ class ClinicDogsController < ApplicationController
   def update
     respond_to do |format|
       if @clinic_dog.update(clinic_dog_params)
-        unless @clinic_dog.ninguna?
-          schedule_datetime = @clinic_dog.dateclinic.to_datetime
+        if @clinic_dog.rabies_applied || @clinic_dog.inmunological_applied
           age_in_months = @clinic_dog.dog.age_in_months
-          if age_in_months > 4
-            schedule_datetime += 1.year
-          else
-            schedule_datetime += 21
+          if age_in_months > 2
+            schedule_datetime = @clinic_dog.dateclinic.to_datetime
+            if age_in_months > 4
+              schedule_datetime += 1.year
+            else
+              schedule_datetime += 21
+            end
+            if @clinic_dog.rabies_applied && @clinic_dog.inmunological_applied
+              vaccines_applied = "antirrábica e inmunológica"
+            elsif @clinic_dog.rabies_applied
+              vaccines_applied = "antirrábica"
+            else
+              vaccines_applied = "inmunológica"
+            end
+            unless @clinic_dog.message.nil?
+              @clinic_dog.message.update(datetime: schedule_datetime, content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una nueva dosis de #{vaccines_applied}")
+            else 
+              Message.create(user_id: @clinic_dog.dog.user.id, clinic_dog_id: @clinic_dog.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una nueva dosis de #{vaccines_applied}")
+            end
+            unless @clinic_dog.meeting.nil?
+              @clinic_dog.meeting.update(start_time: schedule_datetime.to_date, description: "#{@clinic_dog.dog.first_name} ya es apto para recibir una nueva dosis de #{vaccines_applied}")
+            else
+              Meeting.create(name: :Vacunacion, user_id: @clinic_dog.dog.user.id, clinic_dog_id: @clinic_dog.id, start_time: schedule_datetime.to_date, description: "#{@clinic_dog.dog.first_name} ya es apto para recibir una nueva dosis de #{vaccines_applied}")
+            end            
           end
-          vaccine_dose = @clinic_dog.ambas? ? "inmunológica y antirrábica" : t("activerecord.attributes.clinic_dog.vaccines_options.#{@clinic_dog.vaccines}")
-          unless @clinic_dog.message.nil?
-            @clinic_dog.message.update(datetime: schedule_datetime, content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
-          else 
-            Message.create(user_id: @clinic_dog.dog.user.id, clinic_dog_id: @clinic_dog.id, datetime: schedule_datetime, title: "¡Hora de vacunar a #{@clinic_dog.dog.first_name}!", content: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
-          end
-          unless @clinic_dog.meeting.nil?
-            @clinic_dog.meeting.update(start_time: schedule_datetime.to_date, description: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
-          else
-            Meeting.create(name: :Vacunacion, user_id: @clinic_dog.dog.user.id, clinic_dog_id: @clinic_dog.id, start_time: schedule_datetime.to_date, description: "#{@clinic_dog.dog.first_name} ya es apto para recibir una dosis de #{vaccine_dose}")
-          end          
         else
           unless @clinic_dog.message.nil?
             @clinic_dog.message.destroy
@@ -114,6 +130,6 @@ class ClinicDogsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def clinic_dog_params
-      params.require(:clinic_dog).permit(:question, :dateclinic, :description, :vaccines, :dog_id)
+      params.require(:clinic_dog).permit(:dateclinic, :description, :rabies_batch, :rabies_dosage, :inmunological_batch, :inmunological_dosage, :dog_id)
     end
 end
