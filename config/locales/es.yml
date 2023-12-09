@@ -36,6 +36,7 @@ es:
       user: 'usuario'
       meeting: 'evento'
       clinic_dog: 'historia clínica'
+      credit_card: 'Tarjeta'
     attributes:
       user/dogs:
         user_id: "id del dueño"
@@ -116,6 +117,15 @@ es:
         password: 'contraseña'
         password_confirmation: 'confirmación de contraseña'
         current_password: 'contraseña actual'
+      credit_card:
+        number: 'número'
+        expiration_month: 'mes de vencimiento'
+        expiration_year: 'año de vencimiento'
+        cvv: 'código de seguridad'
+        name: 'nombre'
+        last_name: 'apellido'
+        amount: 'monto'
+        card_type: 'tipo de tarjeta'
     errors:
       messages:
         not_a_number:
@@ -203,3 +213,30 @@ es:
               blank: 'no ha sido seleccionada'
             start_time:
               blank: 'no ha sido seleccionada'
+        credit_card:
+          attributes:
+            number:
+              blank: 'no puede estar en blanco'
+              wrong_length: 'debe tener 16 dígitos'
+              invalid: 'no es válido'
+            expiration_month:
+              blank: 'no puede estar en blanco'
+              not_a_number: 'debe ser un número'
+              less_than_or_equal_to: 'debe estar entre 1..12'
+              greater_than_or_equal_to: 'debe estar entre 1..12'
+            expiration_year:
+              blank: 'no puede estar en blanco'
+              not_a_number: 'debe ser un número'
+              greater_than_or_equal_to: 'debe ser mayor o igual que el año actual'
+            cvv:
+              blank: 'no puede estar en blanco'
+              not_a_number: 'debe ser un número'
+              in: 'no es válido'
+            name:
+              blank: 'no puede estar en blanco'
+            last_name: 
+              blank: 'no puede estar en blanco'
+            amount:
+              blank: 'no puede estar en blanco'
+              not_a_number: 'debe ser un número'
+              greater_than: 'debe ser mayor a cero' 

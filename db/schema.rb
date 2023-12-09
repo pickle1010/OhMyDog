@@ -42,6 +42,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "adoption_posts", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_adoption_posts_on_user_id"
+  end
+
   create_table "clinic_dogs", force: :cascade do |t|
     t.boolean "question"
     t.date "dateclinic"
@@ -65,8 +73,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "card_type"
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
   create_table "dog_walkers", force: :cascade do |t|
@@ -89,6 +95,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
     t.datetime "updated_at", null: false
     t.integer "sex"
     t.integer "breed"
+    t.boolean "state", default: true
     t.index ["user_id"], name: "index_dogs_on_user_id"
   end
 
@@ -151,9 +158,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
     t.date "dateCons"
     t.integer "schedule"
     t.boolean "confirmed", default: false
-    t.bigint "dog_id", null: false
+    t.bigint "dog_id"
     t.decimal "total_amount"
     t.text "vet_description"
+    t.date "block_date"
+    t.boolean "done", default: false
     t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
   end
@@ -180,6 +189,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clinic_dogs", "dogs"
   add_foreign_key "credit_cards", "users"
+  add_foreign_key "adoption_posts", "users"
   add_foreign_key "dogs", "users"
   add_foreign_key "meetings", "clinic_dogs"
   add_foreign_key "meetings", "dogs"
