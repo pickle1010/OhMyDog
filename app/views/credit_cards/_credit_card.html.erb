@@ -1,42 +1,18 @@
-<div id="<%= dom_id credit_card %>">
-  <p>
-    <strong>Number:</strong>
-    <%= credit_card.number %>
-  </p>
+<body style="background-image: url('<%= asset_path('donationbackground.png') %>'); background-size: cover;">
+  <div class="card">
+    <div class="card-body" id="<%= dom_id credit_card %>">
+      
+      <p class="card-text">
+        <strong>Amount:</strong>
+        <%= credit_card.amount %>
+      </p>
 
-  <p>
-    <strong>Expiration month:</strong>
-    <%= credit_card.expiration_month %>
-  </p>
+      <p class="card-text">
+        <strong>User:</strong>
+        <%= credit_card.user.first_name %>
+        <%= credit_card.user.last_name %>
+      </p>
 
-  <p>
-    <strong>Expiration year:</strong>
-    <%= credit_card.expiration_year %>
-  </p>
-
-  <p>
-    <strong>Cvv:</strong>
-    <%= credit_card.cvv %>
-  </p>
-
-  <p>
-    <strong>Name:</strong>
-    <%= credit_card.name %>
-  </p>
-
-  <p>
-    <strong>Last name:</strong>
-    <%= credit_card.last_name %>
-  </p>
-
-  <p>
-    <strong>Amount:</strong>
-    <%= credit_card.amount %>
-  </p>
-
-  <p>
-    <strong>Card type:</strong>
-    <%= credit_card.card_type %>
-  </p>
-
-</div>
+    </div>
+  </div>
+</body>

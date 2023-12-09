@@ -21,11 +21,14 @@ class CreditCardsController < ApplicationController
   
     # POST /credit_cards
     def create
-      @credit_card = CreditCard.new(credit_card_params)
+      @credit_card = current_user.credit_cards.new(credit_card_params)
   
       respond_to do |format|
         if @credit_card.save
-          format.html { redirect_to credit_card_url(@credit_card), notice: "Turn form was successfully created." }
+          twenty_percent = (@credit_card.amount * 0.2).round(2)
+          current_user.update(positive_balance: current_user.positive_balance + twenty_percent)
+
+          format.html { redirect_to credit_card_url(@credit_card), notice: "Muchas gracias por la donacion! Revise su perfil para ver su saldo a favor" }
           format.json { render :show, status: :created, location: @credit_card }
         else
           format.html { render :new, status: :unprocessable_entity }

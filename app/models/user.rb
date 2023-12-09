@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :credit_cards
   has_many :dogs, dependent: :destroy
   has_many :turn_forms, dependent: :destroy
   has_many :messages, dependent: :destroy
