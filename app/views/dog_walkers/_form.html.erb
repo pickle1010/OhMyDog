@@ -4,8 +4,7 @@
         <%= form_with(model: dog_walker) do |form| %>
           <% if dog_walker.errors.any? %>
             <div style="color: red">
-              <h2><%= pluralize(dog_walker.errors.count, "error") %> prohibited this dog_walker from being saved:</h2>
-
+              <h4 class="alert-heading"><%= pluralize(dog_walker.errors.count, "error","errores") %> <%= (dog_walker.errors.count == 1) ? "impide" : "impiden" %> que se guarden los datos del paseador o cuidador:</h4>
               <ul>
                 <% dog_walker.errors.each do |error| %>
                   <li><%= error.full_message %></li>
