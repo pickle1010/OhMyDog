@@ -1,0 +1,10 @@
+<body style="background-image: url('<%= asset_path('backgroundpaseadores.jpg') %>'); background-size: cover;">
+  <% if user_signed_in? && current_user.admin? %>
+    <%= link_to "Agregar Paseador/Cuidador", new_dog_walker_path, class: "btn btn-primary my-2 mx-5" %>
+  <% end %>
+  <div id="dog_walkers">
+    <% @dog_walkers.each do |dog_walker| %>
+      <%= render dog_walker %>
+    <% end %>
+  </div>
+</body>

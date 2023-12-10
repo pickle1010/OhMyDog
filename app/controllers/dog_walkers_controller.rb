@@ -25,7 +25,8 @@ class DogWalkersController < ApplicationController
 
     respond_to do |format|
       if @dog_walker.save
-        format.html { redirect_to dog_walker_url(@dog_walker), notice: "Dog walker was successfully created." }
+        flash_notice = "El perfil de Paseador/Cuidador fue agregado con exito"
+        format.html { redirect_to dog_walker_url(@dog_walker), success: flash_notice }
         format.json { render :show, status: :created, location: @dog_walker }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +39,7 @@ class DogWalkersController < ApplicationController
   def update
     respond_to do |format|
       if @dog_walker.update(dog_walker_params)
-        format.html { redirect_to dog_walker_url(@dog_walker), notice: "Dog walker was successfully updated." }
+        format.html { redirect_to dog_walker_url(@dog_walker), success: "El perfil de paseador/cuidador fue actualizado" }
         format.json { render :show, status: :ok, location: @dog_walker }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +53,7 @@ class DogWalkersController < ApplicationController
     @dog_walker.destroy!
 
     respond_to do |format|
-      format.html { redirect_to dog_walkers_url, notice: "Dog walker was successfully destroyed." }
+      format.html { redirect_to dog_walkers_url, success: "El perfil de paseador/cuidador fue eliminado con exito" }
       format.json { head :no_content }
     end
   end
@@ -65,6 +66,6 @@ class DogWalkersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dog_walker_params
-      params.require(:dog_walker).permit(:name, :lastname, :workplace, :service, :contact)
+      params.require(:dog_walker).permit(:name, :lastname, :workplace, :service, :contact, :photo)
     end
 end
