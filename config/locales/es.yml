@@ -238,5 +238,4 @@ es:
               blank: 'no puede estar en blanco'
             amount:
               blank: 'no puede estar en blanco'
-              not_a_number: 'debe ser un número'
               greater_than: 'debe ser mayor a cero' 

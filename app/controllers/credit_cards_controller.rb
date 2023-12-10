@@ -27,8 +27,9 @@ class CreditCardsController < ApplicationController
         if @credit_card.save
           twenty_percent = (@credit_card.amount * 0.2).round(2)
           current_user.update(positive_balance: current_user.positive_balance + twenty_percent)
-
-          format.html { redirect_to credit_card_url(@credit_card), notice: "Muchas gracias por la donacion! Revise su perfil para ver su saldo a favor" }
+          
+          flash_notice = "Muchas gracias por la donacion! Revise su perfil para ver su saldo a favor"
+          format.html { redirect_to credit_card_url(@credit_card), success: flash_notice }
           format.json { render :show, status: :created, location: @credit_card }
         else
           format.html { render :new, status: :unprocessable_entity }

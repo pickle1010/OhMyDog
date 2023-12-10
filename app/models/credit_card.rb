@@ -8,9 +8,14 @@ class CreditCard < ApplicationRecord
     validates :last_name, presence: true, format: { with: /\A[A-Za-z]+\z/, message: "solo permite letras" }
     validates :last_name, presence: true
     validates :amount, presence: true, numericality: { greater_than: 0 }
+    validate :month_cannot_be_in_the_past
     # validates :card_type, numericality: { only_integer: true }
   
-    # other validations or model logic
-  end
-  
+    def month_cannot_be_in_the_past
+      if expiration_month.present? && expiration_month < Date.today.month && expiration_year.present? && expiration_year <= Date.today.year
+        errors.add(:base, "Debe ser una tarjeta vigente")
+      end
+    end
+
+end
   
