@@ -153,6 +153,7 @@ es:
         dni: 'DNI'
         first_name: 'nombre'
         last_name: 'apellidos'
+        phone: 'teléfono'
         address: 'dirección'
         role: 'rol'
         roles:

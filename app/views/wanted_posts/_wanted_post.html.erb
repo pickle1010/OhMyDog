@@ -3,14 +3,24 @@
     <div class="card-body">
       <div class="row">
         <div class="col-lg-6">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="mb-1">
               <h5 class="card-title">
-                <%= wanted_post.user.first_name %> <%= wanted_post.user.last_name %> <span class="text-secondary">#<%= wanted_post.user_id %></span>
+                <%= wanted_post.user.first_name %> <%= wanted_post.user.last_name %> 
+                <span class="text-secondary">
+                  #<%= wanted_post.user_id %>
+                </span>
               </h5>
               <% if wanted_post.user.admin? %>
                 <h6 class="card-subtitle text-body-secondary">
                   <%= t("activerecord.attributes.user.roles.#{wanted_post.user.role}").humanize %>
+                </h6>
+              <% else %>
+                <h6 class="card-subtitle text-dark">
+                  <a href="mailto:<%= wanted_post.user.email %>" class="link-opacity-75 link-underline link-underline-opacity-0"><%= wanted_post.user.email %></a>
+                  <% if wanted_post.user.phone.present? %>
+                    · <a href="tel:<%= wanted_post.user.phone %>" class="link-opacity-75 link-underline link-underline-opacity-0">Tel: <%= wanted_post.user.phone %></a>
+                  <% end %>
                 </h6>
               <% end %>
             </div>

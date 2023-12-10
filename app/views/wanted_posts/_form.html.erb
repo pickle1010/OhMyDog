@@ -17,7 +17,8 @@
     </div>
   </div>
 
-  <%= form.text_area :body, class: 'form-control mb-3', rows: 4, placeholder: "Escribe aquí tu publicación" %>
+  <%= form.text_area :body, class: 'form-control mb-0', rows: 4, placeholder: "Escribe aquí tu publicación" %>
+  <p class="form-text mb-3">Tu correo será utilizado por defecto como medio de contacto al igual que tu número de teléfono si es que has ingresado uno</p>
 
   <%= form.submit "#{form.object.new_record? ? "Publicar" : "Editar"}", class: "btn btn-primary" %>
   <%= link_to "Volver a Perdidos y Encontrados", wanted_posts_path, class: "btn btn-secondary" %>
