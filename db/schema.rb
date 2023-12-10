@@ -186,6 +186,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_191530) do
     t.string "address"
     t.integer "role"
     t.decimal "positive_balance", precision: 10, scale: 2, default: "0.0"
+    t.string "phone"
     t.index ["dni"], name: "index_users_on_dni", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -16,5 +16,6 @@ class User < ApplicationRecord
 
   validates :dni, :first_name, :last_name, :address, presence: true
   validates :first_name, :last_name, format: {with: /\A[^0-9]+\z/, message: "solo puede tener letras"}
+  validates :phone, format: {with: /\A\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\z/, message: "no es un formato válido de número de teléfono"}, if: -> { phone.present? }
   validates :dni, uniqueness: true, numericality: { greater_than: 0 }
 end

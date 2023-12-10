@@ -25,6 +25,14 @@
     <%= f.text_field :address, autofocus: true, autocomplete: "address-line1", class: "form-control" %>
   </div>
 
+  <% unless f.object.new_record? %>
+    <div class="field mb-3">
+      <%= f.label :phone, "Teléfono (opcional)", class: "form-label" %>
+      <%= f.telephone_field :phone, autofocus: true, autocomplete: "tel-national", class: "form-control" %>
+      <p class="form-text">Formatos validos: <span class="ms-1">'123-456-789'</span> <span class="ms-1">'(123) 456-7890'</span> <span class="ms-1">'123 456 7890'</span> <span class="ms-1">'123.456.7890'</span> <span class="ms-1">'1234567890'</span></p>
+    </div>
+  <% end %>
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>

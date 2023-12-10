@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :wanted_posts
+
   resources :meetings
   resources :credit_cards
   

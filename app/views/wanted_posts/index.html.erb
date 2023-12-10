@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="d-flex align-items-center mb-3">
+    <div class="me-auto">
+      <h1>Perdidos y Encontrados</h1>
+    </div>
+    <% if user_signed_in? %>
+      <%= link_to new_wanted_post_path, class: "btn btn-primary btn-lg" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-chat-left-fill" viewBox="0 0 16 16">
+          <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+        </svg>
+        Nuevo Post
+      <% end %>
+    <% end %>
+  </div>
+  <div id="wanted_posts">
+    <% @wanted_posts.order(created_at: :desc).each do |wanted_post| %>
+      <div class="mb-3">
+        <%= render wanted_post %>
+      </div>
+    <% end %>
+  </div>
+</div>

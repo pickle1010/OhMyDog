@@ -1,0 +1,8 @@
+<%= render @wanted_post %>
+
+<div>
+  <%= link_to "Edit this wanted post", edit_wanted_post_path(@wanted_post) %> |
+  <%= link_to "Back to wanted posts", wanted_posts_path %>
+
+  <%= button_to "Destroy this wanted post", @wanted_post, method: :delete %>
+</div>

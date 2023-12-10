@@ -1,4 +1,45 @@
 es:
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 'alrededor de una hora'
+        other: 'alrededor de %{count} horas'
+      about_x_months:
+        one: 'alrededor de un mes'
+        other: 'alrededor de %{count} meses'
+      about_x_years:
+        one: 'alrededor de año'
+        other: 'alrededor de %{count} años'
+      almost_x_years:
+        one: 'casi un año'
+        other: 'casi %{count} años'
+      half_a_minute: 'medio minuto'
+      less_than_x_minutes:
+        zero: 'menos de un minuto'
+        one: 'menos de un minuto'
+        other: 'menos de %{count} minutos'
+      less_than_x_seconds:
+        zero: 'menos de un segundo'
+        one: 'menos de un segundo'
+        other: 'menos de %{count} segundos'
+      over_x_years:
+        one: 'más de un año'
+        other: 'más de %{count} años'
+      x_days:
+        one: '1 día'
+        other: '%{count} días'
+      x_minutes:
+        one: '1 minuto'
+        other: '%{count} minutos'
+      x_months:
+        one: '1 mes'
+        other: '%{count} meses'
+      x_years:
+        one: 'un año'
+        other: '%{count} años'
+      x_seconds:
+        one: '1 segundo'
+        other: '%{count} segundos'
   errors:
     messages:
       not_a_number: 'no es un número'
@@ -39,6 +80,7 @@ es:
       message: 'notificación'
       credit_card: 'Tarjeta'
       dog_walker: "Paseador/cuidador"
+      wanted_post: 'publicación de Perdidos y Encontrados'
     attributes:
       user/dogs:
         user_id: "id del dueño"
@@ -114,8 +156,12 @@ es:
         dni: 'DNI'
         first_name: 'nombre'
         last_name: 'apellidos'
+        phone: 'teléfono'
         address: 'dirección'
         role: 'rol'
+        roles:
+          admin: 'veterinario'
+          client: 'cliente'
         password: 'contraseña'
         password_confirmation: 'confirmación de contraseña'
         current_password: 'contraseña actual'
@@ -140,6 +186,9 @@ es:
         workplace: 'zona de trabajo'
         service: 'servicio'
         contact: 'contacto'
+      wanted_post:
+        photo: 'foto'
+        body: 'cuerpo de la publicación'
     errors:
       messages:
         not_a_number:
@@ -275,3 +324,9 @@ es:
               blank: 'no puede estar en blanco'
             contact:
               blank: 'no puede estar en blanco'
+        wanted_post:
+          attributes:
+            body:
+              blank: 'no puede estar vacío'
+            photo:
+              blank: 'debe estar adjunta'
