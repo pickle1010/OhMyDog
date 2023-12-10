@@ -1,0 +1,55 @@
+<body style="background-image: url('<%= asset_path('backgroundpaseadores.jpg') %>'); background-size: cover;">
+  <div class="card my-5 mx-5">
+      <div class="card-body">
+        <%= form_with(model: dog_walker) do |form| %>
+          <% if dog_walker.errors.any? %>
+            <div style="color: red">
+              <h2><%= pluralize(dog_walker.errors.count, "error") %> prohibited this dog_walker from being saved:</h2>
+
+              <ul>
+                <% dog_walker.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-3">
+            <%= form.label :photo, t("activerecord.attributes.dog_walker.photo").humanize, class: "col-sm-2 col-form-label" %>
+            <div class="col-sm-10">
+              <%= form.file_field :photo, class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :name, style: "display: block" %>
+            <%= form.text_field :name, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :lastname, style: "display: block" %>
+            <%= form.text_field :lastname, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :workplace, style: "display: block" %>
+            <%= form.text_field :workplace, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :service, style: "display: block" %>
+            <%= form.select :service, ["Paseador", "Cuidador", "Paseador y Cuidador"], { include_blank: true }, { class: 'form-select', id: 'service-select' } %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :contact, style: "display: block" %>
+            <%= form.text_field :contact, class: "form-control", placeholder: "numero de telefono/correo" %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.submit "Guardar", class: "btn btn-primary mt-3" %>
+          </div>
+        <% end %>
+      </div>
+    </div>  
+  </body>  

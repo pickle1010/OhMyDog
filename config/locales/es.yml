@@ -37,6 +37,7 @@ es:
       meeting: 'evento'
       clinic_dog: 'historia clínica'
       credit_card: 'Tarjeta'
+      dog_walker: "Paseador/cuidador"
     attributes:
       user/dogs:
         user_id: "id del dueño"
@@ -126,6 +127,13 @@ es:
         last_name: 'apellido'
         amount: 'monto'
         card_type: 'tipo de tarjeta'
+      dog_walker:
+        photo: 'foto'
+        name: 'nombre'
+        lastname: 'apellido'
+        workplace: 'zona de trabajo'
+        service: 'servicio'
+        contact: 'contacto'
     errors:
       messages:
         not_a_number:
@@ -239,3 +247,15 @@ es:
             amount:
               blank: 'no puede estar en blanco'
               greater_than: 'debe ser mayor a cero' 
+        dog_walker:
+          attributes:
+            name:
+              blank: 'no puede estar en blanco'
+            lastname:
+              blank: 'no puede estar en blanco'
+            workplace:
+              blank: 'no puede estar en blanco'
+            service:
+              blank: 'no puede estar en blanco'
+            contact:
+              blank: 'no puede estar en blanco'
