@@ -3,14 +3,23 @@
     <div class="card-body" id="<%= dom_id credit_card %>">
     
       <p class="card-text">
-        <strong>Amount:</strong>
+        <strong>Monto donado:</strong>
         <%= credit_card.amount %>
       </p>
+    
+      <% if credit_card.user.present? %>
+        <p class="card-text">
+          <strong>Cliente:</strong>
+          <%= credit_card.user.first_name %>
+          <%= credit_card.user.last_name %>
+        </p>
+      <% else %>
+        <strong>Donación anónima</strong>    
+      <% end %>    
 
       <p class="card-text">
-        <strong>User:</strong>
-        <%= credit_card.user.first_name %>
-        <%= credit_card.user.last_name %>
+        <strong>Donación realizada el día:</strong>
+        <%= credit_card.created_at.strftime("%d/%m/%Y") %>      
       </p>
 
     </div>
