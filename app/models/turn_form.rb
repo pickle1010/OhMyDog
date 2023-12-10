@@ -11,6 +11,9 @@ class TurnForm < ApplicationRecord
   validates :total_amount, numericality: { greater_than: 0 }, on: :save_total_amount
   validate :date_cannot_be_in_the_past, on: :create
   validate :unique_turn_for_dog, if: -> { user.client? }
+  validate :dog_is_eligible_for_rabies_vaccine, on: :create
+  validate :dog_is_eligible_for_inmunological_vaccine, on: :create
+  validate :dog_has_not_been_castrated, on: :create
   validate :must_not_be_morning_when_has_already_passed, on: :create
   validate :validate_morning_meeting, if: -> { user.client?}, on: :create
   validate :validate_evening_meeting, if: -> { user.client?}, on: :create
@@ -59,6 +62,27 @@ class TurnForm < ApplicationRecord
 
     if existing_turns.exists?
       errors.add(:base, "Ya has solicitado un turno para este perro.")
+    end
+  end
+
+  def dog_is_eligible_for_inmunological_vaccine
+    vaccine_service = "Vacuna inmunológica"
+    if dog.age_in_months < 2 && servicesCons.downcase.include?(vaccine_service.downcase)
+      errors.add(:base, "#{dog.first_name} todavía no cumple los 2 meses de edad requeridos para aplicarle la vacuna inmunológica")
+    end
+  end
+
+  def dog_is_eligible_for_rabies_vaccine
+    vaccine_service = "Vacuna antirrábica"
+    if dog.age_in_months < 4 && servicesCons.downcase.include?(vaccine_service.downcase)
+      errors.add(:base, "#{dog.first_name} todavía no cumple los 4 meses de edad requeridos para aplicarle la vacuna antirrábica")
+    end
+  end
+
+  def dog_has_not_been_castrated
+    castration_service = "Castración"
+    if dog.castrated && servicesCons.downcase.include?(castration_service.downcase)
+      errors.add(:base, "La mascota seleccionada ya fue castrada por lo que ya no aplica para el servicio de castración")
     end
   end
 

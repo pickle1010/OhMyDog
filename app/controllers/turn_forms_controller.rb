@@ -130,6 +130,11 @@ class TurnFormsController < ApplicationController
       # Calcula el monto total a actualizar y actualiza el turno con el monto resultante
       # Además, también actualiza el turno con la descripción adicional del veterinario y lo marca como atendido
       @turn_form.update(total_amount: [(monto_ingresado - saldo_a_favor), 0].max, done: true)
+
+      # Si el turno incluye castración, se marca al perro como castrado
+      if @turn_form.servicesCons.downcase.include?("Castración".downcase)
+        @turn_form.dog.update(castrated: true)
+      end
     
       # Actualiza el saldo a favor del cliente
       @turn_form.user.update(positive_balance: [nuevo_saldo_a_favor, 0].max)

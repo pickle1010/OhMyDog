@@ -79,6 +79,11 @@
     </div>
   </div>
 
+  <div class="mb-3">
+    <%= form.label :castrated, "Marque la casilla si este perro está castrado", class: "form-check-label" %>
+    <%= form.check_box :castrated, class: "form-check-input" %>
+  </div>
+
   <div>
     <%= form.submit "Guardar", class: "btn btn-primary mt-3" %>
   </div>
