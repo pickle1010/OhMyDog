@@ -8,9 +8,9 @@ class ClinicDog < ApplicationRecord
     validate :rabies_info_must_be_completed_or_blank
     validate :inmunological_info_must_be_completed_or_blank
     validates :rabies_dosage, numericality: { greater_than: 0 }, if: -> { rabies_dosage.present? }
-    validates :rabies_dosage, format: { with: /\A\d+(\.\d{1,2})?\z/, message: "debe ser un numero con máximo 2 cifras decimales" }, if: -> { rabies_dosage.present? }
+    validates :rabies_dosage, format: { with: /\A\-?\d+(\.\d{1,2})?\z/, message: "debe ser un numero con máximo 2 cifras decimales" }, if: -> { rabies_dosage.present? }
     validates :inmunological_dosage, numericality: { greater_than: 0 }, if: -> { inmunological_dosage.present? }
-    validates :inmunological_dosage, format: { with: /\A\d+(\.\d{1,2})?\z/, message: "debe ser un numero con máximo 2 cifras decimales" }, if: -> { inmunological_dosage.present? }
+    validates :inmunological_dosage, format: { with: /\A\-?\d+(\.\d{1,2})?\z/, message: "debe ser un numero con máximo 2 cifras decimales" }, if: -> { inmunological_dosage.present? }
 
     def date_cannot_be_in_the_future
       if dateclinic.present? && dateclinic > Date.today
