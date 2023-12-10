@@ -18,15 +18,39 @@
           <p class="text-muted mb-0"><%= clinic_dog.dateclinic %></p>
         </div>
       </div>
-      <hr>
-      <div class="row">
-        <div class="col-sm-6">
-          <p class="mb-0">Vacunas aplicadas:</p>
+      <% unless clinic_dog.rabies_applied || clinic_dog.inmunological_applied %>
+        <hr>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="mb-0">Vacunas aplicadas</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-muted mb-0">Ninguna</p>
+          </div>
         </div>
-        <div class="col-sm-6">
-          <p class="text-muted mb-0"><%= t("activerecord.attributes.clinic_dog.vaccines_options.#{clinic_dog.vaccines}").humanize %></p>
+      <% end %>
+      <% if clinic_dog.rabies_dosage.present? %>
+        <hr>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="mb-0">Antirrábica:</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-muted mb-0">Lote: <%= clinic_dog.rabies_batch %> - Dosis: <%= clinic_dog.rabies_dosage %> mg</p>
+          </div>
         </div>
-      </div>
+      <% end %>
+      <% if clinic_dog.inmunological_dosage.present? %>
+        <hr>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="mb-0">Inmunológica:</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-muted mb-0">Lote: <%= clinic_dog.inmunological_batch %>, Dosis: <%= clinic_dog.inmunological_dosage %> mg</p>
+          </div>
+        </div>
+      <% end %>
       <hr>
       <div class="row">
         <div class="col-sm-6">
