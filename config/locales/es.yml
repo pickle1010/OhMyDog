@@ -81,6 +81,7 @@ es:
       credit_card: 'Tarjeta'
       dog_walker: "Paseador/cuidador"
       wanted_post: 'publicación de Perdidos y Encontrados'
+      adoption_post: 'publicación de adopción'
     attributes:
       user/dogs:
         user_id: "id del dueño"
@@ -189,6 +190,8 @@ es:
       wanted_post:
         photo: 'foto'
         body: 'cuerpo de la publicación'
+      adoption_post:
+        body: 'publicación'
     errors:
       messages:
         not_a_number:
@@ -330,3 +333,7 @@ es:
               blank: 'no puede estar vacío'
             photo:
               blank: 'debe estar adjunta'
+        adoption_post:
+          attributes:
+            body:
+              blank: 'no puede estar vacía'

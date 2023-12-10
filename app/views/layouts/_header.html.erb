@@ -1,4 +1,4 @@
-<header>
+<header data-turbo="false">
   <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
     <div class="container-fluid">
 
@@ -25,7 +25,7 @@
               Menú
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><%= link_to "Adopciones", "#", class:"dropdown-item disabled" %></li>
+              <li><%= link_to "Adopciones", adoption_posts_path, class:"dropdown-item" %></li>
               <li><%= link_to "Perdidos y Encontrados", wanted_posts_path, class:"dropdown-item" %></li>
               <li><%= link_to "Paseadores y Cuidadores", dog_walkers_path, class:"dropdown-item" %></li>
               <li><%= link_to "Calendario", meetings_path, class:"dropdown-item" %></li>

@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   resources :wanted_posts
 
+  resources :adoption_posts
+
   resources :meetings
   resources :credit_cards
   
