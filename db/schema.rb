@@ -81,6 +81,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_042238) do
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
+  create_table "dog_walkers", force: :cascade do |t|
+    t.string "name"
+    t.string "lastname"
+    t.string "workplace"
+    t.string "service"
+    t.string "contact"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dogs", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"

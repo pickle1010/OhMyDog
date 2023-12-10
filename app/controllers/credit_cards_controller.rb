@@ -3,7 +3,7 @@ class CreditCardsController < ApplicationController
   
     # GET /credit_cards
     def index
-      @credit_cards = CreditCard.all
+        @credit_cards = CreditCard.all
     end
   
     # GET /credit_cards/1

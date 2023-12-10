@@ -1,9 +1,23 @@
-<%= link_to "Hacer una Donacion", new_credit_card_path, class: "btn btn-primary my-2" %>
+<% if (current_user.present? && !current_user.admin?) || !current_user.present? %>
+  <%= link_to "Hacer una Donacion", new_credit_card_path, class: "btn btn-primary my-2" %>
+<% end %>
 
+<% if current_user&.admin? %>
 
-<div id="credit_cards">
-  <% @credit_cards.each do |credit_card| %>
-    <%= render credit_card %>
-  <% end %>
-</div>
+<!-- Mostrar todas las donaciones para el administrador -->
+  <div id="credit_cards">
+    <% @credit_cards.each do |credit_card| %>
+      <%= render credit_card %>
+    <% end %>  
+  </div>
+<% elsif current_user.present? %>
+
+<!-- Mostrar solo las donaciones del usuario para usuarios registrados -->
+  <div id="credit_cards">
+    <% current_user.credit_cards.each do |credit_card| %>
+      <%= render credit_card %>
+    <% end %>
+  </div>
+<% end %>
+
 

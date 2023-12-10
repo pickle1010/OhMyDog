@@ -8,13 +8,19 @@
       </p>
     
       <% if credit_card.user.present? %>
-        <p class="card-text">
-          <strong>Cliente:</strong>
-          <%= credit_card.user.first_name %>
-          <%= credit_card.user.last_name %>
-        </p>
+        <% if current_user.present? && credit_card.user == current_user %>
+          <!-- Si el usuario está registrado y la donación pertenece a ese usuario, no mostrar el nombre -->
+        <% else %>
+          <p class="card-text">
+            <strong>Cliente:</strong>
+            <%= credit_card.user.first_name %>
+            <%= credit_card.user.last_name %>
+          </p>
+        <% end %>
       <% else %>
-        <strong>Donación anónima</strong>    
+        <p class="card-text">
+          <strong>Donación anónima</strong>
+        </p>    
       <% end %>    
 
       <p class="card-text">
