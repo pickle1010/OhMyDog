@@ -9,7 +9,15 @@
             <h5 class="mb-1"><%= message.title %></h5>
           </div>
           <p class="mb-1"><%= message.content %></p>
-          <small>Recibido el <%= message.datetime.strftime("%Y-%m-%d %H:%M:%S") %></small>
+          <small>Recibido
+            <% if Time.now - message.datetime < 1.hour %>
+              hace <%= time_ago_in_words(message.datetime) %>
+            <% elsif Time.now - message.datetime < 1.days %>
+              hoy a las <%= message.datetime.strftime("%H:%M:%S") %>
+            <% else %>
+              el <%= message.datetime.to_date %> a las <%= message.datetime.strftime("%H:%M:%S") %>
+            <% end %>
+          </small>
         </li>
       <% end %>
     <% end %>
