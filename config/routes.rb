@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :dog_walkers
   devise_for :users, :skip => [:registrations], :path_prefix => 'my'
   as :user do
     get 'my/users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :meetings
+  resources :credit_cards
   
   resources :services do
     member do

@@ -1,0 +1,16 @@
+<div class="container my-5">
+  <div class="card">
+    <div class="card-header text-center">
+      <h1>Editar a Paseador/Cuidador</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", dog_walker: @dog_walker %>
+    </div>
+    <div class="row mb-3">
+      <div class="col text-center">
+        <%= link_to "Volver a lista de paseadores/cuidadores", dog_walkers_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>
+

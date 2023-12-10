@@ -1,0 +1,33 @@
+<body style="background-image: url('<%= asset_path('donationbackground.png') %>'); background-size: cover;">
+  <div class="card">
+    <div class="card-body" id="<%= dom_id credit_card %>">
+    
+      <p class="card-text">
+        <strong>Monto donado:</strong>
+        <%= credit_card.amount %>
+      </p>
+    
+      <% if credit_card.user.present? %>
+        <% if current_user.present? && credit_card.user == current_user %>
+          <!-- Si el usuario está registrado y la donación pertenece a ese usuario, no mostrar el nombre -->
+        <% else %>
+          <p class="card-text">
+            <strong>Cliente:</strong>
+            <%= credit_card.user.first_name %>
+            <%= credit_card.user.last_name %>
+          </p>
+        <% end %>
+      <% else %>
+        <p class="card-text">
+          <strong>Donación anónima</strong>
+        </p>    
+      <% end %>    
+
+      <p class="card-text">
+        <strong>Donación realizada el día:</strong>
+        <%= credit_card.created_at.strftime("%d/%m/%Y") %>      
+      </p>
+
+    </div>
+  </div>
+</body>

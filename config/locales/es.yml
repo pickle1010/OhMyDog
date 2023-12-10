@@ -37,6 +37,8 @@ es:
       meeting: 'evento'
       clinic_dog: 'historia clínica'
       message: 'notificación'
+      credit_card: 'Tarjeta'
+      dog_walker: "Paseador/cuidador"
     attributes:
       user/dogs:
         user_id: "id del dueño"
@@ -122,6 +124,22 @@ es:
         content: 'contenido del mensaje'
         datetime: 'fecha programada de envío'
         user: 'destinatario'
+      credit_card:
+        number: 'número'
+        expiration_month: 'mes de vencimiento'
+        expiration_year: 'año de vencimiento'
+        cvv: 'código de seguridad'
+        name: 'nombre'
+        last_name: 'apellido'
+        amount: 'monto'
+        card_type: 'tipo de tarjeta'
+      dog_walker:
+        photo: 'foto'
+        name: 'nombre'
+        lastname: 'apellido'
+        workplace: 'zona de trabajo'
+        service: 'servicio'
+        contact: 'contacto'
     errors:
       messages:
         not_a_number:
@@ -219,3 +237,41 @@ es:
               blank: 'no puede estar vacía'
             user:
               required: 'es requerido'
+        credit_card:
+          attributes:
+            number:
+              blank: 'no puede estar en blanco'
+              wrong_length: 'debe tener 16 dígitos'
+              invalid: 'no es válido'
+            expiration_month:
+              blank: 'no puede estar en blanco'
+              not_a_number: 'debe ser un número'
+              less_than_or_equal_to: 'debe estar entre 1..12'
+              greater_than_or_equal_to: 'debe estar entre 1..12'
+            expiration_year:
+              blank: 'no puede estar en blanco'
+              not_a_number: 'debe ser un número'
+              greater_than_or_equal_to: 'debe ser mayor o igual que el año actual'
+            cvv:
+              blank: 'no puede estar en blanco'
+              not_a_number: 'debe ser un número'
+              in: 'no es válido'
+            name:
+              blank: 'no puede estar en blanco'
+            last_name: 
+              blank: 'no puede estar en blanco'
+            amount:
+              blank: 'no puede estar en blanco'
+              greater_than: 'debe ser mayor a cero' 
+        dog_walker:
+          attributes:
+            name:
+              blank: 'no puede estar en blanco'
+            lastname:
+              blank: 'no puede estar en blanco'
+            workplace:
+              blank: 'no puede estar en blanco'
+            service:
+              blank: 'no puede estar en blanco'
+            contact:
+              blank: 'no puede estar en blanco'
