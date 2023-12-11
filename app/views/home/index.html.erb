@@ -1,3 +1,10 @@
-<% if user_signed_in? %>
-    <h1>¡Bienvenido, <%= current_user.first_name %>!</h1>
-<% end %>
+<body style="background-image: url('<%= asset_path('dogsbackground1.png') %>'); background-size: cover;">
+
+  <% if user_signed_in? %>
+    <div style="background-color: rgba(255, 255, 255, 0.7); padding: 2px; border-radius: 10px; margin: 20px; text-align: center; display: flex; align-items: center;">
+      <img src="<%= asset_path('Welcomeimage.png') %>" alt="Image" style="width: 150px; height: 150px; border-radius: 50%; margin-right: 15px;">
+      <h1 style="margin: 0;">¡Bienvenido, <%= current_user.first_name %>!</h1>
+    </div>
+  <% end %>
+
+</body>

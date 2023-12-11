@@ -1,83 +1,85 @@
-<div id="<%= dom_id user %>">
-  <div class="row">
-    <div class="col-lg-4">
-      <div class="card mb-4 shadow-sm">
-        <div class="card-body text-center">
-          <div class="mt-2 mb-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-            </svg>
-          </div>
-          <h4 class="my-3 fw-bold"><%= @user.first_name %> <%= @user.last_name %></h4>
-          <p class="text-muted mb-1"><%= @user.email %></p>
-            <% if current_user.client?%>
-              <p class="text-muted mb-1">DNI: <%= @user.dni %></p>            
-              <p class="text-muted mb-3">Saldo a favor: $<%= @user.positive_balance %></p>
-            <% else %>
-            <p class="text-muted mb-3">DNI: <%= @user.dni %></p>
-            <% end %>            
-          <div class="d-flex justify-content-center mb-2">
-            <%= link_to "Mascotas", user_dogs_path(user), class: "btn btn-outline-info me-1" %>
-            <% if current_user.admin? && current_user != user %>
-              <%= link_to "Editar", edit_user_path(user), class: "btn btn-outline-primary" %>
-              <%= button_to "Eliminar", user,  data: { confirm: "Estás seguro?", turbo_confirm: "¿Estás seguro?" }, method: :delete, class: "btn btn-danger ms-1" %>
-            <% else %>
-              <%= link_to "Editar", edit_user_registration_path(user), class: "btn btn-outline-primary" %>
-            <% end %>
+<body style="background-image: url('<%= asset_path('dogsbackground1.png') %>'); background-size: cover;">
+  <div id="<%= dom_id user %>">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body text-center">
+            <div class="mt-2 mb-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+              </svg>
+            </div>
+            <h4 class="my-3 fw-bold"><%= @user.first_name %> <%= @user.last_name %></h4>
+            <p class="text-muted mb-1"><%= @user.email %></p>
+              <% if current_user.client?%>
+                <p class="text-muted mb-1">DNI: <%= @user.dni %></p>            
+                <p class="text-muted mb-3">Saldo a favor: $<%= @user.positive_balance %></p>
+              <% else %>
+              <p class="text-muted mb-3">DNI: <%= @user.dni %></p>
+              <% end %>            
+            <div class="d-flex justify-content-center mb-2">
+              <%= link_to "Mascotas", user_dogs_path(user), class: "btn btn-outline-info me-1" %>
+              <% if current_user.admin? && current_user != user %>
+                <%= link_to "Editar", edit_user_path(user), class: "btn btn-outline-primary" %>
+                <%= button_to "Eliminar", user,  data: { confirm: "Estás seguro?", turbo_confirm: "¿Estás seguro?" }, method: :delete, class: "btn btn-danger ms-1" %>
+              <% else %>
+                <%= link_to "Editar", edit_user_registration_path(user), class: "btn btn-outline-primary" %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-lg-8">
-      <div class="card mb-2 shadow-sm">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="mb-0">Nombre completo</p>
+      <div class="col-lg-8">
+        <div class="card mb-2 shadow-sm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Nombre completo</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= user.first_name %> <%= user.last_name %></p>
+              </div>
             </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0"><%= user.first_name %> <%= user.last_name %></p>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= user.email %></p>
+              </div>
             </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="mb-0">Email</p>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">DNI</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= user.dni %></p>
+              </div>
             </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0"><%= user.email %></p>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Dirección</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= user.address %></p>
+              </div>
             </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="mb-0">DNI</p>
-            </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0"><%= user.dni %></p>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="mb-0">Dirección</p>
-            </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0"><%= user.address %></p>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="mb-0">Cantidad de mascotas</p>
-            </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0"><%= user.dogs.count %></p>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Cantidad de mascotas</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= user.dogs.count %></p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</body>

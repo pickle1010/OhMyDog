@@ -1,13 +1,18 @@
-<div class="container">
-  <div class="card mb-2 shadow-sm">
-    <div class="card-header text-center">
-      <h1>Solicitar turno</h1>
-    </div>
-    <div class="card-body">
-      <%= render "form", turn_form: @turn_form %>
-      <div class="text-center">
-        <%= link_to "Volver a turnos", turn_forms_path, class: "btn btn-secondary mt-3" %>
+<div class="card mx-5 my-5">
+  <div class ="card-header">
+    <div class="d-flex align-items-center">
+      <div class="me-auto">
+          <img src="<%= asset_path('note.png') %>" alt="Image" style="width: 100px; height: 100px; border-radius: 10%; margin-right: 15px;">
+        </div>
+        <div class="col-md"> 
+          <h1 style="margin: 0;" class="text-start"> Solicitar turno </h1>
+        </div>
+        <div>    
+          <%= link_to "Volver a turnos", turn_forms_path, class: "btn btn-secondary mt-3" %>
+        </div>  
       </div>
-    </div>
+    </div>  
+  <div class="card-body">
+    <%= render "form", turn_form: @turn_form %>
   </div>
 </div>

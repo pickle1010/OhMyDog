@@ -1,31 +1,34 @@
-<div id="<%= dom_id meeting %>">
-  <div class="card mb-2 shadow-sm">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-sm-6">
-          <p class="mb-0">Evento:</p>
+<body style="background-image: url('<%= asset_path('dogbonewallpaper.jpg') %>'); background-size: cover;">
+
+  <div id="<%= dom_id meeting %>">
+    <div class="card mb-2 shadow-sm">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="mb-0">Evento:</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-muted mb-0"><%= t("activerecord.attributes.meeting.names.#{meeting.name}").humanize %></p>
+          </div>
         </div>
-        <div class="col-sm-6">
-          <p class="text-muted mb-0"><%= t("activerecord.attributes.meeting.names.#{meeting.name}").humanize %></p>
+        <hr>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="mb-0">Fecha:</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-muted mb-0"><%= meeting.start_time %></p>
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-sm-6">
-          <p class="mb-0">Fecha:</p>
-        </div>
-        <div class="col-sm-6">
-          <p class="text-muted mb-0"><%= meeting.start_time %></p>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-sm-6">
-          <p class="mb-0">Descripción: </p>
-        </div>
-        <div class="col-sm-6">
-          <p class="text-muted mb-0"><%= meeting.description %></p>
+        <hr>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="mb-0">Descripción: </p>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-muted mb-0"><%= meeting.description %></p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+</body>

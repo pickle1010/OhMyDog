@@ -1,6 +1,4 @@
-<body style="background-image: url('<%= asset_path('backgroundpaseadores.jpg') %>'); background-size: cover;">
-  <div class="card my-5 mx-5">
-      <div class="card-body">
+<body style="background-image: url('<%= asset_path('dogbonewallpaper.jpg') %>'); background-size: cover;">
         <%= form_with(model: dog_walker) do |form| %>
           <% if dog_walker.errors.any? %>
             <div style="color: red">
@@ -49,7 +47,5 @@
           <div class="mb-3">
             <%= form.submit "Guardar", class: "btn btn-primary mt-3" %>
           </div>
-        <% end %>
-      </div>
-    </div>  
+        <% end %> 
   </body>  

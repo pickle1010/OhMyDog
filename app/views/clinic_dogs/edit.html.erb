@@ -1,16 +1,19 @@
-<div class="container">
-  <div class="card">
-    <div class="card-header text-center">
-      <h1>Editar entrada</h1>
-    </div>
-    <div class="card-body">
-      <%= render "form", clinic_dog: @clinic_dog %>
-    </div>
-    <div class="row mb-3">
-      <div class="col text-center">
+<div class="card mx-5 my-5">
+  <div class ="card-header">
+    <div class="d-flex align-items-center">
+      <div class="me-auto">
+          <img src="<%= asset_path('healthicon.png') %>" alt="Image" style="width: 100px; height: 100px; border-radius: 10%; margin-right: 15px;">
+        </div>
+        <div class="col-md"> 
+          <h1 style="margin: 0;" class="text-start"> Editar entrada </h1>
+        </div>
+        <div>  
         <%= link_to "Volver a ver esta entrada", clinic_dog_path(@clinic_dog), class: "btn btn-info" %>
         <%= link_to "Volver a la historia clínica", dog_clinic_dogs_path(@clinic_dog.dog), class: "btn btn-secondary" %>
       </div>
     </div>
+  </div>  
+  <div class="card-body">
+    <%= render "form", clinic_dog: @clinic_dog %>
   </div>
 </div>
