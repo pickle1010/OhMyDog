@@ -3,9 +3,14 @@ class CreditCardsController < ApplicationController
   
     # GET /credit_cards
     def index
-        @credit_cards = CreditCard.all
+      if user_signed_in? 
+        @credit_cards = current_user.admin? ? CreditCard.all : current_user.credit_cards
+        @total_amount = 0
+        for credit_card in @credit_cards do
+          @total_amount += credit_card.amount  
+        end    
+      end
     end
-  
     # GET /credit_cards/1
     def show
     end
