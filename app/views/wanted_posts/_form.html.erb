@@ -1,26 +1,28 @@
-<%= form_with(model: wanted_post) do |form| %>
-  <% if wanted_post.errors.any? %>
-    <div class="alert alert-danger">
-      <h4 class="alert-heading"><%= pluralize(wanted_post.errors.count, "error", "errores") %> <%= (wanted_post.errors.count == 1) ? "impide" : "impiden" %> que se guarde la publicación</h4>
-      <ul>
-        <% wanted_post.errors.each do |error| %>
-          <li><%= error.full_message.humanize %></li>
-        <% end %>
-      </ul>
+<body style="background-image: url('<%= asset_path('dogbonewallpaper.jpg') %>'); background-size: cover;">   
+  <%= form_with(model: wanted_post) do |form| %>
+    <% if wanted_post.errors.any? %>
+      <div class="alert alert-danger">
+        <h4 class="alert-heading"><%= pluralize(wanted_post.errors.count, "error", "errores") %> <%= (wanted_post.errors.count == 1) ? "impide" : "impiden" %> que se guarde la publicación</h4>
+        <ul>
+          <% wanted_post.errors.each do |error| %>
+            <li><%= error.full_message.humanize %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row mb-3">
+      <%= form.label :photo, "Sube una foto de tu mascota perdida o encontrada:", class: "col-sm-6 col-form-label" %>
+      <div class="col-sm-6">
+        <%= form.file_field :photo, class: "form-control" %>
+      </div>
     </div>
+
+    <%= form.text_area :body, class: 'form-control mb-0', rows: 4, placeholder: "Escribe aquí tu publicación" %>
+    <p class="form-text mb-3">Tu correo será utilizado por defecto como medio de contacto al igual que tu número de teléfono si es que has ingresado uno</p>
+
+    <%= form.submit "#{form.object.new_record? ? "Publicar" : "Confirmar"}", class: "btn btn-primary" %>
+    <%= link_to "Volver a Perdidos y Encontrados", wanted_posts_path, class: "btn btn-secondary" %>
+
   <% end %>
-
-  <div class="row mb-3">
-    <%= form.label :photo, "Sube una foto de tu mascota perdida o encontrada:", class: "col-sm-6 col-form-label" %>
-    <div class="col-sm-6">
-      <%= form.file_field :photo, class: "form-control" %>
-    </div>
-  </div>
-
-  <%= form.text_area :body, class: 'form-control mb-0', rows: 4, placeholder: "Escribe aquí tu publicación" %>
-  <p class="form-text mb-3">Tu correo será utilizado por defecto como medio de contacto al igual que tu número de teléfono si es que has ingresado uno</p>
-
-  <%= form.submit "#{form.object.new_record? ? "Publicar" : "Editar"}", class: "btn btn-primary" %>
-  <%= link_to "Volver a Perdidos y Encontrados", wanted_posts_path, class: "btn btn-secondary" %>
-
-<% end %>
+</body>
