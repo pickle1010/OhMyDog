@@ -1,27 +1,38 @@
+<div class="card mx-5 my-5">
+  <div class ="card-header">
+    <div class="d-flex align-items-center">
+      <div class="me-auto">
+        <img src="<%= asset_path('donationdog.png') %>" alt="Image" style="width: 100px; height: 100px; border-radius: 10%; margin-right: 15px;">
+      </div>
+      <div class="col-md"> 
+        <h1 style="margin: 0;" class="text-start"> Historial de Donaciones </h1>
+      </div> 
+      <div>
+        <% if (user_signed_in? && current_user.client?) || !user_signed_in? %>
+          <%= link_to "Hacer una Donacion", new_credit_card_path, class: "btn btn-primary my-2" %>
+        <% end %>
+      </div>
+    </div>
+  </div>  
+  <div class="card-body">
 
-<% if (user_signed_in? && current_user.client?) || !user_signed_in? %>
-  <%= link_to "Hacer una Donacion", new_credit_card_path, class: "btn btn-primary my-2" %>
-<% end %>
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to "Generar Informe PDF", generate_pdf_path(format: :pdf), class: "btn btn-primary my-2" %>
+    <!-- Sección del monto total y cantidad de donaciones -->
+      <div class="total-donations-info bg-light p-3 my-3 rounded">
+        <p class="font-weight-bold">Monto total de donaciones: $<%= @total_amount %></p>
+        <p class="font-weight-bold">Cantidad de donaciones recibidas: <%= @credit_cards.count %></p>
+      </div>
+    <% end %>
 
-<% if user_signed_in? && current_user.admin? %>
-  <%= link_to "Generar Informe PDF", generate_pdf_path(format: :pdf), class: "btn btn-primary my-2" %>
-<!-- Sección del monto total y cantidad de donaciones -->
-  <div class="total-donations-info bg-light p-3 my-3 rounded">
-    <p class="font-weight-bold">Monto total de donaciones: $<%= @total_amount %></p>
-    <p class="font-weight-bold">Cantidad de donaciones recibidas: <%= @credit_cards.count %></p>
-  </div>
-<% end %>
-
-<% if user_signed_in? %>
-<!-- Mostrar solo las donaciones del usuario para usuarios registrados -->
-  <div id="credit_cards">
-    <% @credit_cards.each do |credit_card| %>
-      <%= render credit_card %>
+    <% if user_signed_in? %>
+      <div id="credit_cards">
+        <% @credit_cards.each do |credit_card| %>
+          <%= render credit_card %>
+        <% end %>
+      </div>
     <% end %>
   </div>
-<% end %>
-
-
-
+</div>  
 
 

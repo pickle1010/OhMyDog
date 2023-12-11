@@ -1,16 +1,19 @@
-<div class="container">
-  <div class="card">
-    <div class="card-header text-center">
-      <h1>Editar evento</h1>
-    </div>
-    <div class="card-body">
-      <%= render "form", meeting: @meeting %>
-    </div>
-    <div class="row mb-3">
-      <div class="col text-center">
-        <%= link_to "Ver este evento", @meeting, class: "btn btn-info" %>
-        <%= link_to "Volver al calendario", meetings_path, class: "btn btn-secondary" %>
+<div class="card mx-5 my-5">
+  <div class ="card-header">
+    <div class="d-flex align-items-center">
+      <div class="me-auto">
+          <img src="<%= asset_path('calendaricon.png') %>" alt="Image" style="width: 100px; height: 100px; border-radius: 10%; margin-right: 15px;">
+        </div>
+        <div class="col-md"> 
+          <h1 style="margin: 0;" class="text-start"> Editar evento </h1>
+        </div>
+        <div>  
+          <%= link_to "Ver este evento", @meeting, class: "btn btn-info" %>
+          <%= link_to "Volver al calendario", meetings_path, class: "btn btn-secondary" %>
       </div>
     </div>
+  </div>  
+  <div class="card-body">
+    <%= render "form", meeting: @meeting %>
   </div>
 </div>

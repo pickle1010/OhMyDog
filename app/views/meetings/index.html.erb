@@ -1,33 +1,41 @@
-<div class="d-flex align-items-center">
-  <div class="me-auto">
-    <h1>Calendario</h1>
+<body style="background-image: url('<%= asset_path('dogbonewallpaper.jpg') %>'); background-size: cover;">
+<div class="card mx-5 my-5">
+    <div class ="card-header">           
+      <div class="d-flex align-items-center gap-1">
+        <div class="col-md-auto">
+          <img src="<%= asset_path('calendaricon.png') %>" alt="Image" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 15px;">
+        </div> 
+        <div class="col-md"> 
+          <h1 style="margin: 0;"> Calendario </h1>
+        </div>  
+        <% if user_signed_in? && current_user.admin? %>
+          <%= link_to new_meeting_path, class: "btn btn-primary btn-lg" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+            </svg>
+            Agregar evento
+          <% end %>
+        <% end %>
+    </div>
   </div>
-  <% if user_signed_in? && current_user.admin? %>
-    <%= link_to new_meeting_path, class: "btn btn-primary btn-lg" do %>
-      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-      </svg>
-      Agregar evento
-    <% end %>
-  <% end %>
-</div>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <%= month_calendar(events: @meetings) do |date, meetings| %>
-      <%= date.day %>
+  <div class="card-body">
+    <div class="row justify-content-center">
+      <%= month_calendar(events: @meetings) do |date, meetings| %>
+        <%= date.day %>
 
-      <% meetings.each do |meeting| %>
-        <%= link_to meeting, class: "link-underline link-underline-opacity-0" do %>
-          <div class="card">
-            <div class="card-body text-center">
-              <div>
-                <%= t("activerecord.attributes.meeting.names.#{meeting.name}").humanize %>
+        <% meetings.each do |meeting| %>
+          <%= link_to meeting, class: "link-underline link-underline-opacity-0" do %>
+            <div class="card">
+              <div class="card-body text-center">
+                <div>
+                  <%= t("activerecord.attributes.meeting.names.#{meeting.name}").humanize %>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-</div>
+</body>

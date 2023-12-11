@@ -1,38 +1,47 @@
-<div class="d-flex align-items-center gap-1">
-  <div class="me-auto">
-    <% if current_user == @user %>
-      <h1>Mis mascotas</h1>
-    <% else %>
-      <h1>Mascotas de <%= @user.first_name %> <%= @user.last_name %></h1>
-    <% end %>
-  </div>
-  <% if current_user != @user %>
-    <%= link_to "Volver al cliente", user_path(@user), class: "btn btn-secondary btn-lg" %>
-  <% end %>
-  <% if current_user.admin? %>
-    <%= link_to new_user_dog_path(@user.id), class: "btn btn-primary btn-lg" do %>
-      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-      </svg>
-      Agregar mascota
-    <% end %>
-  <% end %>
-</div>
-
-<div class="table-responsive">
-  <table class="table table-hover align-middle caption-top">
-    <caption>Total: <%= @user.dogs.count %></caption>
-    <thead>
-      <tr class="table-secondary">
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Raza</th>
-        <th scope="col">Color</th>
-        <th scope="col">Sexo</th>
-        <th scope="col">Cumpleaños</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
+<body style="background-image: url('<%= asset_path('dogsbackground1.png') %>'); background-size: cover;">
+  <div class="card mx-5 my-5">
+    <div class ="card-header">       
+      <div class="d-flex align-items-center gap-1">
+        <div class="me-auto">
+              <img src="<%= asset_path('golden.png') %>" alt="Image" style="width: 100px; height: 100px; border-radius: 10%; margin-right: 15px;">
+            </div>
+            <div class="col-md">
+              <% if current_user == @user %>
+                <h1>Mis mascotas</h1>
+              <% else %>
+                <h1>Mascotas de <%= @user.first_name %> <%= @user.last_name %></h1>
+              <% end %>
+            </div>
+          <div>
+          <% if current_user != @user %>
+            <%= link_to "Volver al cliente", user_path(@user), class: "btn btn-secondary btn-lg" %>
+          <% end %>
+          <% if current_user.admin? %>
+            <%= link_to new_user_dog_path(@user.id), class: "btn btn-primary btn-lg" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+              </svg>
+              Agregar mascota
+            <% end %>
+          <% end %>
+        </div>  
+      </div>
+    
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle caption-top">
+          <caption>Total: <%= @user.dogs.count %></caption>
+          <thead>
+            <tr class="table-secondary">
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Raza</th>
+              <th scope="col">Color</th>
+              <th scope="col">Sexo</th>
+              <th scope="col">Cumpleaños</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
 
     <tbody>
       <div id="dogs">
