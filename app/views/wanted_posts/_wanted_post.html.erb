@@ -1,63 +1,64 @@
-<div id="<%= dom_id wanted_post %>">
-  <div class="card round-2">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="mb-1">
-              <h5 class="card-title">
-                <%= wanted_post.user.first_name %> <%= wanted_post.user.last_name %> 
-                <span class="text-secondary">
-                  #<%= wanted_post.user_id %>
-                </span>
-              </h5>
-              <% if wanted_post.user.admin? %>
-                <h6 class="card-subtitle text-body-secondary">
-                  <%= t("activerecord.attributes.user.roles.#{wanted_post.user.role}").humanize %>
-                </h6>
-              <% else %>
-                <h6 class="card-subtitle text-dark">
-                  <a href="mailto:<%= wanted_post.user.email %>" class="link-opacity-75 link-underline link-underline-opacity-0"><%= wanted_post.user.email %></a>
-                  <% if wanted_post.user.phone.present? %>
-                    · <a href="tel:<%= wanted_post.user.phone %>" class="link-opacity-75 link-underline link-underline-opacity-0">Tel: <%= wanted_post.user.phone %></a>
-                  <% end %>
-                </h6>
+<body style="background-image: url('<%= asset_path('dogbonewallpaper.jpg') %>'); background-size: cover;"> 
+  <div id="<%= dom_id wanted_post %>">
+    <div class="card round-2">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="mb-1">
+                <h5 class="card-title">
+                  <%= wanted_post.user.first_name %> <%= wanted_post.user.last_name %> 
+                  <span class="text-secondary">
+                    #<%= wanted_post.user_id %>
+                  </span>
+                </h5>
+                <% if wanted_post.user.admin? %>
+                  <h6 class="card-subtitle text-body-secondary">
+                    <%= t("activerecord.attributes.user.roles.#{wanted_post.user.role}").humanize %>
+                  </h6>
+                <% else %>
+                  <h6 class="card-subtitle text-dark">
+                    <a href="mailto:<%= wanted_post.user.email %>" class="link-opacity-75 link-underline link-underline-opacity-0"><%= wanted_post.user.email %></a>
+                    <% if wanted_post.user.phone.present? %>
+                      · <a href="tel:<%= wanted_post.user.phone %>" class="link-opacity-75 link-underline link-underline-opacity-0">Tel: <%= wanted_post.user.phone %></a>
+                    <% end %>
+                  </h6>
+                <% end %>
+              </div>
+              <% if user_signed_in? && (current_user == wanted_post.user || current_user.admin?) %>
+                <div class="dropdown">
+                  <button class="btn btn-link rounded-circle dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                      <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                    </svg>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <% if current_user == wanted_post.user %>
+                      <li><%= link_to "Editar", edit_wanted_post_path(wanted_post), class: "dropdown-item" %></li>
+                      <li><hr class="dropdown-divider"></li>
+                    <% end %>
+                    <li><%= button_to "Borrar", wanted_post, method: :delete, class: "dropdown-item" %></li>
+                  </ul>
+                </div>
               <% end %>
             </div>
-            <% if user_signed_in? && (current_user == wanted_post.user || current_user.admin?) %>
-              <div class="dropdown">
-                <button class="btn btn-link rounded-circle dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-                  </svg>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <% if current_user == wanted_post.user %>
-                    <li><%= link_to "Editar", edit_wanted_post_path(wanted_post), class: "dropdown-item" %></li>
-                    <li><hr class="dropdown-divider"></li>
-                  <% end %>
-                  <li><%= button_to "Borrar", wanted_post, method: :delete, class: "dropdown-item" %></li>
-                </ul>
-              </div>
-            <% end %>
+            <p class="card-text"><%= wanted_post.body %></p>
           </div>
-          <p class="card-text"><%= wanted_post.body %></p>
-        </div>
-        <div class="col-lg-6">
-        <%= image_tag wanted_post.photo, class: "img-fluid rounded-3" %>
+          <div class="col-lg-6">
+          <%= image_tag wanted_post.photo, class: "img-fluid rounded-3" %>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="card-footer text-body-secondary">
-      Publicado 
-      <% if Time.now - wanted_post.created_at < 1.hour %>
-        hace <%= time_ago_in_words(wanted_post.created_at) %>
-      <% elsif Time.now - wanted_post.created_at < 1.days %>
-        hoy a las <%= wanted_post.created_at.strftime("%H:%M:%S") %>
-      <% else %>
-        el <%= wanted_post.created_at.to_date %> a las <%= wanted_post.created_at.strftime("%H:%M:%S") %>
-      <% end %>
+      <div class="card-footer text-body-secondary">
+        Publicado 
+        <% if Time.now - wanted_post.created_at < 1.hour %>
+          hace <%= time_ago_in_words(wanted_post.created_at) %>
+        <% elsif Time.now - wanted_post.created_at < 1.days %>
+          hoy a las <%= wanted_post.created_at.strftime("%H:%M:%S") %>
+        <% else %>
+          el <%= wanted_post.created_at.to_date %> a las <%= wanted_post.created_at.strftime("%H:%M:%S") %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
-  
+</body>  
