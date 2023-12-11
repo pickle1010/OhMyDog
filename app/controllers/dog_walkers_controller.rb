@@ -3,7 +3,7 @@ class DogWalkersController < ApplicationController
 
   # GET /dog_walkers or /dog_walkers.json
   def index
-    @dog_walkers = DogWalker.all
+    @dog_walkers = DogWalker.order(:name, :lastname)
   end
 
   # GET /dog_walkers/1 or /dog_walkers/1.json

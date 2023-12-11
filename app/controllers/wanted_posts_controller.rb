@@ -28,7 +28,7 @@ class WantedPostsController < ApplicationController
 
     respond_to do |format|
       if @wanted_post.save
-        format.html { redirect_to wanted_posts_path, success: "Publicación de Perdidos y Encontrados publicada exitosamente." }
+        format.html { redirect_to wanted_posts_path, success: "Publicación de Perdidos y Encontrados agregada exitosamente." }
         format.json { render :show, status: :created, location: @wanted_post }
       else
         format.html { render :new, status: :unprocessable_entity }

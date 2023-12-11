@@ -1,14 +1,7 @@
 <body style="background-image: url('<%= asset_path('dogsbackground1.png') %>'); background-size: fixed;">  
   <div class="card mx-5 my-5">
     <div class ="card-header">
-      <div class="d-flex align-items-center">
-        <div class="me-auto"> 
-            <h1 style="margin: 0;" class="text-start"> Recuperá tu cuenta </h1>
-        </div>
-        <div>
-          <%= link_to "Cancelar", :back, class: "btn btn-secondary mb-3" %><br />
-        </div>
-      </div>
+      <h1> Recuperá tu cuenta </h1>
     </div>  
     <div class="card-body">
       <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>

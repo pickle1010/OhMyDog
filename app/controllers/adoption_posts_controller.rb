@@ -28,7 +28,7 @@ class AdoptionPostsController < ApplicationController
 
     respond_to do |format|
       if @adoption_post.save
-        format.html { redirect_to adoption_posts_path, success: "Publicación de adopción publicada exitosamente." }
+        format.html { redirect_to adoption_posts_path, success: "Publicación de Adopción agregada exitosamente." }
         format.json { render :show, status: :created, location: @adoption_post }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,7 +41,7 @@ class AdoptionPostsController < ApplicationController
   def update
     respond_to do |format|
       if @adoption_post.update(adoption_post_params)
-        format.html { redirect_to adoption_posts_path, success: "Publicación de adopción editada exitosamente." }
+        format.html { redirect_to adoption_posts_path, success: "Publicación de Adopción editada exitosamente." }
         format.json { render :show, status: :ok, location: @adoption_post }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +55,7 @@ class AdoptionPostsController < ApplicationController
     @adoption_post.destroy!
 
     respond_to do |format|
-      format.html { redirect_to adoption_posts_url, success: "Publicación de adopción eliminada exitosamente." }
+      format.html { redirect_to adoption_posts_url, success: "Publicación de Adopción eliminada exitosamente." }
       format.json { head :no_content }
     end
   end

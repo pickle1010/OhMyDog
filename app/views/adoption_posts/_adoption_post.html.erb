@@ -1,57 +1,55 @@
-<body style="background-image: url('<%= asset_path('dogbonewallpaper.jpg') %>'); background-size: cover;">  
-  <div id="<%= dom_id adoption_post %>">
-    <div class="card round-2">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <div>
-            <h5 class="card-title">
-              <%= adoption_post.user.first_name %> <%= adoption_post.user.last_name %> 
-              <span class="text-secondary">
-                #<%= adoption_post.user_id %>
-              </span>
-            </h5>
-            <% if adoption_post.user.admin? %>
-              <h6 class="card-subtitle text-body-secondary">
-                <%= t("activerecord.attributes.user.roles.#{adoption_post.user.role}").humanize %>
-              </h6>
-            <% else %>
-              <h6 class="card-subtitle text-dark">
-                <a href="mailto:<%= adoption_post.user.email %>" class="link-opacity-75 link-underline link-underline-opacity-0"><%= adoption_post.user.email %></a>
-                <% if adoption_post.user.phone.present? %>
-                  · <a href="tel:<%= adoption_post.user.phone %>" class="link-opacity-75 link-underline link-underline-opacity-0">Tel: <%= adoption_post.user.phone %></a>
-                <% end %>
-              </h6>
-            <% end %>
-          </div>
-          <% if user_signed_in? && (current_user == adoption_post.user || current_user.admin?) %>
-            <div class="dropdown">
-              <button class="btn btn-link rounded-circle dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                  <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-                </svg>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <% if current_user == adoption_post.user %>
-                  <li><%= link_to "Editar", edit_adoption_post_path(adoption_post), class: "dropdown-item" %></li>
-                  <li><hr class="dropdown-divider"></li>
-                <% end %>
-                <li><%= button_to "Borrar", adoption_post, method: :delete, class: "dropdown-item" %></li>
-              </ul>
-            </div>
+<div id="<%= dom_id adoption_post %>">
+  <div class="card round-2">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h5 class="card-title">
+            <%= adoption_post.user.first_name %> <%= adoption_post.user.last_name %> 
+            <span class="text-secondary">
+              #<%= adoption_post.user_id %>
+            </span>
+          </h5>
+          <% if adoption_post.user.admin? %>
+            <h6 class="card-subtitle text-body-secondary">
+              <%= t("activerecord.attributes.user.roles.#{adoption_post.user.role}").humanize %>
+            </h6>
+          <% else %>
+            <h6 class="card-subtitle text-dark">
+              <a href="mailto:<%= adoption_post.user.email %>" class="link-opacity-75 link-underline link-underline-opacity-0"><%= adoption_post.user.email %></a>
+              <% if adoption_post.user.phone.present? %>
+                · <a href="tel:<%= adoption_post.user.phone %>" class="link-opacity-75 link-underline link-underline-opacity-0">Tel: <%= adoption_post.user.phone %></a>
+              <% end %>
+            </h6>
           <% end %>
         </div>
-        <p class="card-text"><%= adoption_post.body %></p>
-      </div>
-      <div class="card-footer text-body-secondary">
-        Publicado 
-        <% if Time.now - adoption_post.created_at < 1.hour %>
-          hace <%= time_ago_in_words(adoption_post.created_at) %>
-        <% elsif Time.now - adoption_post.created_at < 1.days %>
-          hoy a las <%= adoption_post.created_at.strftime("%H:%M:%S") %>
-        <% else %>
-          el <%= adoption_post.created_at.to_date %> a las <%= adoption_post.created_at.strftime("%H:%M:%S") %>
+        <% if user_signed_in? && (current_user == adoption_post.user || current_user.admin?) %>
+          <div class="dropdown">
+            <button class="btn btn-link rounded-circle dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+              </svg>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <% if current_user == adoption_post.user %>
+                <li><%= link_to "Editar", edit_adoption_post_path(adoption_post), class: "dropdown-item" %></li>
+                <li><hr class="dropdown-divider"></li>
+              <% end %>
+              <li><%= button_to "Borrar", adoption_post, method: :delete, class: "dropdown-item" %></li>
+            </ul>
+          </div>
         <% end %>
       </div>
+      <p class="card-text"><%= adoption_post.body %></p>
+    </div>
+    <div class="card-footer text-body-secondary">
+      Publicado 
+      <% if Time.now - adoption_post.created_at < 1.hour %>
+        hace <%= time_ago_in_words(adoption_post.created_at) %>
+      <% elsif Time.now - adoption_post.created_at < 1.days %>
+        hoy a las <%= adoption_post.created_at.strftime("%H:%M:%S") %>
+      <% else %>
+        el <%= adoption_post.created_at.to_date %> a las <%= adoption_post.created_at.strftime("%H:%M:%S") %>
+      <% end %>
     </div>
   </div>
-</body>
+</div>
