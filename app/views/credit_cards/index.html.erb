@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div class="card mx-5 my-5">
   <div class ="card-header">
     <div class="d-flex align-items-center">
@@ -18,21 +17,21 @@
   <div class="card-body">
     <% if current_user&.admin? %>
 
-<!-- Mostrar todas las donaciones para el administrador -->
-  <div id="credit_cards">
-    <% @credit_cards.each do |credit_card| %>
-      <%= render credit_card %>
-    <% end %>  
-  </div>
-<% elsif current_user.present? %>
+    <!-- Mostrar todas las donaciones para el administrador -->
+      <div id="credit_cards">
+        <% @credit_cards.each do |credit_card| %>
+          <%= render credit_card %>
+        <% end %>  
+      </div>
+    <% elsif current_user.present? %>
 
-<!-- Mostrar solo las donaciones del usuario para usuarios registrados -->
-  <div id="credit_cards">
-    <% current_user.credit_cards.each do |credit_card| %>
-      <%= render credit_card %>
+    <!-- Mostrar solo las donaciones del usuario para usuarios registrados -->
+      <div id="credit_cards">
+        <% current_user.credit_cards.each do |credit_card| %>
+          <%= render credit_card %>
+        <% end %>
+      </div>
     <% end %>
   </div>
-<% end %>
+</div>  
 
-
->>>>>>> 6435f93428046b53f458892c3e8316600f86f013
