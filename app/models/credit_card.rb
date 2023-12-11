@@ -12,7 +12,7 @@ class CreditCard < ApplicationRecord
   
     def month_cannot_be_in_the_past
       if expiration_month.present? && expiration_month < Date.today.month && expiration_year.present? && expiration_year <= Date.today.year
-        errors.add(:base, "Debe ser una tarjeta vigente")
+        errors.add(:base, "Debe elegir un mes posterior o idéntico al actual ya que su tarjeta vence este mismo año")
       end
     end
 

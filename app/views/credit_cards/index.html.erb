@@ -28,7 +28,7 @@
 
         <% if current_user.admin? %>
           <!-- Sección del monto total y cantidad de donaciones -->
-          <div class="total-donations-info bg-light p-3 my-3 rounded">
+          <div class="total-donations-info bg-light px-3 pt-3 pb-1 mb-2 rounded">
             <p class="font-weight-bold">Monto total de donaciones: $<%= @total_amount %></p>
             <p class="font-weight-bold">Cantidad de donaciones recibidas: <%= @credit_cards.count %></p>
           </div>
