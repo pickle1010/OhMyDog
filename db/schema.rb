@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_10_042238) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
     t.datetime "updated_at", null: false
     t.integer "vaccines"
     t.bigint "dog_id", null: false
+    t.decimal "rabies_dosage"
+    t.string "rabies_batch"
+    t.decimal "inmunological_dosage"
+    t.string "inmunological_batch"
     t.index ["dog_id"], name: "index_clinic_dogs_on_dog_id"
   end
 
@@ -73,6 +77,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "card_type"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
   create_table "dog_walkers", force: :cascade do |t|
@@ -185,11 +191,19 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "wanted_posts", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_wanted_posts_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "adoption_posts", "users"
   add_foreign_key "clinic_dogs", "dogs"
   add_foreign_key "credit_cards", "users"
-  add_foreign_key "adoption_posts", "users"
   add_foreign_key "dogs", "users"
   add_foreign_key "meetings", "clinic_dogs"
   add_foreign_key "meetings", "dogs"
@@ -200,4 +214,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_07_224749) do
   add_foreign_key "messages", "users"
   add_foreign_key "turn_forms", "dogs"
   add_foreign_key "turn_forms", "users"
+  add_foreign_key "wanted_posts", "users"
 end

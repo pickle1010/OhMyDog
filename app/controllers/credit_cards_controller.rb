@@ -3,7 +3,7 @@ class CreditCardsController < ApplicationController
   
     # GET /credit_cards
     def index
-      @credit_cards = CreditCard.all
+        @credit_cards = CreditCard.all
     end
   
     # GET /credit_cards/1
@@ -21,16 +21,20 @@ class CreditCardsController < ApplicationController
   
     # POST /credit_cards
     def create
-      @credit_card = current_user.credit_cards.new(credit_card_params)
-  
+      if user_signed_in?
+        @credit_card = current_user.credit_cards.new(credit_card_params)
+      else
+        @credit_card = CreditCard.new(credit_card_params)
+      end  
       respond_to do |format|
         if @credit_card.save
-          twenty_percent = (@credit_card.amount * 0.2).round(2)
-          current_user.update(positive_balance: current_user.positive_balance + twenty_percent)
-          
-          flash_notice = "Muchas gracias por la donacion! Revise su perfil para ver su saldo a favor"
-          format.html { redirect_to credit_card_url(@credit_card), success: flash_notice }
-          format.json { render :show, status: :created, location: @credit_card }
+          if user_signed_in?
+            twenty_percent = (@credit_card.amount * 0.2).round(2)
+            current_user.update(positive_balance: current_user.positive_balance + twenty_percent)
+            message_alert = "Su nuevo saldo a favor es $#{current_user.positive_balance}" 
+          end
+          format.html { redirect_to credit_cards_path, success: "Gracias por su donación. #{message_alert}" }
+          format.json { render :index, status: :created, location: @credit_card }
         else
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @credit_card.errors, status: :unprocessable_entity }
