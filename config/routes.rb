@@ -41,6 +41,9 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index]
   
+  # Ruta para generar el PDF en MyControllerPdf
+  get '/generate_pdf', to: 'my_controller_pdf#generate_pdf', as: 'generate_pdf'
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -80,3 +80,4 @@ gem "noticed", "~> 1.6"
 
 
 gem "simple_calendar", "~> 2.4"
+gem 'prawn'

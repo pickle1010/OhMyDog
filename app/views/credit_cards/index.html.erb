@@ -1,23 +1,27 @@
-<% if (current_user.present? && !current_user.admin?) || !current_user.present? %>
+
+<% if (user_signed_in? && current_user.client?) || !user_signed_in? %>
   <%= link_to "Hacer una Donacion", new_credit_card_path, class: "btn btn-primary my-2" %>
 <% end %>
 
-<% if current_user&.admin? %>
-
-<!-- Mostrar todas las donaciones para el administrador -->
-  <div id="credit_cards">
-    <% @credit_cards.each do |credit_card| %>
-      <%= render credit_card %>
-    <% end %>  
+<% if user_signed_in? && current_user.admin? %>
+  <%= link_to "Generar Informe PDF", generate_pdf_path(format: :pdf), class: "btn btn-primary my-2" %>
+<!-- Sección del monto total y cantidad de donaciones -->
+  <div class="total-donations-info bg-light p-3 my-3 rounded">
+    <p class="font-weight-bold">Monto total de donaciones: $<%= @total_amount %></p>
+    <p class="font-weight-bold">Cantidad de donaciones recibidas: <%= @credit_cards.count %></p>
   </div>
-<% elsif current_user.present? %>
+<% end %>
 
+<% if user_signed_in? %>
 <!-- Mostrar solo las donaciones del usuario para usuarios registrados -->
   <div id="credit_cards">
-    <% current_user.credit_cards.each do |credit_card| %>
+    <% @credit_cards.each do |credit_card| %>
       <%= render credit_card %>
     <% end %>
   </div>
 <% end %>
+
+
+
 
 
