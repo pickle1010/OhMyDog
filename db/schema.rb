@@ -168,6 +168,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_191530) do
     t.bigint "dog_id"
     t.decimal "total_amount"
     t.text "vet_description"
+    t.date "block_date"
     t.boolean "done", default: false
     t.index ["dog_id"], name: "index_turn_forms_on_dog_id"
     t.index ["user_id"], name: "index_turn_forms_on_user_id"
